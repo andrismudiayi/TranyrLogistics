@@ -1,0 +1,69 @@
+﻿@using TranyrLogistics.Views.Helpers;
+
+@using TranyrLogistics.Models;
+
+@model IEnumerable<TranyrLogistics.Models.Customer>
+
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerNumber)
+        </th>
+        <th>
+            Customer
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Priority)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerNumber)
+        </td>
+        <td>
+            @item.DisplayName
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @HtmlDropDownExtensions.GetEnumDisplay(item.Priority)
+        </td>
+        <td>
+            @Html.ActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "Shipper", "Create", "Shipment", new { customer_id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Customer", new { id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Customer", new { id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Customer", new { id=item.ID }, null, null)
+        </td>
+    </tr>
+}
+
+</table>

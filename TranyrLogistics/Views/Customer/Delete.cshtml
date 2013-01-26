@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Delete Customer";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<fieldset>
+    <legend>Customer</legend>
+        
+        @{
+            if (Model is TranyrLogistics.Models.Company)
+            {
+                @Html.Partial("Partials/CompanyDetails");
+            }
+        }
+        
+        @{
+            if (Model is TranyrLogistics.Models.Individual)
+            {
+                @Html.Partial("Partials/IndividualDetails");
+            }
+        }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</fieldset>
+
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

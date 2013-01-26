@@ -1,0 +1,33 @@
+﻿@model TranyrLogistics.Models.Customer
+
+@{
+    ViewBag.Title = "New Customer";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Customer</legend>
+
+        @Html.Partial("Partials/NewCustomer")
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#company-create-banner").addClass("selected-banner");
+    });
+</script>

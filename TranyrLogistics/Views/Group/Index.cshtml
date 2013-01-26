@@ -1,0 +1,42 @@
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model IEnumerable<TranyrLogistics.Models.Group>
+
+@{
+    ViewBag.Title = "Groups";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Group", new { id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Group", new { id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Group", new { id=item.ID }, null, null)
+        </td>
+    </tr>
+}
+
+</table>

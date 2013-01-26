@@ -1,0 +1,84 @@
+﻿@using TranyrLogistics.Views.Helpers;
+
+@using TranyrLogistics.Models;
+
+@model IEnumerable<TranyrLogistics.Models.Shipment>
+
+@{
+    ViewBag.Title = "Shipments";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<br />
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ReferenceNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OriginCountry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DestinationCountry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceProvider)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShipmentEta)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReferenceNumber)
+        </td>
+        <td>
+            @if (item.Customer is Company)
+            {
+                @Html.ActionLink(((Company)item.Customer).Name, "Details", "Customer", new { id=item.Customer.ID }, null)
+            }
+            else if (item.Customer is Individual)
+            {
+                if (!((Individual)item.Customer).Initial.IsEmpty())
+                {
+                    @Html.ActionLink(((Individual)item.Customer).FirstName + " " + ((Individual)item.Customer).Initial + " " + ((Individual)item.Customer).LastName, "Details", "Customer", new { id=item.Customer.ID }, null)
+                } else {
+                    @Html.ActionLink(((Individual)item.Customer).FirstName + " " + ((Individual)item.Customer).LastName, "Details", "Customer", new { id=item.Customer.ID }, null)
+                }
+            }
+        </td>
+        <td>
+            @HtmlDropDownExtensions.GetEnumDisplay(item.Transport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OriginCountry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DestinationCountry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceProvider.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShipmentEta)
+        </td>
+        <td>
+            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Shipment", new { id=item.ShipmentID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Shipment", new { id=item.ShipmentID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Shipment", new { id=item.ShipmentID }, null, null)
+        </td>
+    </tr>
+}
+
+</table>

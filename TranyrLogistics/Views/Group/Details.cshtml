@@ -1,0 +1,34 @@
+﻿@model TranyrLogistics.Models.Group
+
+@{
+    ViewBag.Title = "Group Details";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<fieldset>
+    <legend>Group</legend>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Name)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.Name)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Description)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.Description)
+        </div>
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

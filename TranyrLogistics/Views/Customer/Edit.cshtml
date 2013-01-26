@@ -1,0 +1,38 @@
+﻿@model TranyrLogistics.Models.Customer
+
+@{
+    ViewBag.Title = "Edit Customer";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Customer</legend>
+
+        @{
+            if (Model is TranyrLogistics.Models.Company)
+            {
+                @Html.Partial("Partials/CompanyEdit");
+            }
+        }
+        
+        @{
+            if (Model is TranyrLogistics.Models.Individual)
+            {
+                @Html.Partial("Partials/IndividualEdit");
+            }
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

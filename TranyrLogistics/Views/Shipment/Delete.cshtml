@@ -1,0 +1,96 @@
+﻿@model TranyrLogistics.Models.Shipment
+
+@{
+    ViewBag.Title = "Delete Shipment";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Shipment</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ReferenceNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ReferenceNumber)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Customer.CustomerNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Customer.CustomerNumber)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ServiceProvider)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ServiceProvider.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Transport)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Transport)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OriginCountry)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OriginCountry)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DestinationCountry)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DestinationCountry)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Recipient)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Recipient)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ShippingTerms)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ShippingTerms.Standard)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Category)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Category)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ShipmentEta)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ShipmentEta)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CreateDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreateDate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

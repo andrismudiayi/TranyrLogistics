@@ -1,0 +1,14 @@
+﻿@model TranyrLogistics.Models.Customer
+
+@{
+    if (Model is TranyrLogistics.Models.Company)
+    {
+        @Html.Partial("~/Views/Customer/Partials/CompanyDetails.cshtml");
+    }
+}
+@{
+    if (Model is TranyrLogistics.Models.Individual)
+    {
+        @Html.Partial("~/Views/Customer/Partials/IndividualDetails.cshtml");
+    }
+}

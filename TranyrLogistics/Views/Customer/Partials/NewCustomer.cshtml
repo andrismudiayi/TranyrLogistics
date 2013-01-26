@@ -1,0 +1,49 @@
+﻿@model TranyrLogistics.Models.Customer
+
+<div class="table-row">
+    <div id="company-create-banner" class="table-cell" style="cursor:pointer">
+        New Company
+    </div>
+    <div id="individual-create-banner" class="table-cell" style="cursor:pointer">
+        New Individual
+    </div>
+</div>
+<br />
+
+<div id="company-create-form">
+    @{
+        if (Model == null || Model is TranyrLogistics.Models.Company)
+        {
+            @Html.Partial("~/Views/Customer/Partials/CompanyCreate.cshtml");
+        }
+    }
+</div>
+<div id="individual-create-form">
+    @{
+        if (Model == null || Model is TranyrLogistics.Models.Individual)
+        {
+            @Html.Partial("~/Views/Customer/Partials/IndividualCreate.cshtml");
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#individual-create-form").hide();
+
+        $("#company-create-banner").click(function () {
+            $("#company-create-banner").addClass("selected-banner");
+            $("#individual-create-banner").removeClass("selected-banner");
+            $("#individual-create-form").slideUp("slow");
+            $("#company-create-form").slideToggle("slow");
+            
+        });
+
+        $("#individual-create-banner").click(function () {
+            $("#individual-create-banner").addClass("selected-banner");
+            $("#company-create-banner").removeClass("selected-banner");
+            $("#company-create-form").slideUp("slow");
+            $("#individual-create-form").slideToggle("slow");
+        });
+    });
+</script>
