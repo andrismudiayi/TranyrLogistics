@@ -33,7 +33,7 @@
             @Html.DisplayNameFor(model => model.ServiceProvider)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ShipmentEta)
+            @Html.DisplayNameFor(model => model.PlannedETA)
         </th>
         <th></th>
     </tr>
@@ -71,7 +71,7 @@
             @Html.DisplayFor(modelItem => item.ServiceProvider.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ShipmentEta)
+            @Html.DisplayFor(modelItem => item.PlannedETA)
         </td>
         <td>
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Shipment", new { id=item.ShipmentID }, null, null) |
