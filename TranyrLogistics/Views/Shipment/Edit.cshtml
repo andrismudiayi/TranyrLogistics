@@ -30,6 +30,7 @@
         @Html.HiddenFor(model => model.CustomerID)
         @Html.HiddenFor(model => model.ReferenceNumber)
         @Html.HiddenFor(model => model.CreateDate)
+        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ServiceProviderID, "Service Provider")
@@ -91,8 +92,16 @@
             @Html.LabelFor(model => model.PickUpPoint)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.PickUpPoint)
+            @Html.TextAreaFor(model => model.PickUpPoint)
             @Html.ValidationMessageFor(model => model.PickUpPoint)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PlannedPickUpTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PlannedPickUpTime)
+            @Html.ValidationMessageFor(model => model.PlannedPickUpTime)
         </div>
 
         <div class="editor-label">
@@ -128,11 +137,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ShipmentEta)
+            @Html.LabelFor(model => model.PlannedETA)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ShipmentEta)
-            @Html.ValidationMessageFor(model => model.ShipmentEta)
+            @Html.EditorFor(model => model.PlannedETA)
+            @Html.ValidationMessageFor(model => model.PlannedETA)
         </div>
 
         <div class="editor-label">
@@ -189,6 +198,14 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.HouseBillNumber)
             @Html.ValidationMessageFor(model => model.HouseBillNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PlannedCollectionDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PlannedCollectionDate)
+            @Html.ValidationMessageFor(model => model.PlannedCollectionDate)
         </div>
 
         <p>

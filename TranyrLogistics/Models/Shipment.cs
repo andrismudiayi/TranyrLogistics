@@ -42,6 +42,14 @@ namespace TranyrLogistics.Models
         [Display(Name = "Pick up point")]
         public string PickUpPoint { get; set; }
 
+        [Display(Name = "Planned pick time")]
+        [DataType(DataType.Date)]
+        public DateTime PlannedPickUpTime { get; set; }
+
+        [Display(Name = "Actual Pick up time")]
+        [DataType(DataType.Date)]
+        public DateTime? ActualPickUpTime { get; set; }
+
         [Required]
         [Display(Name = "Recipient")]
         public string Recipient { get; set; }
@@ -57,9 +65,13 @@ namespace TranyrLogistics.Models
         [Display(Name = "Shipment description")]
         public string ShipmentDescription { get; set; }
 
-        [Display(Name = "ETA")]
+        [Display(Name = "Planned ETA")]
         [DataType(DataType.Date)]
-        public DateTime ShipmentEta { get; set; }
+        public DateTime PlannedETA { get; set; }
+
+        [Display(Name = "Time of Arrival")]
+        [DataType(DataType.Date)]
+        public DateTime? ActualTimeOfArrival { get; set; }
         
         [Required]
         [Display(Name = "Number of packages")]
@@ -86,6 +98,14 @@ namespace TranyrLogistics.Models
 
         [Display(Name = "Service Provider")]
         public virtual ServiceProvider ServiceProvider { get; set; }
+
+        [Display(Name = "Planned Collection Date")]
+        [DataType(DataType.Date)]
+        public DateTime PlannedCollectionDate { get; set; }
+
+        [Display(Name = "Collection Date")]
+        [DataType(DataType.Date)]
+        public DateTime? CollectionDate { get; set; }
 
         [Display(Name = "Date")]
         public virtual DateTime? CreateDate { get; set; }
