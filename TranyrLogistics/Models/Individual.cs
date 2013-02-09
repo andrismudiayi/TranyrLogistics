@@ -22,6 +22,7 @@ namespace TranyrLogistics.Models
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
+        [Required]
         [Display(Name = "Identity")]
         public string IdentityNumber { get; set; }
 
