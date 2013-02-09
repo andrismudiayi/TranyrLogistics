@@ -21,5 +21,12 @@ namespace TranyrLogistics.Models
         [Required]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Identity")]
+        public string IdentityNumber { get; set; }
+
+        [Display(Name = "Tax number")]
+        public string TaxNumber { get; set; }
     }
 }

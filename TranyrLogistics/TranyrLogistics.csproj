@@ -177,6 +177,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Enums\ShipmentStatus.cs" />
+    <Compile Include="Models\Enums\CustomsEntryType.cs" />
     <Compile Include="Models\ServiceProvider.cs" />
     <Compile Include="Models\CustomModelBinders\CustomerModelBinder.cs" />
     <Compile Include="Models\Company.cs" />

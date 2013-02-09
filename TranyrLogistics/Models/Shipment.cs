@@ -11,7 +11,7 @@ namespace TranyrLogistics.Models
 
         public virtual Customer Customer { get; set; }
 
-        [Display(Name = "Reference No.")]
+        [Display(Name = "Reference no.")]
         public string ReferenceNumber { get; set; }
 
         [Required]
@@ -19,11 +19,11 @@ namespace TranyrLogistics.Models
         public Transportation Transport { get; set; }
 
         [Required]
-        [Display(Name = "City of origin")]
+        [Display(Name = "Origin city")]
         public string OriginCity { get; set; }
 
         [Required]
-        [Display(Name = "Country of origin")]
+        [Display(Name = "Origin country")]
         public string OriginCountry { get; set; }
 
         [Required]
@@ -46,7 +46,7 @@ namespace TranyrLogistics.Models
         [DataType(DataType.Date)]
         public DateTime PlannedPickUpTime { get; set; }
 
-        [Display(Name = "Actual Pick up time")]
+        [Display(Name = "Actual pick up time")]
         [DataType(DataType.Date)]
         public DateTime? ActualPickUpTime { get; set; }
 
@@ -54,7 +54,7 @@ namespace TranyrLogistics.Models
         [Display(Name = "Recipient")]
         public string Recipient { get; set; }
 
-        [Display(Name = "Shipping Terms")]
+        [Display(Name = "Shipping terms")]
         public virtual ShippingTerms ShippingTerms { get; set; }
 
         [Required]
@@ -62,14 +62,14 @@ namespace TranyrLogistics.Models
         public ShipmentCategory? Category { get; set; }
 
         [Required]
-        [Display(Name = "Shipment description")]
-        public string ShipmentDescription { get; set; }
+        [Display(Name = "Goods description")]
+        public string GoodsDescription { get; set; }
 
         [Display(Name = "Planned ETA")]
         [DataType(DataType.Date)]
         public DateTime PlannedETA { get; set; }
 
-        [Display(Name = "Time of Arrival")]
+        [Display(Name = "Time of arrival")]
         [DataType(DataType.Date)]
         public DateTime? ActualTimeOfArrival { get; set; }
         
@@ -78,37 +78,50 @@ namespace TranyrLogistics.Models
         public int NumberOfPackages { get; set; }
 
         [Required]
-        [Display(Name = "Gross Weight (Kg)")]
+        [Display(Name = "Gross weight (Kg)")]
         public double GrossWeight { get; set; }
 
-        [Display(Name = "Volume")]
-        public double Volume { get; set; }
+        [Display(Name = "Volumetric weight")]
+        public double VolumetricWeight { get; set; }
 
         [Display(Name = "Insurance required")]
         public bool InsuranceRequired { get; set; }
 
-        [Display(Name = "Master Bill No.")]
+        [Display(Name = "Master bill no.")]
         public string MasterBillNumber { get; set; }
 
-        [Display(Name = "Sub-Master Bill No.")]
-        public string SubMasterBillNumber { get; set; }
+        [Display(Name = "Way bill no.")]
+        public string WayBillNumber { get; set; }
 
-        [Display(Name = "House Bill No.")]
+        [Display(Name = "House bill no.")]
         public string HouseBillNumber { get; set; }
 
-        [Display(Name = "Service Provider")]
+        [Display(Name = "Service provider")]
         public virtual ServiceProvider ServiceProvider { get; set; }
 
-        [Display(Name = "Planned Collection Date")]
+        [Display(Name = "Planned collection date")]
         [DataType(DataType.Date)]
         public DateTime PlannedCollectionDate { get; set; }
 
-        [Display(Name = "Collection Date")]
+        [Display(Name = "Collection date")]
         [DataType(DataType.Date)]
         public DateTime? CollectionDate { get; set; }
 
+        [Required]
+        [Display(Name = "Customs entry type")]
+        public CustomsEntryType CustomsEntry { get; set; }
+
+        [Required]
+        [Display(Name = "ShipShape")]
+        public string ShipShape { get; set; }
+
         [Display(Name = "Date")]
         public virtual DateTime? CreateDate { get; set; }
+
+        [Display(Name = "Unresolved issues")]
+        public bool HasUnresolvedIssues { get; set; }
+
+        public ShipmentStatus Status { get; set; }
 
         public virtual DateTime ModifiedDate { get; set; }
 
