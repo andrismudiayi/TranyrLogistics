@@ -68,7 +68,7 @@ namespace TranyrLogistics.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 string uploadDirectoryPath = Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory +
-                    "\\Uploads\\ShipmentDocs\\" + shipmentDocument.CustomerNumber + "\\"
+                    @"Uploads\ShipmentDocs\" + shipmentDocument.CustomerNumber + @"\"
                 );
                 string savedFileName = Path.Combine(
                      uploadDirectoryPath,
@@ -79,7 +79,8 @@ namespace TranyrLogistics.Controllers
                     Directory.CreateDirectory(uploadDirectoryPath);
                 }
                 file.SaveAs(savedFileName);
-                shipmentDocument.FilePathOnDisc = savedFileName;
+                shipmentDocument.ActualFileName = fileName;
+                shipmentDocument.FilePathOnDisc = savedFileName.Substring(1);
             }
 
             shipmentDocument.CreateDate = DateTime.Now;
@@ -124,6 +125,18 @@ namespace TranyrLogistics.Controllers
             }
 
             return RedirectToAction("Index", new { customer_number = shipmentDocument.CustomerNumber, shipment_id = shipmentDocument.ShipmentID });
+        }
+
+        //
+        // GET: /ShipmentDocumentation/DownloadFile/5
+
+        public ActionResult DownloadFile(int id = 0)
+        {
+            ShipmentDocument shipmentDocument = db.ShipmentDocuments.Find(id);
+
+            return File(System.Text.Encoding.UTF8.GetBytes(shipmentDocument.FilePathOnDisc),
+                 "text/plain",
+                  string.Format("{0}", shipmentDocument.ActualFileName));
         }
 
         protected override void Dispose(bool disposing)

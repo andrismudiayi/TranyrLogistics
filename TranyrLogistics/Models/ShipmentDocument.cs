@@ -21,6 +21,8 @@ namespace TranyrLogistics.Models
         [Display(Name = "File Path")]
         public string FilePath { get; set; }
 
+        public string ActualFileName { get; set; }
+
         public string FilePathOnDisc { get; set; }
 
         public string CustomerNumber { get; set; }

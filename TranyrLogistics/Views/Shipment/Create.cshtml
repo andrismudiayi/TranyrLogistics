@@ -124,11 +124,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ShipmentDescription)
+            @Html.LabelFor(model => model.GoodsDescription)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.ShipmentDescription)
-            @Html.ValidationMessageFor(model => model.ShipmentDescription)
+            @Html.TextAreaFor(model => model.GoodsDescription)
+            @Html.ValidationMessageFor(model => model.GoodsDescription)
         </div>
 
         <div class="editor-label">
@@ -156,11 +156,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Volume)
+            @Html.LabelFor(model => model.VolumetricWeight)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Volume)
-            @Html.ValidationMessageFor(model => model.Volume)
+            @Html.EditorFor(model => model.VolumetricWeight)
+            @Html.ValidationMessageFor(model => model.VolumetricWeight)
         </div>
 
         <div class="editor-label">
@@ -180,11 +180,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.SubMasterBillNumber)
+            @Html.LabelFor(model => model.WayBillNumber)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.SubMasterBillNumber)
-            @Html.ValidationMessageFor(model => model.SubMasterBillNumber)
+            @Html.EditorFor(model => model.WayBillNumber)
+            @Html.ValidationMessageFor(model => model.WayBillNumber)
         </div>
 
         <div class="editor-label">
@@ -201,6 +201,22 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.PlannedCollectionDate)
             @Html.ValidationMessageFor(model => model.PlannedCollectionDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ShipShape)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ShipShape)
+            @Html.ValidationMessageFor(model => model.ShipShape)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CustomsEntry)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.CustomsEntry)
+            @Html.ValidationMessageFor(model => model.CustomsEntry)
         </div>
 
         <p>

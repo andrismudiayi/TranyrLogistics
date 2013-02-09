@@ -32,7 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Label)
+            @Html.ActionLink(item.Label, "DownloadFile", new { id=item.ID })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
@@ -49,3 +49,9 @@
 }
 
 </table>
+<br />
+<br />
+
+<div>
+    @Html.ActionLink("Back to Shipments", "Index", "Shipment")
+</div>

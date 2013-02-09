@@ -14,6 +14,9 @@ namespace TranyrLogistics.Models
         [Display(Name = "VAT number")]
         public string VatNumber { get; set; }
 
+        [Display(Name = "Importers code")]
+        public string ImportersCode { get; set; }
+
         [Display(Name = "Postal Address")]
         public string PostalAddress { get; set; }
     }
