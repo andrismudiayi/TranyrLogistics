@@ -170,6 +170,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiceProviderController.cs" />
     <Compile Include="Controllers\ShipmentController.cs" />
+    <Compile Include="Controllers\ShipmentDocumentController.cs" />
     <Compile Include="Controllers\ShippingTermsController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -187,6 +188,7 @@
     <Compile Include="Models\Enums\Transportation.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Individual.cs" />
+    <Compile Include="Models\ShipmentDocument.cs" />
     <Compile Include="Models\ShippingTerm.cs" />
     <Compile Include="Models\Shipment.cs" />
     <Compile Include="Models\TranyrLogisticsDb.cs" />
@@ -357,9 +359,14 @@
     <Content Include="Views\ServiceProvider\Create.cshtml" />
     <Content Include="Views\ServiceProvider\Edit.cshtml" />
     <Content Include="Views\ServiceProvider\Delete.cshtml" />
+    <Content Include="Views\ShipmentDocument\Index.cshtml" />
+    <Content Include="Views\ShipmentDocument\Details.cshtml" />
+    <Content Include="Views\ShipmentDocument\Create.cshtml" />
+    <Content Include="Views\ShipmentDocument\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\ShipmentDocs\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
