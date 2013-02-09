@@ -74,6 +74,7 @@
             @Html.DisplayFor(modelItem => item.PlannedETA)
         </td>
         <td>
+            @Html.ActionImageLink(@Url.Content("~/Images/file-upload.png"), "Documents", "Index", "ShipmentDocument", new { customer_number=item.Customer.CustomerNumber, shipment_id=item.ShipmentID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Shipment", new { id=item.ShipmentID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Shipment", new { id=item.ShipmentID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Shipment", new { id=item.ShipmentID }, null, null)

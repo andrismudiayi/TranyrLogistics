@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TranyrLogistics.Models.ShipmentDocument>
+
+@{
+    var customer = ViewBag.Customer;
+    var shipment = ViewBag.Shipment;
+    ViewBag.Title = customer.DisplayName + "'s documents";
+    
+    var pageTitle = customer.DisplayName + "'s documents for shipment: " + shipment.ReferenceNumber;
+    
+}
+
+<h4>@pageTitle</h4>
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { customer_number=customer.CustomerNumber, shipment_id=shipment.ShipmentID })
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Label)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Label)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
