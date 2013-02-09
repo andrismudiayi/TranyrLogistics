@@ -18,6 +18,8 @@ namespace TranyrLogistics.Models
         public DbSet<ShippingTerms> ShippingTerms { get; set; }
 
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
+
+        public DbSet<ShipmentDocument> ShipmentDocuments { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -29,7 +31,7 @@ namespace TranyrLogistics.Models
             modelBuilder.Entity<Customer>().HasMany(e => e.Shipments).WithRequired(a => a.Customer).HasForeignKey(e => e.CustomerID);
             modelBuilder.Entity<Group>().HasMany(e => e.Customers).WithOptional(a => a.Group).HasForeignKey(e => e.GroupID);
             modelBuilder.Entity<Shipment>().HasRequired(e => e.ShippingTerms);
-            modelBuilder.Entity<Shipment>().HasOptional(e => e.ServiceProvider);
+            modelBuilder.Entity<Shipment>().HasRequired(e => e.ServiceProvider);
         }
     }
 }
