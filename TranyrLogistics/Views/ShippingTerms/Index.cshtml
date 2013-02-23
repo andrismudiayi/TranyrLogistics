@@ -1,4 +1,6 @@
-﻿@model IEnumerable<TranyrLogistics.Models.ShippingTerms>
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model IEnumerable<TranyrLogistics.Models.ShippingTerms>
 
 @{
     ViewBag.Title = "Shipping Terms";
@@ -30,9 +32,10 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "ShippingTerms", new { id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "ShippingTerms", new { id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "ShippingTerms", new { id=item.ID }, null, null)
+
         </td>
     </tr>
 }

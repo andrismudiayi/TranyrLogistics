@@ -96,12 +96,14 @@
             @Html.ValidationMessageFor(model => model.PickUpPoint)
         </div>
 
+        @Html.HiddenFor(model => model.PlannedPickUpTime)
+
         <div class="editor-label">
-            @Html.LabelFor(model => model.PlannedPickUpTime)
+            @Html.LabelFor(model => model.ActualPickUpTime)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.PlannedPickUpTime)
-            @Html.ValidationMessageFor(model => model.PlannedPickUpTime)
+            @Html.EditorFor(model => model.ActualPickUpTime)
+            @Html.ValidationMessageFor(model => model.ActualPickUpTime)
         </div>
 
         <div class="editor-label">
@@ -136,12 +138,24 @@
             @Html.ValidationMessageFor(model => model.GoodsDescription)
         </div>
 
+        @Html.HiddenFor(model => model.PlannedCollectionDate)
+
         <div class="editor-label">
-            @Html.LabelFor(model => model.PlannedETA)
+            @Html.LabelFor(model => model.CollectionDate)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.PlannedETA)
-            @Html.ValidationMessageFor(model => model.PlannedETA)
+            @Html.EditorFor(model => model.CollectionDate)
+            @Html.ValidationMessageFor(model => model.CollectionDate)
+        </div>
+
+        @Html.HiddenFor(model => model.PlannedETA)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ActualTimeOfArrival)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ActualTimeOfArrival)
+            @Html.ValidationMessageFor(model => model.ActualTimeOfArrival)
         </div>
 
         <div class="editor-label">
@@ -198,14 +212,6 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.HouseBillNumber)
             @Html.ValidationMessageFor(model => model.HouseBillNumber)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PlannedCollectionDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PlannedCollectionDate)
-            @Html.ValidationMessageFor(model => model.PlannedCollectionDate)
         </div>
 
         <div class="editor-label">

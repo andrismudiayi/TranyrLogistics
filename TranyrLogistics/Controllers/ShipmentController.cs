@@ -15,9 +15,18 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Shipment/
 
-        public ActionResult Index()
+        public ActionResult Index(int customer_id = 0)
         {
-            var shipments = db.Shipments.Include(s => s.Customer);
+            IQueryable<Shipment> shipments = null;
+            if (customer_id > 0)
+            {
+                shipments = db.Shipments.Where(x => x.CustomerID == customer_id);
+                ViewBag.Customer = db.Customers.FirstOrDefault(x => x.ID == customer_id);
+            }
+            else
+            {
+                shipments = db.Shipments.Include(s => s.Customer);
+            }
             return View(shipments.ToList());
         }
 
