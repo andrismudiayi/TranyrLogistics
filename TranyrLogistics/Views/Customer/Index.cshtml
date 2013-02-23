@@ -58,7 +58,8 @@
             @HtmlDropDownExtensions.GetEnumDisplay(item.Priority)
         </td>
         <td>
-            @Html.ActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "Shipper", "Create", "Shipment", new { customer_id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "New Shipment", "Create", "Shipment", new { customer_id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/customer_shipments.png"), "Shipment List", "Index", "Shipment", new { customer_id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Customer", new { id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Customer", new { id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Customer", new { id=item.ID }, null, null)

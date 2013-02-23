@@ -6,9 +6,27 @@
 
 @{
     ViewBag.Title = "Shipments";
+
+    Customer customer = null;
+    if (ViewBag.Customer != null)
+    {
+        customer = ViewBag.Customer;
+    }
 }
 
-<h3>@ViewBag.Title</h3>
+<h3>
+    @{
+        if (customer != null)
+        {
+            var pageTitle = customer.DisplayName + "'s shipments";
+            @pageTitle;
+            
+        }else
+        {
+            @ViewBag.Title;
+        }   
+    }
+</h3>
 <br />
 
 <br />
@@ -83,3 +101,10 @@
 }
 
 </table>
+<br />
+<br />
+
+<div>
+    @Html.ActionLink("Customer list", "Index", "Customer")
+</div>
+
