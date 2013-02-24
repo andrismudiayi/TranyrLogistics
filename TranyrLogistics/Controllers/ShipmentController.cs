@@ -93,6 +93,8 @@ namespace TranyrLogistics.Controllers
         public ActionResult Edit(int id = 0)
         {
             Shipment shipment = db.Shipments.Find(id);
+            shipment.OriginCountry = db.Countries.Find(shipment.OriginCountryID);
+            shipment.DestinationCountry = db.Countries.Find(shipment.DestinationCountryID);
             if (shipment == null)
             {
                 return HttpNotFound();
