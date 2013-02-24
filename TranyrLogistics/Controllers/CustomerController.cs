@@ -17,7 +17,7 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Index()
         {
-            var customers = db.Customers.Include(c => c.Group);
+            var customers = db.Customers.Include(c => c.Group).Include(c => c.Country);
             return View(customers.ToList());
         }
 
@@ -27,6 +27,7 @@ namespace TranyrLogistics.Controllers
         public ActionResult Details(int id = 0)
         {
             Customer customer = db.Customers.Find(id);
+            customer.Country = db.Countries.Find(customer.CountryID);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -40,6 +41,7 @@ namespace TranyrLogistics.Controllers
         public ActionResult Create()
         {
             ViewBag.GroupID = new SelectList(db.Groups, "ID", "Name");
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
             return View();
         }
 
@@ -57,7 +59,7 @@ namespace TranyrLogistics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
             ViewBag.GroupID = new SelectList(db.Groups, "ID", "Name", customer.GroupID);
             return View(customer);
         }
@@ -73,6 +75,7 @@ namespace TranyrLogistics.Controllers
                 return HttpNotFound();
             }
             ViewBag.GroupID = new SelectList(db.Groups, "ID", "Name", customer.GroupID);
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", customer.CountryID);
             return View(customer);
         }
 
@@ -99,6 +102,7 @@ namespace TranyrLogistics.Controllers
         public ActionResult Delete(int id = 0)
         {
             Customer customer = db.Customers.Find(id);
+            customer.Country = db.Countries.Find(customer.CountryID);
             if (customer == null)
             {
                 return HttpNotFound();

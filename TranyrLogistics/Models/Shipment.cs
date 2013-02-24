@@ -22,9 +22,8 @@ namespace TranyrLogistics.Models
         [Display(Name = "Origin city")]
         public string OriginCity { get; set; }
 
-        [Required]
         [Display(Name = "Origin country")]
-        public string OriginCountry { get; set; }
+        public Country OriginCountry { get; set; }
 
         [Required]
         [Display(Name = "Destination address")]
@@ -34,9 +33,8 @@ namespace TranyrLogistics.Models
         [Display(Name = "Destination city")]
         public string DestinationCity { get; set; }
 
-        [Required]
         [Display(Name = "Destination country")]
-        public string DestinationCountry { get; set; }
+        public Country DestinationCountry { get; set; }
 
         [Required]
         [Display(Name = "Pick up point")]
@@ -44,10 +42,12 @@ namespace TranyrLogistics.Models
 
         [Display(Name = "Planned pick time")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime PlannedPickUpTime { get; set; }
 
         [Display(Name = "Actual pick up time")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? ActualPickUpTime { get; set; }
 
         [Required]
@@ -67,10 +67,12 @@ namespace TranyrLogistics.Models
 
         [Display(Name = "Planned ETA")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime PlannedETA { get; set; }
 
         [Display(Name = "Time of arrival")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? ActualTimeOfArrival { get; set; }
         
         [Required]
@@ -101,10 +103,12 @@ namespace TranyrLogistics.Models
 
         [Display(Name = "Planned collection date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
         public DateTime PlannedCollectionDate { get; set; }
 
-        [Display(Name = "Collection date")]
+        [Display(Name = "Actual collection date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? CollectionDate { get; set; }
 
         [Required]
@@ -116,6 +120,7 @@ namespace TranyrLogistics.Models
         public string ShipShape { get; set; }
 
         [Display(Name = "Date")]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
         public virtual DateTime? CreateDate { get; set; }
 
         [Display(Name = "Unresolved issues")]
@@ -130,5 +135,19 @@ namespace TranyrLogistics.Models
         public virtual int? ShippingTermsID { get; set; }
 
         public virtual int? ServiceProviderID { get; set; }
+
+        public virtual int? OriginCountryID { get; set; }
+
+        public virtual int? DestinationCountryID { get; set; }
+
+        public Shipment()
+        {
+            ActualPickUpTime = DateTime.Now;
+            ActualTimeOfArrival = DateTime.Now;
+            CollectionDate = DateTime.Now;
+            PlannedCollectionDate = DateTime.Now;
+            PlannedETA = DateTime.Now;
+            PlannedPickUpTime = DateTime.Now;
+        }
     }
 }

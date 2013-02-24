@@ -42,10 +42,10 @@
             @Html.DisplayNameFor(model => model.Transport)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OriginCountry)
+            @Html.DisplayName("Origin")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DestinationCountry)
+            @Html.DisplayName("Destination")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ServiceProvider)
@@ -62,34 +62,22 @@
             @Html.DisplayFor(modelItem => item.ReferenceNumber)
         </td>
         <td>
-            @if (item.Customer is Company)
-            {
-                @Html.ActionLink(((Company)item.Customer).Name, "Details", "Customer", new { id=item.Customer.ID }, null)
-            }
-            else if (item.Customer is Individual)
-            {
-                if (!((Individual)item.Customer).Initial.IsEmpty())
-                {
-                    @Html.ActionLink(((Individual)item.Customer).FirstName + " " + ((Individual)item.Customer).Initial + " " + ((Individual)item.Customer).LastName, "Details", "Customer", new { id=item.Customer.ID }, null)
-                } else {
-                    @Html.ActionLink(((Individual)item.Customer).FirstName + " " + ((Individual)item.Customer).LastName, "Details", "Customer", new { id=item.Customer.ID }, null)
-                }
-            }
+            @Html.ActionLink(item.Customer.DisplayName, "Details", "Customer", new { id=item.Customer.ID }, null)
         </td>
         <td>
             @HtmlDropDownExtensions.GetEnumDisplay(item.Transport)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.OriginCountry)
+            @item.OriginCountry.Code
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DestinationCountry)
+            @item.DestinationCountry.Code
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ServiceProvider.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PlannedETA)
+            @item.PlannedETA.ToShortDateString()
         </td>
         <td>
             @Html.ActionImageLink(@Url.Content("~/Images/shipment_documents.png"), "Documents", "Index", "ShipmentDocument", new { customer_number=item.Customer.CustomerNumber, shipment_id=item.ShipmentID }, null, null) |
@@ -101,7 +89,6 @@
 }
 
 </table>
-<br />
 <br />
 
 <div>

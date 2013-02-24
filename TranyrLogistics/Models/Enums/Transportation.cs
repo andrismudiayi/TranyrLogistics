@@ -15,6 +15,8 @@ namespace TranyrLogistics.Models.Enums
         [Display(Name = "Air + Sea")]
         AIR_SEA,
         [Display(Name = "Road + Sea")]
-        ROAD_SEA
+        ROAD_SEA,
+        [Display(Name = "Air + Road + Sea")]
+        AIR_ROAD_SEA
     }
 }

@@ -177,6 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Enums\ShipmentStatus.cs" />
     <Compile Include="Models\Enums\CustomsEntryType.cs" />
     <Compile Include="Models\ServiceProvider.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Views\Helpers\HtmlDropDownExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Countries.sql" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -215,6 +217,8 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui-timepicker-addon.css" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
     <Content Include="Content\themes\base\jquery-ui.css" />
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
@@ -367,7 +371,6 @@
     <Content Include="Views\ShipmentDocument\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Uploads\ShipmentDocs\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
