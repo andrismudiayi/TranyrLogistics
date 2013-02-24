@@ -52,7 +52,7 @@
             @Html.DisplayFor(modelItem => item.ContactNumber)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Country)
+            @item.Country.Code
         </td>
         <td>
             @HtmlDropDownExtensions.GetEnumDisplay(item.Priority)

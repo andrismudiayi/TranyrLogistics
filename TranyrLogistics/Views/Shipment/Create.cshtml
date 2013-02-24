@@ -55,7 +55,7 @@
             @Html.LabelFor(model => model.OriginCountry)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.OriginCountry)
+            @Html.DropDownList("OriginCountryID", String.Empty)
             @Html.ValidationMessageFor(model => model.OriginCountry)
         </div>
 
@@ -79,7 +79,7 @@
             @Html.LabelFor(model => model.DestinationCountry)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DestinationCountry)
+            @Html.DropDownList("DestinationCountryID", String.Empty)
             @Html.ValidationMessageFor(model => model.DestinationCountry)
         </div>
 
@@ -234,9 +234,9 @@
 }
 
 <script type="text/javascript">
-    $('#PlannedPickUpTime').datepicker();
-    $('#PlannedETA').datepicker();
-    $('#PlannedCollectionDate').datepicker();
+    $('#PlannedPickUpTime').datetimepicker({ dateFormat: "dd MM yy", });
+    $('#PlannedETA').datetimepicker({ dateFormat: "dd MM yy", });
+    $('#PlannedCollectionDate').datepicker({ dateFormat: "dd MM yy", });
     $(document).ready(function () {
         $("#company-create-form").hide();
         $("#individual-create-form").hide();

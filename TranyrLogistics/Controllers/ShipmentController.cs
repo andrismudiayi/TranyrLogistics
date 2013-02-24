@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -17,16 +18,17 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Index(int customer_id = 0)
         {
-            IQueryable<Shipment> shipments = null;
+            IQueryable<Shipment> shipments = db.Shipments.Include(s => s.OriginCountry).Include(s => s.DestinationCountry);
             if (customer_id > 0)
             {
-                shipments = db.Shipments.Where(x => x.CustomerID == customer_id);
+                shipments.Where(x => x.CustomerID == customer_id);
                 ViewBag.Customer = db.Customers.FirstOrDefault(x => x.ID == customer_id);
             }
             else
             {
-                shipments = db.Shipments.Include(s => s.Customer);
+                shipments.Include(s => s.Customer);
             }
+            
             return View(shipments.ToList());
         }
 
@@ -36,6 +38,8 @@ namespace TranyrLogistics.Controllers
         public ActionResult Details(int id = 0)
         {
             Shipment shipment = db.Shipments.Find(id);
+            shipment.OriginCountry = db.Countries.Find(shipment.OriginCountryID);
+            shipment.DestinationCountry = db.Countries.Find(shipment.DestinationCountryID);
             if (shipment == null)
             {
                 return HttpNotFound();
@@ -52,9 +56,12 @@ namespace TranyrLogistics.Controllers
             if (customer_id > 0)
             {
                 Customer customer = db.Customers.Find(customer_id);
+                customer.Country = db.Countries.Find(customer.CountryID);
                 shipment.CustomerID = customer.ID;
                 shipment.Customer = customer;
             }
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.OriginCountryID);
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.DestinationCountryID);
             ViewBag.ShippingTermsID = new SelectList(db.ShippingTerms, "ID", "Standard", shipment.ShippingTermsID);
             ViewBag.ServiceProviderID = new SelectList(db.ServiceProviders, "ID", "Name", shipment.ServiceProviderID);
             return View(shipment);
@@ -67,6 +74,9 @@ namespace TranyrLogistics.Controllers
         public ActionResult Create(Shipment shipment)
         {
             shipment.ReferenceNumber = ShipmentModel.GenerateReferenceNumber(shipment);
+            shipment.CollectionDate = shipment.PlannedCollectionDate;
+            shipment.ActualTimeOfArrival = shipment.PlannedETA;
+            shipment.ActualPickUpTime = shipment.PlannedPickUpTime;
             shipment.CreateDate = shipment.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
@@ -83,10 +93,14 @@ namespace TranyrLogistics.Controllers
         public ActionResult Edit(int id = 0)
         {
             Shipment shipment = db.Shipments.Find(id);
+            shipment.OriginCountry = db.Countries.Find(shipment.OriginCountryID);
+            shipment.DestinationCountry = db.Countries.Find(shipment.DestinationCountryID);
             if (shipment == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.OriginCountryID);
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.DestinationCountryID);
             ViewBag.ShippingTermsID = new SelectList(db.ShippingTerms, "ID", "Standard", shipment.ShippingTermsID);
             ViewBag.ServiceProviderID = new SelectList(db.ServiceProviders, "ID", "Name", shipment.ServiceProviderID);
             return View(shipment);
@@ -114,6 +128,8 @@ namespace TranyrLogistics.Controllers
         public ActionResult Delete(int id = 0)
         {
             Shipment shipment = db.Shipments.Find(id);
+            shipment.OriginCountry = db.Countries.Find(shipment.OriginCountryID);
+            shipment.DestinationCountry = db.Countries.Find(shipment.DestinationCountryID);
             if (shipment == null)
             {
                 return HttpNotFound();

@@ -60,7 +60,7 @@
             @Html.DisplayNameFor(model => model.OriginCountry)
         </div>
         <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.OriginCountry)
+            @Model.OriginCountry.Name
         </div>
     </div>
 
@@ -87,7 +87,7 @@
             @Html.DisplayNameFor(model => model.DestinationCountry)
         </div>
         <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.DestinationCountry)
+            @Model.DestinationCountry.Name
         </div>
     </div>
 
