@@ -8,6 +8,7 @@ using TranyrLogistics.Models.Utility;
 
 namespace TranyrLogistics.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();

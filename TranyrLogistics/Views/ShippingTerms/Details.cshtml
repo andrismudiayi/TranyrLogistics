@@ -10,19 +10,24 @@
 <fieldset>
     <legend>ShipmentTerms</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Standard)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Standard)
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Standard)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.Standard)
+        </div>
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Description)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.Description)
+        </div>
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
+
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |

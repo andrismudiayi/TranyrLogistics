@@ -42,7 +42,7 @@
             @Html.DisplayFor(modelItem => item.ContactNumber)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Country)
+            @Html.DisplayFor(modelItem => item.Country.Code)
         </td>
         <td>
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "ServiceProvider", new { id=item.ID }, null, null) |

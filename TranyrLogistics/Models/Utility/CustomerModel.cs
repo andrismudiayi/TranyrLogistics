@@ -1,4 +1,5 @@
 ﻿using System;
+using TranyrLogistics.Models.Customers;
 
 namespace TranyrLogistics.Models.Utility
 {

@@ -12,8 +12,6 @@ namespace TranyrLogistics.Models
 
         public DbSet<Customer> Customers { get; set; }
 
-        public DbSet<Company> Companies { get; set; }
-
         public DbSet<Group> Groups { get; set; }
 
         public DbSet<ShippingTerms> ShippingTerms { get; set; }
@@ -38,6 +36,9 @@ namespace TranyrLogistics.Models
             modelBuilder.Entity<Shipment>().HasRequired(e => e.ServiceProvider);
             modelBuilder.Entity<Shipment>().HasRequired(e => e.OriginCountry).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<Shipment>().HasRequired(e => e.DestinationCountry).WithMany().WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Enquiry>().HasRequired(e => e.OriginCountry).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Enquiry>().HasRequired(e => e.DestinationCountry).WithMany().WillCascadeOnDelete(false);
             
             base.OnModelCreating(modelBuilder);
         }

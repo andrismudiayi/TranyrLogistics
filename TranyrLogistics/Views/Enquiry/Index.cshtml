@@ -15,10 +15,7 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            Name
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EmailAddress)
@@ -27,7 +24,13 @@
             @Html.DisplayNameFor(model => model.ContactNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Subject)
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            From
+        </th>
+        <th>
+            To
         </th>
         <th></th>
     </tr>
@@ -35,10 +38,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
+            @Html.DisplayFor(modelItem => item.DisplayName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EmailAddress)
@@ -47,10 +47,16 @@
             @Html.DisplayFor(modelItem => item.ContactNumber)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Subject)
+            @Html.DisplayFor(modelItem => item.Category)
         </td>
         <td>
-            @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "Customer", "Create", "Customer", new { enquiryID=item.ID }, null, null) |
+            @Html.DisplayFor(modelItem => item.OriginCountry.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DestinationCountry.Code)
+        </td>
+        <td>
+            @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "Quote", "GetQuote", "Enquiry", new { id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Enquiry", new { id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Enquiry", new { id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Enquiry", new { id=item.ID }, null, null)

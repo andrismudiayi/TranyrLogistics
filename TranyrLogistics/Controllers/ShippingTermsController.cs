@@ -5,6 +5,7 @@ using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
 {
+    [Authorize]
     public class ShippingTermsController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();

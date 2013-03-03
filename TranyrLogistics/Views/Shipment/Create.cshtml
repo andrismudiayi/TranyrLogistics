@@ -84,19 +84,19 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.PickUpPoint)
+            @Html.LabelFor(model => model.CollectionPoint)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.PickUpPoint)
-            @Html.ValidationMessageFor(model => model.PickUpPoint)
+            @Html.TextAreaFor(model => model.CollectionPoint)
+            @Html.ValidationMessageFor(model => model.CollectionPoint)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.PlannedPickUpTime)
+            @Html.LabelFor(model => model.PlannedCollectionTime)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.PlannedPickUpTime)
-            @Html.ValidationMessageFor(model => model.PlannedPickUpTime)
+            @Html.EditorFor(model => model.PlannedCollectionTime)
+            @Html.ValidationMessageFor(model => model.PlannedCollectionTime)
         </div>
 
         <div class="editor-label">
@@ -129,14 +129,6 @@
         <div class="editor-field">
             @Html.TextAreaFor(model => model.GoodsDescription)
             @Html.ValidationMessageFor(model => model.GoodsDescription)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PlannedCollectionDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PlannedCollectionDate)
-            @Html.ValidationMessageFor(model => model.PlannedCollectionDate)
         </div>
 
         <div class="editor-label">
@@ -234,9 +226,8 @@
 }
 
 <script type="text/javascript">
-    $('#PlannedPickUpTime').datetimepicker({ dateFormat: "dd MM yy", });
+    $('#PlannedCollectionTime').datetimepicker({ dateFormat: "dd MM yy", });
     $('#PlannedETA').datetimepicker({ dateFormat: "dd MM yy", });
-    $('#PlannedCollectionDate').datepicker({ dateFormat: "dd MM yy", });
     $(document).ready(function () {
         $("#company-create-form").hide();
         $("#individual-create-form").hide();

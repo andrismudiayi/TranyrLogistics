@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using TranyrLogistics.Models;
@@ -16,7 +17,8 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Enquiries.ToList());
+            var enquiries = db.Enquiries.Include(c => c.OriginCountry).Include(c => c.DestinationCountry);
+            return View(enquiries.ToList());
         }
 
         //
@@ -25,6 +27,8 @@ namespace TranyrLogistics.Controllers
         public ActionResult Details(int id = 0)
         {
             Enquiry enquiry = db.Enquiries.Find(id);
+            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
+            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
             if (enquiry == null)
             {
                 return HttpNotFound();
@@ -37,6 +41,8 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
             return View();
         }
 
@@ -49,6 +55,9 @@ namespace TranyrLogistics.Controllers
             enquiry.CreateDate = enquiry.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
+                // send verification email
+                new EmailTemplateController().EnquiryVerificationEmail(enquiry).Deliver();
+
                 db.Enquiries.Add(enquiry);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -63,10 +72,14 @@ namespace TranyrLogistics.Controllers
         public ActionResult Edit(int id = 0)
         {
             Enquiry enquiry = db.Enquiries.Find(id);
+
             if (enquiry == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", enquiry.OriginCountryID);
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", enquiry.DestinationCountryID);
+            
             return View(enquiry);
         }
 
@@ -92,6 +105,8 @@ namespace TranyrLogistics.Controllers
         public ActionResult Delete(int id = 0)
         {
             Enquiry enquiry = db.Enquiries.Find(id);
+            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
+            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
             if (enquiry == null)
             {
                 return HttpNotFound();
@@ -109,6 +124,18 @@ namespace TranyrLogistics.Controllers
             db.Enquiries.Remove(enquiry);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //
+        // GET: /Enquiry/GetQuote/5
+
+        public ActionResult GetQuote(int id = 0)
+        {
+            Enquiry enquiry = db.Enquiries.Find(id);
+            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
+            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
+
+            return View(enquiry);
         }
 
         protected override void Dispose(bool disposing)

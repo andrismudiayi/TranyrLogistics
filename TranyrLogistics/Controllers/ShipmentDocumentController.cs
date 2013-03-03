@@ -7,6 +7,7 @@ using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
 {
+    [Authorize]
     public class ShipmentDocumentController : Controller
     {
         private Dictionary<string, string> contentTypeConfig = null;

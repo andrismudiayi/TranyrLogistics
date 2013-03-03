@@ -14,14 +14,14 @@
         <legend>Customer</legend>
 
         @{
-            if (Model is TranyrLogistics.Models.Company)
+            if (Model is TranyrLogistics.Models.Customers.Company)
             {
                 @Html.Partial("Partials/CompanyEdit");
             }
         }
         
         @{
-            if (Model is TranyrLogistics.Models.Individual)
+            if (Model is TranyrLogistics.Models.Customers.Individual)
             {
                 @Html.Partial("Partials/IndividualEdit");
             }

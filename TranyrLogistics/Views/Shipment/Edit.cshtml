@@ -89,21 +89,21 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.PickUpPoint)
+            @Html.LabelFor(model => model.CollectionPoint)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.PickUpPoint)
-            @Html.ValidationMessageFor(model => model.PickUpPoint)
+            @Html.TextAreaFor(model => model.CollectionPoint)
+            @Html.ValidationMessageFor(model => model.CollectionPoint)
         </div>
 
-        @Html.HiddenFor(model => model.PlannedPickUpTime)
+        @Html.HiddenFor(model => model.PlannedCollectionTime)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ActualPickUpTime)
+            @Html.LabelFor(model => model.ActualCollectionTime)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ActualPickUpTime)
-            @Html.ValidationMessageFor(model => model.ActualPickUpTime)
+            @Html.EditorFor(model => model.ActualCollectionTime)
+            @Html.ValidationMessageFor(model => model.ActualCollectionTime)
         </div>
 
         <div class="editor-label">
@@ -136,16 +136,6 @@
         <div class="editor-field">
             @Html.TextAreaFor(model => model.GoodsDescription)
             @Html.ValidationMessageFor(model => model.GoodsDescription)
-        </div>
-
-        @Html.HiddenFor(model => model.PlannedCollectionDate)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CollectionDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CollectionDate)
-            @Html.ValidationMessageFor(model => model.CollectionDate)
         </div>
 
         @Html.HiddenFor(model => model.PlannedETA)
@@ -245,8 +235,7 @@
 }
 
 <script type="text/javascript">
-    $('#ActualPickUpTime').datetimepicker({ dateFormat: "dd MM yy", });
-    $('#CollectionDate').datepicker({ dateFormat: "dd MM yy", });
+    $('#ActualCollectionTime').datetimepicker({ dateFormat: "dd MM yy", });
     $('#ActualTimeOfArrival').datetimepicker({ dateFormat: "dd MM yy", });
     $(document).ready(function () {
         $("#company-create-form").hide();

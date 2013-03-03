@@ -1,0 +1,27 @@
+﻿@model TranyrLogistics.Models.Enquiry
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Enquiry Verification Email</title>
+</head>
+<body>
+    <div>
+        <b>Dear @Model.DisplayName</b>
+        <br />
+        <p>
+            Thank you for your enquiry. Our consultants will get back to your with a quote for your request.
+        </p>
+        <br />
+        Regards,
+        <br /><br />
+        Tranyr Logistics
+    </div>
+</body>
+</html>
