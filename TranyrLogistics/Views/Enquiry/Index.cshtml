@@ -56,7 +56,7 @@
             @Html.DisplayFor(modelItem => item.DestinationCountry.Code)
         </td>
         <td>
-            @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "Quote", "GetQuote", "Enquiry", new { id=item.ID }, null, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "Quote", "RequestQuote", "Enquiry", new { id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Enquiry", new { id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Enquiry", new { id=item.ID }, null, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Enquiry", new { id=item.ID }, null, null)

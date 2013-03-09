@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TranyrLogistics.Models.Enums;
 using TranyrLogistics.Models.Customers;
+using TranyrLogistics.Models.Groups;
 
 namespace TranyrLogistics.Models
 {
@@ -42,9 +43,9 @@ namespace TranyrLogistics.Models
         public Priority Priority { get; set; }
 
         [Display(Name = "Group")]
-        public virtual Group Group { get; set; }
+        public virtual CustomerGroup CustomerGroup { get; set; }
 
-        public virtual int? GroupID { get; set; }
+        public virtual int? CustomerGroupID { get; set; }
 
         public virtual int? CountryID { get; set; }
         

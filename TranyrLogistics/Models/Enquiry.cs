@@ -68,9 +68,15 @@ namespace TranyrLogistics.Models
         [Display(Name = "Insurance required?")]
         public bool InsuranceRequired { get; set; }
 
-        [Required]
         [Display(Name = "Additional Notes")]
         public string Notes { get; set; }
+
+        [Display(Name = "Quote requested")]
+        public Boolean QuoteRequested { get; set; }
+
+        [Required]
+        [Display(Name = "Quote sent")]
+        public Boolean QuoteSent { get; set; }
 
         [NotMapped]
         public string DisplayName

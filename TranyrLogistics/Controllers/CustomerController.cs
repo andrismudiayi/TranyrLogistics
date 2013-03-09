@@ -18,7 +18,7 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Index()
         {
-            var customers = db.Customers.Include(c => c.Group).Include(c => c.Country);
+            var customers = db.Customers.Include(c => c.CustomerGroup).Include(c => c.Country);
             return View(customers.ToList());
         }
 
@@ -41,7 +41,7 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.GroupID = new SelectList(db.Groups, "ID", "Name");
+            ViewBag.CustomerGroupID = new SelectList(db.CustomerGroups, "ID", "Name");
             ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
             return View();
         }
@@ -60,8 +60,8 @@ namespace TranyrLogistics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CustomerGroupID = new SelectList(db.CustomerGroups, "ID", "Name", customer.CustomerGroupID);
             ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
-            ViewBag.GroupID = new SelectList(db.Groups, "ID", "Name", customer.GroupID);
             return View(customer);
         }
 
@@ -75,7 +75,7 @@ namespace TranyrLogistics.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.GroupID = new SelectList(db.Groups, "ID", "Name", customer.GroupID);
+            ViewBag.CustomerGroupID = new SelectList(db.CustomerGroups, "ID", "Name", customer.CustomerGroupID);
             ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", customer.CountryID);
             return View(customer);
         }
@@ -93,7 +93,7 @@ namespace TranyrLogistics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.GroupID = new SelectList(db.Groups, "ID", "Name", customer.GroupID);
+            ViewBag.CustomerGroupID = new SelectList(db.CustomerGroups, "ID", "Name", customer.CustomerGroupID);
             return View(customer);
         }
 

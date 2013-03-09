@@ -18,6 +18,9 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
+            Type
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th></th>
@@ -27,6 +30,18 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @{
+                if (item is TranyrLogistics.Models.Groups.CustomerGroup)
+                {
+                    @Html.Raw("Customers");
+                }
+                else if (item is TranyrLogistics.Models.Groups.ServiceProviderGroup)
+                {
+                    @Html.Raw("Service Providers");
+                }               
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)

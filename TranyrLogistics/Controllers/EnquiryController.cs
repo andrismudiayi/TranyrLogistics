@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -55,8 +56,12 @@ namespace TranyrLogistics.Controllers
             enquiry.CreateDate = enquiry.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
-                // send verification email
-                new EmailTemplateController().EnquiryVerificationEmail(enquiry).Deliver();
+                try
+                {
+                    // send verification email
+                    new EmailTemplateController().EnquiryVerificationEmail(enquiry).Deliver();
+                }
+                catch { }
 
                 db.Enquiries.Add(enquiry);
                 db.SaveChanges();
@@ -127,15 +132,41 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /Enquiry/GetQuote/5
+        // GET: /Enquiry/RequestQuote/5
 
-        public ActionResult GetQuote(int id = 0)
+        public ActionResult RequestQuote(int id = 0)
         {
             Enquiry enquiry = db.Enquiries.Find(id);
             enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
             enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
 
+            ViewBag.group_id = new SelectList(db.ServiceProviderGroups, "ID", "Name");
+
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", enquiry.OriginCountryID);
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", enquiry.DestinationCountryID);
+
             return View(enquiry);
+        }
+
+        //
+        // POST: /Enquiry/Delete/5
+
+        [HttpPost, ActionName("RequestQuote"), ValidateInput(false)]
+        public ActionResult RequestQuote(int group_id, string subject, string message_body, int id = 0)
+        {
+            var serviceProviders = db.ServiceProviders.Where(x => x.ServiceProviderGroupID == group_id);
+
+            List<string> sendTo = new List<string>();
+            foreach (ServiceProvider serviceProvider in serviceProviders)
+            {
+                sendTo.Add(serviceProvider.EmailAddress);
+            }
+
+            EmailTemplateController.SendEmail(sendTo, subject, message_body);
+
+            ViewBag.group_id = new SelectList(db.ServiceProviderGroups, "ID", "Name");
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)
