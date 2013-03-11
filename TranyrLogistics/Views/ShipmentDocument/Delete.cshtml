@@ -11,26 +11,33 @@
 <fieldset>
     <legend>ShipmentDocumentation</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Label)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Label)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Label)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.Label)
+        </div>
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CreateDate)
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Description)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.Description)
+        </div>
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CreateDate)
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.CreateDate)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.CreateDate)
+        </div>
     </div>
+
 </fieldset>
 @using (Html.BeginForm()) {
     <p>

@@ -12,7 +12,7 @@
 
 <div id="company-create-form">
     @{
-        if (Model == null || Model is TranyrLogistics.Models.Company)
+        if (Model == null || Model is TranyrLogistics.Models.Customers.Company)
         {
             @Html.Partial("~/Views/Customer/Partials/CompanyCreate.cshtml");
         }
@@ -20,7 +20,7 @@
 </div>
 <div id="individual-create-form">
     @{
-        if (Model == null || Model is TranyrLogistics.Models.Individual)
+        if (Model == null || Model is TranyrLogistics.Models.Customers.Individual)
         {
             @Html.Partial("~/Views/Customer/Partials/IndividualCreate.cshtml");
         }

@@ -38,7 +38,7 @@ namespace TranyrLogistics.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("TranyrLogisticsDb", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("TranyrMembershipDb", "UserProfile", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

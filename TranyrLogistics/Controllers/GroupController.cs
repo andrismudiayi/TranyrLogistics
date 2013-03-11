@@ -6,6 +6,7 @@ using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
 {
+    [Authorize]
     public class GroupController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();

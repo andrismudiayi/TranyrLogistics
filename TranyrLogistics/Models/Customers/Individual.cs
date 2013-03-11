@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using TranyrLogistics.Models.Enums;
 
-namespace TranyrLogistics.Models
+namespace TranyrLogistics.Models.Customers
 {
     [Table("Individual")]
     public class Individual : Customer

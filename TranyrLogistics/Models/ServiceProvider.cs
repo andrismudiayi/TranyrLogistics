@@ -38,9 +38,10 @@ namespace TranyrLogistics.Models
         [Display(Name = "Postal code")]
         public string PostalCode { get; set; }
 
-        [Required]
         [Display(Name = "Country")]
-        public string Country { get; set; }
+        public Country Country { get; set; }
+
+        public virtual int? CountryID { get; set; }
         
         public virtual DateTime? CreateDate { get; set; }
 

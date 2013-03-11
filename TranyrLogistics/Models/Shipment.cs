@@ -37,18 +37,18 @@ namespace TranyrLogistics.Models
         public Country DestinationCountry { get; set; }
 
         [Required]
-        [Display(Name = "Pick up point")]
-        public string PickUpPoint { get; set; }
+        [Display(Name = "Collection point")]
+        public string CollectionPoint { get; set; }
 
-        [Display(Name = "Planned pick time")]
+        [Display(Name = "Planned collection time")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        public DateTime PlannedPickUpTime { get; set; }
+        public DateTime PlannedCollectionTime { get; set; }
 
-        [Display(Name = "Actual pick up time")]
+        [Display(Name = "Actual collection time")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        public DateTime? ActualPickUpTime { get; set; }
+        public DateTime? ActualCollectionTime { get; set; }
 
         [Required]
         [Display(Name = "Recipient")]
@@ -101,16 +101,6 @@ namespace TranyrLogistics.Models
         [Display(Name = "Service provider")]
         public virtual ServiceProvider ServiceProvider { get; set; }
 
-        [Display(Name = "Planned collection date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime PlannedCollectionDate { get; set; }
-
-        [Display(Name = "Actual collection date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? CollectionDate { get; set; }
-
         [Required]
         [Display(Name = "Customs entry type")]
         public CustomsEntryType CustomsEntry { get; set; }
@@ -142,12 +132,10 @@ namespace TranyrLogistics.Models
 
         public Shipment()
         {
-            ActualPickUpTime = DateTime.Now;
             ActualTimeOfArrival = DateTime.Now;
-            CollectionDate = DateTime.Now;
-            PlannedCollectionDate = DateTime.Now;
+            PlannedCollectionTime = DateTime.Now;
+            ActualCollectionTime = DateTime.Now;
             PlannedETA = DateTime.Now;
-            PlannedPickUpTime = DateTime.Now;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using TranyrLogistics.Models.Customers;
 
 namespace TranyrLogistics.Models.CustomModelBinders
 {

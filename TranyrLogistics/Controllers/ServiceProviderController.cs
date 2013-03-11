@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
 {
+    [Authorize]
     public class ServiceProviderController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();
@@ -15,7 +17,8 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Index()
         {
-            return View(db.ServiceProviders.ToList());
+            IQueryable<ServiceProvider> serviceProviders = db.ServiceProviders.Include(s => s.Country);
+            return View(serviceProviders.ToList());
         }
 
         //
@@ -24,6 +27,7 @@ namespace TranyrLogistics.Controllers
         public ActionResult Details(int id = 0)
         {
             ServiceProvider serviceprovider = db.ServiceProviders.Find(id);
+            serviceprovider.Country = db.Countries.Find(serviceprovider.CountryID);
             if (serviceprovider == null)
             {
                 return HttpNotFound();
@@ -36,6 +40,7 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
             return View();
         }
 
@@ -66,6 +71,7 @@ namespace TranyrLogistics.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", serviceprovider.CountryID);
             return View(serviceprovider);
         }
 
@@ -75,6 +81,7 @@ namespace TranyrLogistics.Controllers
         [HttpPost]
         public ActionResult Edit(ServiceProvider serviceprovider)
         {
+            serviceprovider.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Entry(serviceprovider).State = EntityState.Modified;
@@ -90,6 +97,7 @@ namespace TranyrLogistics.Controllers
         public ActionResult Delete(int id = 0)
         {
             ServiceProvider serviceprovider = db.ServiceProviders.Find(id);
+            serviceprovider.Country = db.Countries.Find(serviceprovider.CountryID);
             if (serviceprovider == null)
             {
                 return HttpNotFound();

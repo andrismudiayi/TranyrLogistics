@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.Shipment
+﻿@using TranyrLogistics.Views.Helpers
+
+@model TranyrLogistics.Models.Shipment
 
 @{
     ViewBag.Title = "Shipment Details";
@@ -93,28 +95,28 @@
 
     <div class="table-row">
         <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.PickUpPoint)
+            @Html.DisplayNameFor(model => model.CollectionPoint)
         </div>
         <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.PickUpPoint)
+            @Html.DisplayFor(model => model.CollectionPoint)
         </div>
     </div>
 
     <div class="table-row">
         <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.PlannedPickUpTime)
+            @Html.DisplayNameFor(model => model.PlannedCollectionTime)
         </div>
         <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.PlannedPickUpTime)
+            @Html.DisplayFor(model => model.PlannedCollectionTime)
         </div>
     </div>
 
     <div class="table-row">
         <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.ActualPickUpTime)
+            @Html.DisplayNameFor(model => model.ActualCollectionTime)
         </div>
         <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.ActualPickUpTime)
+            @Html.DisplayFor(model => model.ActualCollectionTime)
         </div>
     </div>
 
@@ -141,7 +143,7 @@
             @Html.DisplayNameFor(model => model.Category)
         </div>
         <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.Category)
+            @HtmlDropDownExtensions.GetEnumDisplay(Model.Category)
         </div>
     </div>
 
@@ -151,24 +153,6 @@
         </div>
         <div class="display-field table-cell">
             @Html.DisplayFor(model => model.GoodsDescription)
-        </div>
-    </div>
-
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.PlannedCollectionDate)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.PlannedCollectionDate)
-        </div>
-    </div>
-
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.CollectionDate)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.CollectionDate)
         </div>
     </div>
 

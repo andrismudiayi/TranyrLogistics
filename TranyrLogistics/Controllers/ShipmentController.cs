@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -9,6 +8,7 @@ using TranyrLogistics.Models.Utility;
 
 namespace TranyrLogistics.Controllers
 {
+    [Authorize]
     public class ShipmentController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();
@@ -18,15 +18,22 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Index(int customer_id = 0)
         {
-            IQueryable<Shipment> shipments = db.Shipments.Include(s => s.OriginCountry).Include(s => s.DestinationCountry);
+            IQueryable<Shipment> shipments = null;
             if (customer_id > 0)
             {
-                shipments.Where(x => x.CustomerID == customer_id);
-                ViewBag.Customer = db.Customers.FirstOrDefault(x => x.ID == customer_id);
+                shipments = db.Shipments.Where(x => x.CustomerID == customer_id)
+                    .Include(s => s.OriginCountry)
+                    .Include(s => s.DestinationCountry)
+                    .Include(s => s.Customer);
+
+                ViewBag.Customer = db.Customers.Find(customer_id);
             }
             else
             {
-                shipments.Include(s => s.Customer);
+                shipments = db.Shipments
+                    .Include(s => s.OriginCountry)
+                    .Include(s => s.DestinationCountry)
+                    .Include(s => s.Customer);
             }
             
             return View(shipments.ToList());
@@ -74,9 +81,8 @@ namespace TranyrLogistics.Controllers
         public ActionResult Create(Shipment shipment)
         {
             shipment.ReferenceNumber = ShipmentModel.GenerateReferenceNumber(shipment);
-            shipment.CollectionDate = shipment.PlannedCollectionDate;
+            shipment.ActualCollectionTime = shipment.PlannedCollectionTime;
             shipment.ActualTimeOfArrival = shipment.PlannedETA;
-            shipment.ActualPickUpTime = shipment.PlannedPickUpTime;
             shipment.CreateDate = shipment.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
