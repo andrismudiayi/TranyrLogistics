@@ -1,10 +1,4 @@
-﻿@model TranyrLogistics.Models.Enquiry
-
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
@@ -13,11 +7,58 @@
 </head>
 <body>
     <div>
-        <b>Dear @Model.DisplayName</b>
+        <strong>Dear $$DISPLAY_NAME$$</strong>
         <br />
         <p>
-            Thank you for your enquiry. Our consultants will get back to your with a quote for your request.
+            We would like to confirm recipt of you enquiry described as below:
         </p>
+        <table>
+            <tr>
+                <td><strong>Category</strong></td>
+                <td>$$CATEGORY$$</td>
+            </tr>
+            <tr>
+                <td><strong>Goods decription</strong></td>
+                <td>$$GOODS_DESCRIPTION$$</td>
+            </tr>
+            <tr>
+                <td><strong>Planned shipment date</strong></td>
+                <td>$$PLANNED_SHIPMENT_DATE$$</td>
+            </tr>
+            <tr>
+                <td><strong>Origin city</strong></td>
+                <td>$$ORIGIN_CITYY$$</td>
+            </tr>
+            <tr>
+                <td><strong>Origin country</strong></td>
+                <td>$$ORIGIN_COUNTRY$$</td>
+            </tr>
+            <tr>
+                <td><strong>Destination city</strong></td>
+                <td>$$DESTINATION_CITY$$</td>
+            </tr>
+            <tr>
+                <td><strong>Destination country</strong></td>
+                <td>$$DESTINATION_COUNTRY$$</td>
+            </tr>
+            <tr>
+                <td><strong>Number of packages</strong></td>
+                <td>$$NUMBER_OF_PACKAGES$$</td>
+            </tr>
+            <tr>
+                <td><strong>Gross weight (Kgs)</strong></td>
+                <td>$$GROSS_WEIGHT$$</td>
+            </tr>
+            <tr>
+                <td><strong>Volumetric weight (cubic meters)</strong></td>
+                <td>$$VOLUMETRIC_WEIGHT$$</td>
+            </tr>
+        </table>
+
+        <p>
+            Our consultants will get back to you with your requested information.
+        </p>
+
         <br />
         Regards,
         <br /><br />

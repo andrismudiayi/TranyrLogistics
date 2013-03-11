@@ -18,7 +18,16 @@
         @Html.HiddenFor(model => model.CreateDate)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @{
+                if (Model is TranyrLogistics.Models.Groups.CustomerGroup)
+                {
+                    @Html.Label("Group (Customers)")
+                }
+                else
+                {
+                    @Html.Label("Group (Service providers)")
+                }
+            }
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)

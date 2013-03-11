@@ -1,0 +1,54 @@
+﻿@using TranyrLogistics.Views.Helpers
+
+@model TranyrLogistics.Models.Enquiry
+
+@{
+    ViewBag.Title = "Request Quote";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<form method="post">
+    
+    @Html.Hidden("enquiry_id", Model.ID)
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            Group:
+        </div>
+        <div class="display-field table-cell">
+            @Html.DropDownList("group_id", String.Empty)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            Subject:
+        </div>
+        <div class="display-field table-cell">
+            <input id="subject" name="subject" value="Shipment Quotation Request" />
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+                Message:
+        </div>
+        <div class="display-field table-cell">
+            <textarea id="message_body" name="message_body">@ViewBag.MessageTemplate</textarea>
+        </div>
+    </div>
+
+    <p style="padding-left:75px">
+        <input type="submit" value="Send Request" />
+    </p>
+</form>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script type="text/javascript">
+    $("#message_body").ckeditor();
+</script>

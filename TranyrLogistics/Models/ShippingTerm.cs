@@ -11,7 +11,6 @@ namespace TranyrLogistics.Models
         [Display(Name = "Standard")]
         public string Standard { get; set; }
 
-        [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
     }

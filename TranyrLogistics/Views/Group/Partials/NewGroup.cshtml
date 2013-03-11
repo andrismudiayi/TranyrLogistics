@@ -1,0 +1,49 @@
+﻿@model TranyrLogistics.Models.Group
+
+<div class="table-row">
+    <div id="customer-group-create-banner" class="table-cell" style="cursor:pointer">
+        New Customer Group
+    </div>
+    <div id="service-provider-group-create-banner" class="table-cell" style="cursor:pointer">
+        New Service Provider Group
+    </div>
+</div>
+<br />
+
+<div id="customer-group-create-form">
+    @{
+        if (Model == null || Model is TranyrLogistics.Models.Groups.CustomerGroup)
+        {
+            @Html.Partial("~/Views/Group/Partials/CustomerGroupCreate.cshtml");
+        }
+    }
+</div>
+<div id="service-provider-group-create-form">
+    @{
+        if (Model == null || Model is TranyrLogistics.Models.Groups.ServiceProviderGroup)
+        {
+            @Html.Partial("~/Views/Group/Partials/ServiceProviderGroupCreate.cshtml");
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#service-provider-group-create-form").hide();
+
+        $("#service-provider-group-create-banner").click(function () {
+            $("#service-provider-group-create-banner").addClass("selected-banner");
+            $("#customer-group-create-banner").removeClass("selected-banner");
+            $("#customer-group-create-form").slideUp("slow");
+            $("#service-provider-group-create-form").slideToggle("slow");
+            
+        });
+
+        $("#customer-group-create-banner").click(function () {
+            $("#customer-group-create-banner").addClass("selected-banner");
+            $("#service-provider-group-create-banner").removeClass("selected-banner");
+            $("#service-provider-group-create-form").slideUp("slow");
+            $("#customer-group-create-form").slideToggle("slow");
+        });
+    });
+</script>

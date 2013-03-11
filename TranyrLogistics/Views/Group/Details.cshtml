@@ -21,6 +21,24 @@
 
     <div class="table-row">
         <div class="display-label table-cell">
+            @Html.Raw("Type")
+        </div>
+        <div class="display-field table-cell">
+            @{
+                if (Model is TranyrLogistics.Models.Groups.CustomerGroup)
+                {
+                    @Html.Raw("Customers")
+                }
+                else
+                {
+                    @Html.Raw("Service providers")
+                }
+            }
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
              @Html.DisplayNameFor(model => model.Description)
         </div>
         <div class="display-field table-cell">

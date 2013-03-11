@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using TranyrLogistics.Models.Groups;
 
 namespace TranyrLogistics.Models
 {
@@ -40,6 +41,11 @@ namespace TranyrLogistics.Models
 
         [Display(Name = "Country")]
         public Country Country { get; set; }
+
+        [Display(Name = "Group")]
+        public virtual ServiceProviderGroup ServiceProviderGroup { get; set; }
+
+        public virtual int? ServiceProviderGroupID { get; set; }
 
         public virtual int? CountryID { get; set; }
         

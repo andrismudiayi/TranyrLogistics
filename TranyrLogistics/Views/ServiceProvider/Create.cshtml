@@ -85,6 +85,14 @@
             @Html.ValidationMessageFor(model => model.Country)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ServiceProviderGroupID, "Group")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ServiceProviderGroupID", String.Empty)
+            @Html.ValidationMessageFor(model => model.ServiceProviderGroupID)
+        </div>
+
         <p>
             <input type="submit" value="Create" />
         </p>

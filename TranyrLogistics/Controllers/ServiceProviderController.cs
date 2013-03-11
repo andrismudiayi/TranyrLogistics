@@ -40,6 +40,7 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name");
             ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
             return View();
         }
@@ -71,6 +72,7 @@ namespace TranyrLogistics.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name", serviceprovider.ServiceProviderGroupID);
             ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", serviceprovider.CountryID);
             return View(serviceprovider);
         }

@@ -81,10 +81,10 @@ namespace TranyrLogistics.Models
 
         [Required]
         [Display(Name = "Gross weight (Kg)")]
-        public double GrossWeight { get; set; }
+        public decimal GrossWeight { get; set; }
 
         [Display(Name = "Volumetric weight")]
-        public double VolumetricWeight { get; set; }
+        public decimal VolumetricWeight { get; set; }
 
         [Display(Name = "Insurance required")]
         public bool InsuranceRequired { get; set; }
