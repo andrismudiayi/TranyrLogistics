@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TranyrLogistics.Controllers.Utility;
 using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
@@ -56,10 +57,14 @@ namespace TranyrLogistics.Controllers
             enquiry.CreateDate = enquiry.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
+                enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
+                enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
+
                 try
                 {
-                    // send verification email
-                    new EmailTemplateController().EnquiryVerificationEmail(enquiry).Deliver();
+                    string message_body = EmailTemplate.PerpareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml");
+                    EmailTemplate.Send(enquiry.EmailAddress, "info@tranyr.com", "Enquiry Verification", message_body, true);
+                    enquiry.Verified = true;
                 }
                 catch { }
 
@@ -145,6 +150,8 @@ namespace TranyrLogistics.Controllers
             ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", enquiry.OriginCountryID);
             ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", enquiry.DestinationCountryID);
 
+            ViewBag.MessageTemplate = EmailTemplate.PerpareQuoteRequestEmail(enquiry, @"~\views\EmailTemplate\QuoteRequestEmail.html.cshtml");
+
             return View(enquiry);
         }
 
@@ -152,8 +159,10 @@ namespace TranyrLogistics.Controllers
         // POST: /Enquiry/Delete/5
 
         [HttpPost, ActionName("RequestQuote"), ValidateInput(false)]
-        public ActionResult RequestQuote(int group_id, string subject, string message_body, int id = 0)
+        public ActionResult RequestQuote(int enquiry_id, int group_id, string subject, string message_body)
         {
+            Enquiry enquiry = db.Enquiries.Find(enquiry_id);
+
             var serviceProviders = db.ServiceProviders.Where(x => x.ServiceProviderGroupID == group_id);
 
             List<string> sendTo = new List<string>();
@@ -162,11 +171,22 @@ namespace TranyrLogistics.Controllers
                 sendTo.Add(serviceProvider.EmailAddress);
             }
 
-            EmailTemplateController.SendEmail(sendTo, subject, message_body);
+            if (sendTo.Count > 0)
+            {
+                try
+                {
+                    EmailTemplate.Send(sendTo, "info@tranyr.com", subject, EmailTemplate.FinalizeHtmlEmail(message_body), true);
+                    enquiry.QuoteRequested = true;
+                }
+                catch
+                {
+                    return RedirectToAction("Error");
+                }
+            }
 
             ViewBag.group_id = new SelectList(db.ServiceProviderGroups, "ID", "Name");
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

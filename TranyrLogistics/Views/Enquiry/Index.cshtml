@@ -21,16 +21,19 @@
             @Html.DisplayNameFor(model => model.EmailAddress)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ContactNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th>
             From
         </th>
         <th>
             To
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Verified)
+        </th>
+        <th>
+            @Html.Raw("Quote Req.")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuoteSent)
         </th>
         <th></th>
     </tr>
@@ -43,17 +46,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.EmailAddress)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContactNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
+        <td style="text-align:center">
             @Html.DisplayFor(modelItem => item.OriginCountry.Code)
         </td>
-        <td>
+        <td style="text-align:center">
             @Html.DisplayFor(modelItem => item.DestinationCountry.Code)
+        </td>
+        <td style="text-align:center">
+            @Html.DisplayFor(modelItem => item.Verified)
+        </td>
+        <td style="text-align:center">
+            @Html.DisplayFor(modelItem => item.QuoteRequested)
+        </td>
+        <td style="text-align:center">
+            @Html.DisplayFor(modelItem => item.QuoteSent)
         </td>
         <td>
             @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "Quote", "RequestQuote", "Enquiry", new { id=item.ID }, null, null) |

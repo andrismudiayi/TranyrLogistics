@@ -1,5 +1,7 @@
 ﻿@using TranyrLogistics.Views.Helpers
 
+@model TranyrLogistics.Models.Enquiry
+
 @{
     ViewBag.Title = "Request Quote";
 }
@@ -9,7 +11,7 @@
 
 <form method="post">
     
-    @Html.Hidden("id", 1)
+    @Html.Hidden("enquiry_id", Model.ID)
 
     <div class="table-row">
         <div class="display-label table-cell">
@@ -25,7 +27,7 @@
             Subject:
         </div>
         <div class="display-field table-cell">
-            @Html.Editor("subject")
+            <input id="subject" name="subject" value="Shipment Quotation Request" />
         </div>
     </div>
 
@@ -34,7 +36,7 @@
                 Message:
         </div>
         <div class="display-field table-cell">
-            @Html.TextArea("message_body")
+            <textarea id="message_body" name="message_body">@ViewBag.MessageTemplate</textarea>
         </div>
     </div>
 

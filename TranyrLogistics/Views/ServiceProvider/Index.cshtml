@@ -26,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Country)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceProviderGroup)
+        </th>
         <th></th>
     </tr>
 
@@ -43,6 +46,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Country.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceProviderGroup.Name)
         </td>
         <td>
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "ServiceProvider", new { id=item.ID }, null, null) |

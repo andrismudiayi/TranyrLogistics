@@ -73,11 +73,27 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.OriginCity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OriginCity)
+            @Html.ValidationMessageFor(model => model.OriginCity)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.OriginCountry)
         </div>
         <div class="editor-field">
             @Html.DropDownList("OriginCountryID", String.Empty)
             @Html.ValidationMessageFor(model => model.OriginCountry)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DestinationCity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DestinationCity)
+            @Html.ValidationMessageFor(model => model.DestinationCity)
         </div>
 
         <div class="editor-label">

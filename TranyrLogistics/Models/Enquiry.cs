@@ -39,8 +39,16 @@ namespace TranyrLogistics.Models
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime PlannedShipmentTime { get; set; }
 
+        [Required]        
+        [Display(Name = "Origin city")]
+        public string OriginCity { get; set; }
+
         [Display(Name = "Origin country")]
         public Country OriginCountry { get; set; }
+
+        [Required]
+        [Display(Name = "Destination city")]
+        public string DestinationCity { get; set; }
 
 
         [Display(Name = "Destination country")]
@@ -60,10 +68,10 @@ namespace TranyrLogistics.Models
 
         [Required]
         [Display(Name = "Gross weight (Kg)")]
-        public double GrossWeight { get; set; }
+        public decimal GrossWeight { get; set; }
 
         [Display(Name = "Volumetric weight")]
-        public double VolumetricWeight { get; set; }
+        public decimal VolumetricWeight { get; set; }
 
         [Display(Name = "Insurance required?")]
         public bool InsuranceRequired { get; set; }
@@ -71,12 +79,14 @@ namespace TranyrLogistics.Models
         [Display(Name = "Additional Notes")]
         public string Notes { get; set; }
 
-        [Display(Name = "Quote requested")]
-        public Boolean QuoteRequested { get; set; }
+        [Display(Name = "Verified")]
+        public bool Verified { get; set; }
 
-        [Required]
+        [Display(Name = "Quote requested")]
+        public bool QuoteRequested { get; set; }
+
         [Display(Name = "Quote sent")]
-        public Boolean QuoteSent { get; set; }
+        public bool QuoteSent { get; set; }
 
         [NotMapped]
         public string DisplayName

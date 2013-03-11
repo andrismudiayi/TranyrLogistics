@@ -67,16 +67,16 @@
         <td>
             @HtmlDropDownExtensions.GetEnumDisplay(item.Transport)
         </td>
-        <td>
+        <td style="text-align:center">
             @item.OriginCountry.Code
         </td>
-        <td>
+        <td style="text-align:center">
             @item.DestinationCountry.Code
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ServiceProvider.Name)
         </td>
-        <td>
+        <td style="text-align:center">
             @item.PlannedETA.ToShortDateString()
         </td>
         <td>

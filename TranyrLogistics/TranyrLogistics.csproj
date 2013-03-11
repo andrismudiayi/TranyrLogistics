@@ -40,12 +40,6 @@
     <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ActionMailer.Net">
-      <HintPath>..\packages\ActionMailer.0.7.4\lib\Net40\ActionMailer.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="ActionMailer.Net.Mvc">
-      <HintPath>..\packages\ActionMailer.0.7.4\lib\Net40\ActionMailer.Net.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -172,7 +166,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
-    <Compile Include="Controllers\EmailTemplateController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -180,6 +173,7 @@
     <Compile Include="Controllers\ShipmentController.cs" />
     <Compile Include="Controllers\ShipmentDocumentController.cs" />
     <Compile Include="Controllers\ShippingTermsController.cs" />
+    <Compile Include="Controllers\Utility\EmailTemplate.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -748,14 +742,14 @@
     <Content Include="Views\ShipmentDocument\Create.cshtml" />
     <Content Include="Views\ShipmentDocument\Delete.cshtml" />
     <Content Include="Views\Enquiry\RequestQuote.cshtml" />
-    <Content Include="Views\EmailTemplate\EnquiryVerificationEmail.html.cshtml" />
     <Content Include="Views\Group\Partials\NewGroup.cshtml" />
     <Content Include="Views\Group\Partials\CustomerGroupCreate.cshtml" />
     <Content Include="Views\Group\Partials\ServiceProviderGroupCreate.cshtml" />
+    <Content Include="Views\EmailTemplate\QuoteRequestEmail.html.cshtml" />
+    <Content Include="Views\EmailTemplate\EnquiryVerificationEmail.html.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Uploads\ShipmentDocs\" />
-    <Folder Include="Views\EmailTemplate\RTFEmailTemplates\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
