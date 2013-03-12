@@ -27,9 +27,9 @@ a {
         color: #333;
     }
 
-    a:hover {
-        background-color: #c7d1d6;
-    }
+img {
+    border: 0;
+}
 
 header, footer, hgroup,
 nav, section {
