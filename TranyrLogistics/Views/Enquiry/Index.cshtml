@@ -30,10 +30,10 @@
             @Html.DisplayNameFor(model => model.Verified)
         </th>
         <th>
-            @Html.Raw("Quote Req.")
+            @Html.DisplayNameFor(model => model.QuotationRequested)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.QuoteSent)
+            @Html.DisplayNameFor(model => model.QuotationSent)
         </th>
         <th></th>
     </tr>
@@ -56,16 +56,17 @@
             @Html.DisplayFor(modelItem => item.Verified)
         </td>
         <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.QuoteRequested)
+            @Html.DisplayFor(modelItem => item.QuotationRequested)
         </td>
         <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.QuoteSent)
+            @Html.DisplayFor(modelItem => item.QuotationSent)
         </td>
         <td>
-            @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "Quote", "RequestQuote", "Enquiry", new { id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Enquiry", new { id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Enquiry", new { id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Enquiry", new { id=item.ID }, null, null)
+            @Html.ActionImageLink(@Url.Content("~/Images/generate_quote.png"), "Generate Quote", "GenerateQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Generate Quote" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "Request Quote", "RequestQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Request Quote" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)
         </td>
     </tr>
 }

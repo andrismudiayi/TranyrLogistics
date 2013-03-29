@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using TranyrLogistics.Controllers.Utility;
 using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
@@ -10,7 +11,6 @@ namespace TranyrLogistics.Controllers
     [Authorize]
     public class ShipmentDocumentController : Controller
     {
-        private Dictionary<string, string> contentTypeConfig = null;
 
         private TranyrLogisticsDb db = new TranyrLogisticsDb();
 
@@ -139,67 +139,9 @@ namespace TranyrLogistics.Controllers
             ShipmentDocument shipmentDocument = db.ShipmentDocuments.Find(id);
 
             return File(shipmentDocument.FilePathOnDisc,
-                 this.getContentType(Path.GetExtension(shipmentDocument.ActualFileName)),
-                  string.Format("{0}", shipmentDocument.ActualFileName));
-        }
-
-        protected Dictionary<string, string> ContentTypeConfig
-        {
-            get
-            {
-                if (this.contentTypeConfig == null)
-                {
-                    this.contentTypeConfig = new Dictionary<string, string>();
-                    // Images
-                    this.contentTypeConfig.Add(".bmp", "image/bmp");
-                    this.contentTypeConfig.Add(".gif", "image/gif");
-                    this.contentTypeConfig.Add(".jpeg", "image/jpeg");
-                    this.contentTypeConfig.Add(".jpg", "image/jpeg");
-                    this.contentTypeConfig.Add(".png", "image/png");
-                    this.contentTypeConfig.Add(".tif", "image/tiff");
-                    this.contentTypeConfig.Add(".tiff", "image/tiff");
-                    // Documents
-                    this.contentTypeConfig.Add(".doc", "application/msword");
-                    this.contentTypeConfig.Add(".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-                    this.contentTypeConfig.Add(".pdf", "application/pdf");
-                    // Slideshows
-                    this.contentTypeConfig.Add(".ppt", "application/vnd.ms-powerpoint");
-                    this.contentTypeConfig.Add(".pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation");
-                    // Data
-                    this.contentTypeConfig.Add(".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                    this.contentTypeConfig.Add(".xls", "application/vnd.ms-excel");
-                    this.contentTypeConfig.Add(".csv", "text/csv");
-                    this.contentTypeConfig.Add(".xml", "text/xml");
-                    this.contentTypeConfig.Add(".txt", "text/plain");
-                    // Compressed Folders
-                    this.contentTypeConfig.Add(".zip", "application/zip");
-                    // Audio
-                    this.contentTypeConfig.Add(".ogg", "application/ogg");
-                    this.contentTypeConfig.Add(".mp3", "audio/mpeg");
-                    this.contentTypeConfig.Add(".wma", "audio/x-ms-wma");
-                    this.contentTypeConfig.Add(".wav", "audio/x-wav");
-                    // Video
-                    this.contentTypeConfig.Add(".wmv", "audio/x-ms-wmv");
-                    this.contentTypeConfig.Add(".swf", "application/x-shockwave-flash");
-                    this.contentTypeConfig.Add(".avi", "video/avi");
-                    this.contentTypeConfig.Add(".mp4", "video/mp4");
-                    this.contentTypeConfig.Add(".mpeg", "video/mpeg");
-                    this.contentTypeConfig.Add(".mpg", "video/mpeg");
-                    this.contentTypeConfig.Add(".qt", "video/quicktime");
-                }
-
-                return this.contentTypeConfig;
-            }
-        }
-
-        protected string getContentType(string fileExtension)
-        {
-            if (!ContentTypeConfig.ContainsKey(fileExtension))
-            {
-                throw new ArgumentException("Unsupported content type or unknown content type specified.");
-            }
-
-            return ContentTypeConfig[fileExtension];
+                FileContent.GetType(Path.GetExtension(shipmentDocument.ActualFileName)),
+                string.Format("{0}", shipmentDocument.ActualFileName)
+            );
         }
 
         protected override void Dispose(bool disposing)

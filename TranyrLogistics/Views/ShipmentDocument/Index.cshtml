@@ -43,9 +43,9 @@
             @Html.DisplayFor(modelItem => item.CreateDate)
         </td>
         <td>
-            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "ShipmentDocument", new { id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "ShipmentDocument", new { id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "ShipmentDocument", new { id=item.ID }, null, null)
+            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "ShipmentDocument", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "ShipmentDocument", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "ShipmentDocument", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)
         </td>
     </tr>
 }

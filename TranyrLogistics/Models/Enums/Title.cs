@@ -2,7 +2,7 @@
 
 namespace TranyrLogistics.Models.Enums
 {
-    public enum Honorific
+    public enum Title
     {
         [Display(Name = "Mr")]
         MR,

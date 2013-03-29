@@ -18,26 +18,31 @@ namespace TranyrLogistics.Models
         public string VatNumber { get; set; }
 
         [Required]
-        [Display(Name = "Email address")]
-        [EmailAddress]
+        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
         [Required]
         [Display(Name = "Contact number")]
         public string ContactNumber { get; set; }
 
-        [Display(Name = "Postal Address")]
-        public string PostalAddress { get; set; }
+        [Display(Name = "Mobile")]
+        public string Mobile { get; set; }
+
+        [Display(Name = "Emergency number")]
+        public string EmergencyNumber { get; set; }
 
         [Required]
         [Display(Name = "Physical Address")]
-        public string Address { get; set; }
+        public string PhysicalAddress { get; set; }
 
-        [Display(Name = "State/Province")]
-        public string StateOrProvince { get; set; }
+        [Display(Name = "Postal Address")]
+        public string PostalAddress { get; set; }
 
         [Display(Name = "Postal code")]
         public string PostalCode { get; set; }
+
+        [Display(Name = "State/Province")]
+        public string StateOrProvince { get; set; }
 
         [Display(Name = "Country")]
         public Country Country { get; set; }

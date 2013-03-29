@@ -105,9 +105,11 @@ namespace TranyrLogistics.Models
         [Display(Name = "Customs entry type")]
         public CustomsEntryType CustomsEntry { get; set; }
 
-        [Required]
         [Display(Name = "ShipShape")]
         public string ShipShape { get; set; }
+
+        [Display(Name = "Client Ref. Number")]
+        public string ClientRefNumber { get; set; }
 
         [Display(Name = "Date")]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", ApplyFormatInEditMode = true)]

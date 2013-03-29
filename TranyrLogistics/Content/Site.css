@@ -31,6 +31,10 @@ img {
     border: 0;
 }
 
+hr {
+    color: #efeeef;
+}
+
 header, footer, hgroup,
 nav, section {
     display: block;

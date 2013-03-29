@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
+using System.Net.Mime;
 using TranyrLogistics.Models;
 using TranyrLogistics.Views.Helpers;
 
@@ -37,7 +38,41 @@ namespace TranyrLogistics.Controllers.Utility
             smtpClient.Send(mailMessage);
         }
 
-        public static string PerpareQuoteRequestEmail(Enquiry enquiry, string templatePath)
+        public static void Send(string sendTo, string from, string subject, string messageBody, bool isHtml = false, List<string> attachmentFiles = null)
+        {
+            List<string> to = new List<string>();
+            to.Add(sendTo);
+
+            Send(to, from, subject, messageBody, isHtml, attachmentFiles);
+        }
+
+        public static void Send(List<string> sendTo, string from, string subject, string messageBody, bool isHtml = false, List<string> attachmentFiles = null)
+        {
+            SmtpClient smtpClient = new SmtpClient("127.0.0.1", 25);
+            //smtpClient.Credentials = new System.Net.NetworkCredential("pamire.fungai@gmail.com", "$@fung41#!");
+            //smtpClient.EnableSsl = true;
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.IsBodyHtml = isHtml;
+            mailMessage.From = new MailAddress(from);
+            foreach (string to in sendTo)
+            {
+                mailMessage.To.Add(to);
+            }
+            mailMessage.Subject = subject;
+            mailMessage.Body = messageBody;
+
+            foreach (string attachmentFile in attachmentFiles)
+            {
+                Attachment attachment = new Attachment(attachmentFile, MediaTypeNames.Application.Octet);
+                mailMessage.Attachments.Add(attachment);
+            }
+
+            smtpClient.Send(mailMessage);
+        }
+
+        public static string PerpareQuotationRequestEmail(Enquiry enquiry, string templatePath)
         {
             string readTemplateFile = string.Empty;
 
@@ -73,7 +108,7 @@ namespace TranyrLogistics.Controllers.Utility
             {
                 readTemplateFile = streamReader.ReadToEnd();
 
-                readTemplateFile = readTemplateFile.Replace("$$DISPLAY_NAME$$", enquiry.DisplayName);
+                readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", enquiry.FirstName);
                 readTemplateFile = readTemplateFile.Replace("$$CATEGORY$$", HtmlDropDownExtensions.GetEnumDisplay(enquiry.Category));
                 readTemplateFile = readTemplateFile.Replace("$$GOODS_DESCRIPTION$$", enquiry.GoodsDescription);
                 readTemplateFile = readTemplateFile.Replace("$$PLANNED_SHIPMENT_DATE$$", enquiry.PlannedShipmentTime.ToLongDateString());
@@ -89,6 +124,20 @@ namespace TranyrLogistics.Controllers.Utility
                 {
                     readTemplateFile = readTemplateFile.Replace("$$INSURANCE_REQUIRED$$", "is insured");
                 }
+            }
+
+            return readTemplateFile;
+        }
+
+        public static string PerpareSendQuotationEmail(Enquiry enquiry, string templatePath)
+        {
+            string readTemplateFile = string.Empty;
+
+            using (StreamReader streamReader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(templatePath)))
+            {
+                readTemplateFile = streamReader.ReadToEnd();
+
+                readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", enquiry.FirstName);
             }
 
             return readTemplateFile;

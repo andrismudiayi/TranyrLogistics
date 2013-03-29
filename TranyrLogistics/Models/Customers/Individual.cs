@@ -9,7 +9,7 @@ namespace TranyrLogistics.Models.Customers
     {
         [Required]
         [Display(Name = "Title")]
-        public Honorific? Title { get; set; }
+        public Title? Title { get; set; }
 
         [Required]
         [Display(Name = "First name")]

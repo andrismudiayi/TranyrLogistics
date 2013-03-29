@@ -98,21 +98,31 @@
 
     <div class="table-row">
         <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.Mobile)
         </div>
         <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.Address)
-            @Html.HiddenFor(model => model.Address)
+            @Html.DisplayFor(model => model.Mobile)
+            @Html.HiddenFor(model => model.Mobile)
         </div>
     </div>
 
     <div class="table-row">
         <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.StateOrProvince)
+            @Html.DisplayNameFor(model => model.PhysicalAddress)
         </div>
         <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.StateOrProvince)
-            @Html.HiddenFor(model => model.StateOrProvince)
+            @Html.DisplayFor(model => model.PhysicalAddress)
+            @Html.HiddenFor(model => model.PhysicalAddress)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.PostalAddress)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.PostalAddress)
+            @Html.HiddenFor(model => model.PostalAddress)
         </div>
     </div>
 
@@ -123,6 +133,16 @@
         <div class="display-field table-cell">
             @Html.DisplayFor(model => model.PostalCode)
             @Html.HiddenFor(model => model.PostalCode)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.StateOrProvince)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.StateOrProvince)
+            @Html.HiddenFor(model => model.StateOrProvince)
         </div>
     </div>
 

@@ -14,6 +14,15 @@
 
     <div class="table-row">
         <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.EnquiryType)
+        </div>
+        <div class="display-field table-cell">
+            @HtmlDropDownExtensions.GetEnumDisplay(Model.EnquiryType)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
              @Html.DisplayNameFor(model => model.Title)
         </div>
         <div class="display-field table-cell">

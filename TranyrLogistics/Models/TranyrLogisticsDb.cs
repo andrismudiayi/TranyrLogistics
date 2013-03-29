@@ -18,6 +18,8 @@ namespace TranyrLogistics.Models
 
         public DbSet<ShippingTerms> ShippingTerms { get; set; }
 
+        public DbSet<Quotation> Quotations { get; set; }
+
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
 
         public DbSet<ShipmentDocument> ShipmentDocuments { get; set; }

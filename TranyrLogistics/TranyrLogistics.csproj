@@ -40,7 +40,18 @@
     <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocX">
+      <HintPath>..\packages\DocX.1.0.0.12\lib\DocX.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\NPOI\bin\.net 4.0\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\NPOI\bin\.net 4.0\NPOI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -173,12 +184,17 @@
     <Compile Include="Controllers\ShipmentController.cs" />
     <Compile Include="Controllers\ShipmentDocumentController.cs" />
     <Compile Include="Controllers\ShippingTermsController.cs" />
+    <Compile Include="Controllers\Utility\FileContent.cs" />
     <Compile Include="Controllers\Utility\EmailTemplate.cs" />
+    <Compile Include="Controllers\Utility\ExcelTemplate.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Enums\Package.cs" />
+    <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\Enums\EnquiryType.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Groups\ServiceProviderGroup.cs" />
     <Compile Include="Models\Country.cs" />
@@ -191,7 +207,7 @@
     <Compile Include="Models\Enquiry.cs" />
     <Compile Include="Models\Enums\Priority.cs" />
     <Compile Include="Models\Enums\ShipmentCategory.cs" />
-    <Compile Include="Models\Enums\Honorific.cs" />
+    <Compile Include="Models\Enums\Title.cs" />
     <Compile Include="Models\Enums\Transportation.cs" />
     <Compile Include="Models\Groups\CustomerGroup.cs" />
     <Compile Include="Models\Customers\Individual.cs" />
@@ -239,6 +255,7 @@
     <Content Include="Images\customer_avatar.png" />
     <Content Include="Images\customer_shipments.png" />
     <Content Include="Images\file-upload.png" />
+    <Content Include="Images\generate_quote.png" />
     <Content Include="Images\shipment_documents.png" />
     <Content Include="Images\shipment_icon.png" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -741,12 +758,17 @@
     <Content Include="Views\ShipmentDocument\Details.cshtml" />
     <Content Include="Views\ShipmentDocument\Create.cshtml" />
     <Content Include="Views\ShipmentDocument\Delete.cshtml" />
-    <Content Include="Views\Enquiry\RequestQuote.cshtml" />
+    <Content Include="Views\Enquiry\RequestQuotation.cshtml" />
     <Content Include="Views\Group\Partials\NewGroup.cshtml" />
     <Content Include="Views\Group\Partials\CustomerGroupCreate.cshtml" />
     <Content Include="Views\Group\Partials\ServiceProviderGroupCreate.cshtml" />
-    <Content Include="Views\EmailTemplate\QuoteRequestEmail.html.cshtml" />
+    <Content Include="Views\EmailTemplate\QuotationRequestEmail.html.cshtml" />
     <Content Include="Views\EmailTemplate\EnquiryVerificationEmail.html.cshtml" />
+    <Content Include="Views\Enquiry\GenerateQuotation.cshtml" />
+    <Content Include="Views\EmailTemplate\QuoteTemplate.xls" />
+    <Content Include="Views\Enquiry\SendQuotation.cshtml" />
+    <Content Include="Views\EmailTemplate\SendQuotationEmail.html.cshtml" />
+    <Content Include="Views\Enquiry\Partials\QuotationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Uploads\ShipmentDocs\" />

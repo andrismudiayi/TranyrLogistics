@@ -58,11 +58,11 @@
             @HtmlDropDownExtensions.GetEnumDisplay(item.Priority)
         </td>
         <td>
-            @Html.ActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "New Shipment", "Create", "Shipment", new { customer_id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/customer_shipments.png"), "Shipment List", "Index", "Shipment", new { customer_id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Customer", new { id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Customer", new { id=item.ID }, null, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Customer", new { id=item.ID }, null, null)
+            @Html.ActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "New Shipment", "Create", "Shipment", new { customer_id=item.ID }, new Dictionary<string, string> { { "title", "Create Shipment" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/customer_shipments.png"), "Shipment List", "Index", "Shipment", new { customer_id=item.ID }, new Dictionary<string, string> { { "title", "List Shipments" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Customer", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Customer", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Customer", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)
         </td>
     </tr>
 }
