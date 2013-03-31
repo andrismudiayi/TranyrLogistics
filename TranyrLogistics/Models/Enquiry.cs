@@ -10,19 +10,26 @@ namespace TranyrLogistics.Models
         [Key]
         public int ID { get; set; }
 
+
+        [Required]
+        [Display(Name = "Enquiry type")]
+        public EnquiryType EnquiryType { get; set; }
+
         [Display(Name = "Customer No.")]
         public string CustomerNumber { get; set; }
 
+        [Required]
         [Display(Name = "Title")]
-        public Honorific Title { get; set; }
+        public Title Title { get; set; }
 
+        [Required]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
+        [Required]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Required]
         [Display(Name = "Company")]
         public string Company { get; set; }
 
@@ -34,6 +41,7 @@ namespace TranyrLogistics.Models
         [Display(Name = "Contact")]
         public string ContactNumber { get; set; }
 
+        [Required]
         [Display(Name = "Planned shipment date/time")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
@@ -82,11 +90,11 @@ namespace TranyrLogistics.Models
         [Display(Name = "Verified")]
         public bool Verified { get; set; }
 
-        [Display(Name = "Quote requested")]
-        public bool QuoteRequested { get; set; }
+        [Display(Name = "Quote req.")]
+        public bool QuotationRequested { get; set; }
 
         [Display(Name = "Quote sent")]
-        public bool QuoteSent { get; set; }
+        public bool QuotationSent { get; set; }
 
         [NotMapped]
         public string DisplayName

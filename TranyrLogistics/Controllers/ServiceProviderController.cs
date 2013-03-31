@@ -18,7 +18,7 @@ namespace TranyrLogistics.Controllers
         public ActionResult Index()
         {
             IQueryable<ServiceProvider> serviceProviders = db.ServiceProviders.Include(s => s.Country);
-            return View(serviceProviders.ToList());
+            return View(serviceProviders.ToList().OrderBy(x => x.Name));
         }
 
         //

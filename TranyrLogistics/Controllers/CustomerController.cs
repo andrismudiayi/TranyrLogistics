@@ -19,7 +19,7 @@ namespace TranyrLogistics.Controllers
         public ActionResult Index()
         {
             var customers = db.Customers.Include(c => c.CustomerGroup).Include(c => c.Country);
-            return View(customers.ToList());
+            return View(customers.ToList().OrderBy(x => x.DisplayName));
         }
 
         //

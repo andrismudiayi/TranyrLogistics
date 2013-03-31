@@ -1,0 +1,65 @@
+﻿@using TranyrLogistics.Views.Helpers
+
+@model TranyrLogistics.Models.Quotation
+
+@{
+    ViewBag.Title = "Send Quote";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+@using (Html.BeginForm("SendQuotation", "Enquiry", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.EnquiryID)
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.Label("To")
+        </div>
+        <div class="display-field table-cell">
+            @Html.Raw(ViewBag.ToEmail)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.Label("Subject")
+        </div>
+        <div class="display-field table-cell">
+            <input id="subject" name="subject" value="Tranyr Logistics Shipment Quotation" />
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+                Message:
+        </div>
+        <div class="display-field table-cell">
+            <textarea id="message_body" name="message_body">@ViewBag.MessageTemplate</textarea>
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.Label("Quotation")
+        </div>
+        <div class="display-field table-cell">
+            <input type="file" id="FilePath" name="FilePath" />
+        </div>
+    </div>
+
+    <p style="padding-left:75px">
+        <input type="submit" value="Send Quotation" />
+    </p>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script type="text/javascript">
+    $("#message_body").ckeditor();
+</script>

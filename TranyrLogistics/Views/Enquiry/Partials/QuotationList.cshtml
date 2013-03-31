@@ -1,0 +1,29 @@
+﻿@{
+    List<TranyrLogistics.Models.Quotation> quotations = ViewBag.Quotations;
+}
+
+@if (quotations.Count > 0)
+{
+    <table>
+        <tr>
+            <th>
+                Quotation
+            </th>
+            <th>
+                Date Sent
+            </th>
+        </tr>
+
+       @foreach (var item in quotations)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.ActualFileName, "DownloadQuotation", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.Raw(item.CreateDate)
+                </td>
+            </tr>
+        }
+    </table>
+}

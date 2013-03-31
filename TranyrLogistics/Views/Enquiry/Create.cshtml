@@ -17,6 +17,14 @@
         <legend>Enquiry</legend>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.EnquiryType)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.EnquiryType)
+            @Html.ValidationMessageFor(model => model.EnquiryType)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.Title)
         </div>
         <div class="editor-field">

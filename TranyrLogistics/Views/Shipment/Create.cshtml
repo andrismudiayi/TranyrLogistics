@@ -25,6 +25,7 @@
             </div>
         </div>
         <br />
+
         @Html.HiddenFor(model => model.CustomerID)
 
         <div class="editor-label">
@@ -201,6 +202,14 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.ShipShape)
             @Html.ValidationMessageFor(model => model.ShipShape)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ClientRefNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ClientRefNumber)
+            @Html.ValidationMessageFor(model => model.ClientRefNumber)
         </div>
 
         <div class="editor-label">
