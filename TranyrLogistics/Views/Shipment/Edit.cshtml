@@ -26,11 +26,7 @@
         </div>
         <br />
 
-        @Html.HiddenFor(model => model.ShipmentID)
-        @Html.HiddenFor(model => model.CustomerID)
-        @Html.HiddenFor(model => model.ReferenceNumber)
-        @Html.HiddenFor(model => model.CreateDate)
-        
+        @Html.HiddenFor(model => model.ID)        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ServiceProviderID, "Service Provider")

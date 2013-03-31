@@ -7,7 +7,7 @@ namespace TranyrLogistics.Models
     public class Shipment
     {
         [Key]
-        public int ShipmentID { get; set; }
+        public int ID { get; set; }
 
         public virtual Customer Customer { get; set; }
 

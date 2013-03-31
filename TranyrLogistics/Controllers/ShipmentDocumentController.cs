@@ -26,7 +26,7 @@ namespace TranyrLogistics.Controllers
             Customer customer = db.Customers.FirstOrDefault(x => x.CustomerNumber == customer_number);
             ViewBag.Customer = customer;
 
-            Shipment shipment = db.Shipments.FirstOrDefault(x => x.ShipmentID == shipment_id);
+            Shipment shipment = db.Shipments.FirstOrDefault(x => x.ID == shipment_id);
             ViewBag.Shipment = shipment;
 
             return View(db.ShipmentDocuments.Where(x => x.CustomerNumber == customer_number && x.ShipmentID == shipment_id).ToList());

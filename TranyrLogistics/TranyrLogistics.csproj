@@ -192,6 +192,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Enquiries\ExistingCustomerEnquiry.cs" />
+    <Compile Include="Models\Enquiries\PotentialCustomerEnquiry.cs" />
     <Compile Include="Models\Enums\Package.cs" />
     <Compile Include="Models\Quotation.cs" />
     <Compile Include="Models\Enums\EnquiryType.cs" />
@@ -256,6 +258,8 @@
     <Content Include="Images\customer_shipments.png" />
     <Content Include="Images\file-upload.png" />
     <Content Include="Images\generate_quote.png" />
+    <Content Include="Images\request_quotation.png" />
+    <Content Include="Images\send_quotation.png" />
     <Content Include="Images\shipment_documents.png" />
     <Content Include="Images\shipment_icon.png" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -748,7 +752,6 @@
     <Content Include="Views\Shipment\Edit.cshtml" />
     <Content Include="Views\Shipment\Delete.cshtml" />
     <Content Include="Views\Customer\Partials\NewCustomer.cshtml" />
-    <Content Include="Views\Customer\Partials\CustomerDetails.cshtml" />
     <Content Include="Views\ServiceProvider\Index.cshtml" />
     <Content Include="Views\ServiceProvider\Details.cshtml" />
     <Content Include="Views\ServiceProvider\Create.cshtml" />
@@ -769,6 +772,13 @@
     <Content Include="Views\Enquiry\SendQuotation.cshtml" />
     <Content Include="Views\EmailTemplate\SendQuotationEmail.html.cshtml" />
     <Content Include="Views\Enquiry\Partials\QuotationList.cshtml" />
+    <Content Include="Views\Enquiry\Partials\CreatePotentialCustomerEnquiry.cshtml" />
+    <Content Include="Views\Enquiry\Partials\NewEnquiry.cshtml" />
+    <Content Include="Views\Enquiry\Partials\CreateExistingCustomerEnquiry.cshtml" />
+    <Content Include="Views\Enquiry\Partials\EditExistingCustomerEnquiry.cshtml" />
+    <Content Include="Views\Enquiry\Partials\EditPotentialCustomerEnquiry.cshtml" />
+    <Content Include="Views\Enquiry\Partials\PotentialCustomerEnquiryDetails.cshtml" />
+    <Content Include="Views\Enquiry\Partials\ExistingCustomerEnquiryDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Uploads\ShipmentDocs\" />

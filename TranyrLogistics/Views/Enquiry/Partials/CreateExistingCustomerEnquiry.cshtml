@@ -1,0 +1,128 @@
+﻿@using TranyrLogistics.Views.Helpers
+
+@model TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Enquiry</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnquiryType)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.EnquiryType)
+            @Html.ValidationMessageFor(model => model.EnquiryType)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CustomerNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CustomerNumber)
+            @Html.ValidationMessageFor(model => model.CustomerNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PlannedShipmentTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PlannedShipmentTime)
+            @Html.ValidationMessageFor(model => model.PlannedShipmentTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OriginCity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OriginCity)
+            @Html.ValidationMessageFor(model => model.OriginCity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OriginCountry)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("OriginCountryID", String.Empty)
+            @Html.ValidationMessageFor(model => model.OriginCountry)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DestinationCity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DestinationCity)
+            @Html.ValidationMessageFor(model => model.DestinationCity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DestinationCountry)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("DestinationCountryID", String.Empty)
+            @Html.ValidationMessageFor(model => model.DestinationCountry)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Category)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.Category)
+            @Html.ValidationMessageFor(model => model.Category)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GoodsDescription)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.GoodsDescription)
+            @Html.ValidationMessageFor(model => model.GoodsDescription)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NumberOfPackages)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NumberOfPackages)
+            @Html.ValidationMessageFor(model => model.NumberOfPackages)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GrossWeight)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.GrossWeight)
+            @Html.ValidationMessageFor(model => model.GrossWeight)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.VolumetricWeight)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.VolumetricWeight)
+            @Html.ValidationMessageFor(model => model.VolumetricWeight)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.InsuranceRequired)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InsuranceRequired)
+            @Html.ValidationMessageFor(model => model.InsuranceRequired)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes)
+            @Html.ValidationMessageFor(model => model.Notes)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}

@@ -118,6 +118,13 @@ namespace TranyrLogistics.Controllers
         [HttpPost]
         public ActionResult Edit(Shipment shipment)
         {
+            using (TranyrLogisticsDb db = new TranyrLogisticsDb())
+            {
+                Shipment currentShipment = db.Shipments.Find(shipment.ID);
+                shipment.CustomerID = currentShipment.CustomerID;
+                shipment.ReferenceNumber = currentShipment.ReferenceNumber;
+                shipment.CreateDate = currentShipment.CreateDate;
+            }
             shipment.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
@@ -125,7 +132,7 @@ namespace TranyrLogistics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return this.Edit(shipment.ShipmentID);
+            return this.Edit(shipment.ID);
         }
 
         //

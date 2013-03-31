@@ -1,45 +1,20 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TranyrLogistics.Models.Customers;
+using TranyrLogistics.Models.Enquiries;
 using TranyrLogistics.Models.Enums;
 
 namespace TranyrLogistics.Models
 {
-    public class Enquiry
+    public abstract class Enquiry
     {
         [Key]
         public int ID { get; set; }
 
-
         [Required]
         [Display(Name = "Enquiry type")]
         public EnquiryType EnquiryType { get; set; }
-
-        [Display(Name = "Customer No.")]
-        public string CustomerNumber { get; set; }
-
-        [Required]
-        [Display(Name = "Title")]
-        public Title Title { get; set; }
-
-        [Required]
-        [Display(Name = "First name")]
-        public string FirstName { get; set; }
-
-        [Required]
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
-
-        [Display(Name = "Company")]
-        public string Company { get; set; }
-
-        [Display(Name = "Email address")]
-        [EmailAddress]
-        public string EmailAddress { get; set; }
-
-        [Required]
-        [Display(Name = "Contact")]
-        public string ContactNumber { get; set; }
 
         [Required]
         [Display(Name = "Planned shipment date/time")]
@@ -88,7 +63,7 @@ namespace TranyrLogistics.Models
         public string Notes { get; set; }
 
         [Display(Name = "Verified")]
-        public bool Verified { get; set; }
+        public bool VerificationSent { get; set; }
 
         [Display(Name = "Quote req.")]
         public bool QuotationRequested { get; set; }
@@ -101,7 +76,15 @@ namespace TranyrLogistics.Models
         {
             get
             {
-                return FirstName + " " + LastName;
+                if (this is PotentialCustomerEnquiry)
+                {
+                    return ((PotentialCustomerEnquiry)this).FirstName + " " + ((PotentialCustomerEnquiry)this).LastName;
+                }
+                else if (this is ExistingCustomerEnquiry)
+                {
+                    return ((ExistingCustomerEnquiry)this).Customer.DisplayName;
+                }
+                return string.Empty;
             }
         }
 

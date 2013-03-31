@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using TranyrLogistics.Models;
+using TranyrLogistics.Models.Customers;
+using TranyrLogistics.Models.Enquiries;
 using TranyrLogistics.Views.Helpers;
 
 namespace TranyrLogistics.Controllers.Utility
@@ -25,14 +27,39 @@ namespace TranyrLogistics.Controllers.Utility
 
                 // Row 9
                 IRow dataRow = workSheet.GetRow(8);
-                // Cell A9
-                dataRow.GetCell(0).SetCellValue(enquiry.Company);
-                // Cell B9
-                dataRow.GetCell(1).SetCellValue(enquiry.FirstName);
-                // Cell C9
-                dataRow.GetCell(2).SetCellValue(enquiry.EmailAddress);
-                // Cell D9
-                dataRow.GetCell(3).SetCellValue(enquiry.ContactNumber);
+
+                if (enquiry is PotentialCustomerEnquiry)
+                {
+                    // Cell A9
+                    dataRow.GetCell(0).SetCellValue(((PotentialCustomerEnquiry) enquiry).Company);
+                    // Cell B9
+                    dataRow.GetCell(1).SetCellValue(((PotentialCustomerEnquiry) enquiry).FirstName);
+                    // Cell C9
+                    dataRow.GetCell(2).SetCellValue(((PotentialCustomerEnquiry) enquiry).EmailAddress);
+                    // Cell D9
+                    dataRow.GetCell(3).SetCellValue(((PotentialCustomerEnquiry) enquiry).ContactNumber);
+                }
+                else if (enquiry is ExistingCustomerEnquiry)
+                {
+                    // Cell A9
+                    dataRow.GetCell(0).SetCellValue(((ExistingCustomerEnquiry) enquiry).Customer.DisplayName);
+
+                    if (((ExistingCustomerEnquiry)enquiry).Customer is Individual)
+                    {
+                        // Cell B9
+                        dataRow.GetCell(1).SetCellValue(((ExistingCustomerEnquiry)enquiry).Customer.DisplayName);
+                    }
+                    else                    
+                    {
+                        // Cell B9
+                        dataRow.GetCell(1).SetCellValue("-");
+                    }
+                    // Cell C9
+                    dataRow.GetCell(2).SetCellValue(((ExistingCustomerEnquiry) enquiry).Customer.EmailAddress);
+                    // Cell D9
+                    dataRow.GetCell(3).SetCellValue(((ExistingCustomerEnquiry) enquiry).Customer.ContactNumber);
+
+                }
                 // Cell E9
                 dataRow.GetCell(4).SetCellValue(HtmlDropDownExtensions.GetEnumDisplay(enquiry.Category));
                 // Cell F9

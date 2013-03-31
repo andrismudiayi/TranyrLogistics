@@ -1,0 +1,49 @@
+﻿@model TranyrLogistics.Models.Enquiry
+
+<div class="table-row">
+    <div id="potential-customer-enquiry-banner" class="table-cell" style="cursor:pointer">
+        Potential Customer Enquiry
+    </div>
+    <div id="existing-customer-enquiry-banner" class="table-cell" style="cursor:pointer">
+        Existing Customer Enquiry
+    </div>
+</div>
+<br />
+
+<div id="potential-customer-enquiry-form">
+    @{
+        if (Model == null || Model is TranyrLogistics.Models.Customers.Company)
+        {
+            @Html.Partial("~/Views/Enquiry/Partials/CreatePotentialCustomerEnquiry.cshtml");
+        }
+    }
+</div>
+<div id="existing-customer-enquiry-form">
+    @{
+        if (Model == null || Model is TranyrLogistics.Models.Customers.Individual)
+        {
+            @Html.Partial("~/Views/Enquiry/Partials/CreateExistingCustomerEnquiry.cshtml");
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#existing-customer-enquiry-form").hide();
+
+        $("#potential-customer-enquiry-banner").click(function () {
+            $("#potential-customer-enquiry-banner").addClass("selected-banner");
+            $("#existing-customer-enquiry-banner").removeClass("selected-banner");
+            $("#existing-customer-enquiry-form").slideUp("slow");
+            $("#potential-customer-enquiry-form").slideToggle("slow");
+            
+        });
+
+        $("#existing-customer-enquiry-banner").click(function () {
+            $("#existing-customer-enquiry-banner").addClass("selected-banner");
+            $("#potential-customer-enquiry-banner").removeClass("selected-banner");
+            $("#potential-customer-enquiry-form").slideUp("slow");
+            $("#existing-customer-enquiry-form").slideToggle("slow");
+        });
+    });
+</script>

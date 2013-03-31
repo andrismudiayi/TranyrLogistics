@@ -86,6 +86,12 @@ namespace TranyrLogistics.Controllers
         [HttpPost]
         public ActionResult Edit(Customer customer)
         {
+            using (TranyrLogisticsDb db = new TranyrLogisticsDb())
+            {
+                Customer currentCustomer = db.Customers.Find(customer.ID);
+                customer.CustomerNumber = currentCustomer.CustomerNumber;
+                customer.CreateDate = currentCustomer.CreateDate;
+            }
             customer.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {

@@ -43,16 +43,16 @@ namespace TranyrLogistics.Controllers
         // POST: /ShipmentTerms/Create
 
         [HttpPost]
-        public ActionResult Create(ShippingTerms shipmentterms)
+        public ActionResult Create(ShippingTerms shipmentTerms)
         {
             if (ModelState.IsValid)
             {
-                db.ShippingTerms.Add(shipmentterms);
+                db.ShippingTerms.Add(shipmentTerms);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(shipmentterms);
+            return View(shipmentTerms);
         }
 
         //
@@ -60,27 +60,27 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            ShippingTerms shipmentterms = db.ShippingTerms.Find(id);
-            if (shipmentterms == null)
+            ShippingTerms shipmentTerms = db.ShippingTerms.Find(id);
+            if (shipmentTerms == null)
             {
                 return HttpNotFound();
             }
-            return View(shipmentterms);
+            return View(shipmentTerms);
         }
 
         //
         // POST: /ShipmentTerms/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(ShippingTerms shipmentterms)
+        public ActionResult Edit(ShippingTerms shipmentTerms)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(shipmentterms).State = EntityState.Modified;
+                db.Entry(shipmentTerms).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(shipmentterms);
+            return View(shipmentTerms);
         }
 
         //

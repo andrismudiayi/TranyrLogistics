@@ -76,6 +76,11 @@ namespace TranyrLogistics.Controllers
         [HttpPost]
         public ActionResult Edit(Group group)
         {
+            using (TranyrLogisticsDb db = new TranyrLogisticsDb())
+            {
+                var currentGroup = db.Groups.Find(group.ID);
+                group.CreateDate = currentGroup.CreateDate;
+            }
             group.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {

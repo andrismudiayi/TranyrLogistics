@@ -3,177 +3,177 @@
 @model TranyrLogistics.Models.Customers.Individual
 
 <fieldset>
-    <legend>Customer</legend>
-    @Html.HiddenFor(model => model.ID)
+<legend>Customer</legend>
+@Html.HiddenFor(model => model.ID)
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.CustomerNumber)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.CustomerNumber)
-            @Html.HiddenFor(model => model.CustomerNumber)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.CustomerNumber)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.CustomerNumber)
+        @Html.HiddenFor(model => model.CustomerNumber)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.Title)
-        </div>
-        <div class="display-field table-cell">
-            @HtmlDropDownExtensions.GetEnumDisplay(Model.Title)
-            @Html.HiddenFor(model => model.Title)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.Title)
     </div>
+    <div class="display-field table-cell">
+        @HtmlDropDownExtensions.GetEnumDisplay(Model.Title)
+        @Html.HiddenFor(model => model.Title)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.FirstName)
-            @Html.HiddenFor(model => model.FirstName)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.FirstName)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.FirstName)
+        @Html.HiddenFor(model => model.FirstName)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.Initial)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.Initial)
-            @Html.HiddenFor(model => model.Initial)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.Initial)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.Initial)
+        @Html.HiddenFor(model => model.Initial)
+    </div>
+</div>
     
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.LastName)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.LastName)
-            @Html.HiddenFor(model => model.LastName)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.LastName)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.LastName)
+        @Html.HiddenFor(model => model.LastName)
+    </div>
+</div>
     
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.IdentityNumber)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.IdentityNumber)
-            @Html.HiddenFor(model => model.IdentityNumber)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.IdentityNumber)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.IdentityNumber)
+        @Html.HiddenFor(model => model.IdentityNumber)
+    </div>
+</div>
     
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.TaxNumber)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.TaxNumber)
-            @Html.HiddenFor(model => model.TaxNumber)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.TaxNumber)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.TaxNumber)
+        @Html.HiddenFor(model => model.TaxNumber)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.EmailAddress)
-            @Html.HiddenFor(model => model.EmailAddress)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.EmailAddress)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.EmailAddress)
+        @Html.HiddenFor(model => model.EmailAddress)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.ContactNumber)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.ContactNumber)
-            @Html.HiddenFor(model => model.ContactNumber)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.ContactNumber)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.ContactNumber)
+        @Html.HiddenFor(model => model.ContactNumber)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.Mobile)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.Mobile)
-            @Html.HiddenFor(model => model.Mobile)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.Mobile)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.Mobile)
+        @Html.HiddenFor(model => model.Mobile)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.PhysicalAddress)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.PhysicalAddress)
-            @Html.HiddenFor(model => model.PhysicalAddress)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.PhysicalAddress)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.PhysicalAddress)
+        @Html.HiddenFor(model => model.PhysicalAddress)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.PostalAddress)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.PostalAddress)
-            @Html.HiddenFor(model => model.PostalAddress)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.PostalAddress)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.PostalAddress)
+        @Html.HiddenFor(model => model.PostalAddress)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.PostalCode)
-            @Html.HiddenFor(model => model.PostalCode)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.PostalCode)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.PostalCode)
+        @Html.HiddenFor(model => model.PostalCode)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.StateOrProvince)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.StateOrProvince)
-            @Html.HiddenFor(model => model.StateOrProvince)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.StateOrProvince)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.StateOrProvince)
+        @Html.HiddenFor(model => model.StateOrProvince)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.Country)
-        </div>
-        <div class="display-field table-cell">
-            @Model.Country.Name
-            @Html.HiddenFor(model => model.Country)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.Country)
     </div>
+    <div class="display-field table-cell">
+        @Model.Country.Name
+        @Html.HiddenFor(model => model.Country)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.CustomerGroup)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.CustomerGroup.Name)
-            @Html.HiddenFor(model => model.CustomerGroup)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.CustomerGroup)
     </div>
+    <div class="display-field table-cell">
+        @Html.DisplayFor(model => model.CustomerGroup.Name)
+        @Html.HiddenFor(model => model.CustomerGroup)
+    </div>
+</div>
 
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.Priority)
-        </div>
-        <div class="display-field table-cell">
-            @HtmlDropDownExtensions.GetEnumDisplay(Model.Priority)
-            @Html.HiddenFor(model => model.Priority)
-        </div>
+<div class="table-row">
+    <div class="display-label table-cell">
+        @Html.DisplayNameFor(model => model.Priority)
     </div>
-    <br />
+    <div class="display-field table-cell">
+        @HtmlDropDownExtensions.GetEnumDisplay(Model.Priority)
+        @Html.HiddenFor(model => model.Priority)
+    </div>
+</div>
+<br />
 </fieldset>

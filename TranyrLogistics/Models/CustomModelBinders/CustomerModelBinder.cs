@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using TranyrLogistics.Models.Customers;
+using TranyrLogistics.Models.Enquiries;
 using TranyrLogistics.Models.Groups;
 
 namespace TranyrLogistics.Models.CustomModelBinders
@@ -47,6 +48,28 @@ namespace TranyrLogistics.Models.CustomModelBinders
                 else
                 {
                     instantiationType = typeof(ServiceProviderGroup);
+                }
+
+                var objectInstance = Activator.CreateInstance(instantiationType);
+                bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, instantiationType);
+                bindingContext.ModelMetadata.Model = objectInstance;
+                return objectInstance;
+            }
+
+            if (modelType.Equals(typeof(Enquiry)))
+            {
+                // If this value is null on the model then we know this is not a company. This is
+                // because as per spec, individuals have no vat numbers.
+                var testValue = controllerContext.Controller.ValueProvider.GetValue("CustomerNumber");
+
+                Type instantiationType;
+                if (testValue != null)
+                {
+                    instantiationType = typeof(ExistingCustomerEnquiry);
+                }
+                else
+                {
+                    instantiationType = typeof(PotentialCustomerEnquiry);
                 }
 
                 var objectInstance = Activator.CreateInstance(instantiationType);

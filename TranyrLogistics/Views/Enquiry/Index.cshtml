@@ -18,7 +18,7 @@
             Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
+            @Html.Raw("Email Address")
         </th>
         <th>
             From
@@ -27,7 +27,7 @@
             To
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Verified)
+            @Html.DisplayNameFor(model => model.VerificationSent)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.QuotationRequested)
@@ -44,7 +44,15 @@
             @Html.DisplayFor(modelItem => item.DisplayName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EmailAddress)
+            @if (item is TranyrLogistics.Models.Enquiries.PotentialCustomerEnquiry)
+            {
+                @Html.DisplayFor(modelItem => ((TranyrLogistics.Models.Enquiries.PotentialCustomerEnquiry) item).EmailAddress)
+            }
+            else if (item is TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry)
+            {
+                @Html.DisplayFor(modelItem => ((TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry) item).Customer.EmailAddress)
+            }
+            
         </td>
         <td style="text-align:center">
             @Html.DisplayFor(modelItem => item.OriginCountry.Code)
@@ -53,7 +61,7 @@
             @Html.DisplayFor(modelItem => item.DestinationCountry.Code)
         </td>
         <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.Verified)
+            @Html.DisplayFor(modelItem => item.VerificationSent)
         </td>
         <td style="text-align:center">
             @Html.DisplayFor(modelItem => item.QuotationRequested)
@@ -62,8 +70,8 @@
             @Html.DisplayFor(modelItem => item.QuotationSent)
         </td>
         <td>
-            @Html.ActionImageLink(@Url.Content("~/Images/generate_quote.png"), "Generate Quote", "GenerateQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Generate Quote" } }, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "Request Quote", "RequestQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Request Quote" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/send_quotation.png"), "Generate Quote", "GenerateQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Generate Quote" } }, null) |
+            @Html.ActionImageLink(@Url.Content("~/Images/request_quotation.png"), "Request Quote", "RequestQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Request Quote" } }, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)

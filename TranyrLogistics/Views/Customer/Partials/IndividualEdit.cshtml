@@ -9,6 +9,8 @@
     <fieldset>
         <legend>Individual</legend>
 
+        @Html.HiddenFor(model => model.ID)
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)
         </div>
@@ -56,10 +58,6 @@
             @Html.EditorFor(model => model.TaxNumber)
             @Html.ValidationMessageFor(model => model.TaxNumber)
         </div>
-
-        @Html.HiddenFor(model => model.ID)
-        @Html.HiddenFor(model => model.CreateDate)
-        @Html.HiddenFor(model => model.CustomerNumber)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.EmailAddress)

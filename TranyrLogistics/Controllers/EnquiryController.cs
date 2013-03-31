@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web.Mvc;
 using TranyrLogistics.Controllers.Utility;
 using TranyrLogistics.Models;
+using TranyrLogistics.Models.Enquiries;
 
 namespace TranyrLogistics.Controllers
 {
@@ -21,7 +22,17 @@ namespace TranyrLogistics.Controllers
         public ActionResult Index()
         {
             var enquiries = db.Enquiries.Include(c => c.OriginCountry).Include(c => c.DestinationCountry);
-            return View(enquiries.ToList());
+            var enquiryList = enquiries.ToList();
+            foreach (Enquiry enquiry in enquiryList)
+            {
+                if (enquiry is ExistingCustomerEnquiry)
+                {
+                    var customer = db.Customers.Where(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber).FirstOrDefault();
+                    ((ExistingCustomerEnquiry)enquiry).Customer = customer;
+                }
+            }
+
+            return View(enquiryList);
         }
 
         //
@@ -30,11 +41,16 @@ namespace TranyrLogistics.Controllers
         public ActionResult Details(int id = 0)
         {
             Enquiry enquiry = db.Enquiries.Find(id);
-            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
-            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
             if (enquiry == null)
             {
                 return HttpNotFound();
+            }
+            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
+            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
+            if (enquiry is ExistingCustomerEnquiry)
+            {
+                var customer = db.Customers.Where(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber).FirstOrDefault();
+                ((ExistingCustomerEnquiry)enquiry).Customer = customer;
             }
             return View(enquiry);
         }
@@ -61,13 +77,25 @@ namespace TranyrLogistics.Controllers
                 enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
                 enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
 
-                try
+                //try
                 {
                     string message_body = EmailTemplate.PerpareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml");
-                    EmailTemplate.Send(enquiry.EmailAddress, "info@tranyr.com", "Enquiry Verification", message_body, true);
-                    enquiry.Verified = true;
+                    if (enquiry is PotentialCustomerEnquiry)
+                    {
+                        EmailTemplate.Send(((PotentialCustomerEnquiry)enquiry).EmailAddress, "info@tranyr.com", "Enquiry Verification", message_body, true);
+                    }
+                    else if (enquiry is ExistingCustomerEnquiry)
+                    {
+                        var customer = db.Customers.FirstOrDefault(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber);
+
+                        ((ExistingCustomerEnquiry)enquiry).CustomerID = customer.ID;
+                        ((ExistingCustomerEnquiry)enquiry).Customer = customer;
+
+                        EmailTemplate.Send(((ExistingCustomerEnquiry)enquiry).Customer.EmailAddress, "info@tranyr.com", "Enquiry Verification", message_body, true);
+                    }
+                    enquiry.VerificationSent = true;
                 }
-                catch { }
+                //catch { }
 
                 db.Enquiries.Add(enquiry);
                 db.SaveChanges();
@@ -100,6 +128,19 @@ namespace TranyrLogistics.Controllers
         [HttpPost]
         public ActionResult Edit(Enquiry enquiry)
         {
+            using (TranyrLogisticsDb db = new TranyrLogisticsDb())
+            {
+                var currentEnquiry = db.Enquiries.Find(enquiry.ID);
+                if (enquiry is ExistingCustomerEnquiry)
+                {
+                    ((ExistingCustomerEnquiry)enquiry).CustomerID = ((ExistingCustomerEnquiry)currentEnquiry).CustomerID;
+                }
+
+                enquiry.VerificationSent = currentEnquiry.VerificationSent;
+                enquiry.QuotationRequested = currentEnquiry.QuotationRequested;
+                enquiry.QuotationSent = currentEnquiry.QuotationSent;
+                enquiry.CreateDate = currentEnquiry.CreateDate;
+            }
             enquiry.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
@@ -200,6 +241,10 @@ namespace TranyrLogistics.Controllers
             Enquiry enquiry = db.Enquiries.Find(id);
             enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
             enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
+            if (enquiry is ExistingCustomerEnquiry)
+            {
+                ((ExistingCustomerEnquiry)enquiry).Customer = db.Customers.Where(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber).FirstOrDefault();
+            }
 
             var quotations = db.Quotations.Where(x => x.EnquiryID == enquiry.ID);
             ViewBag.Quotations = quotations.ToList();
@@ -215,6 +260,10 @@ namespace TranyrLogistics.Controllers
             Enquiry enquiry = db.Enquiries.Find(id);
             enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
             enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
+            if (enquiry is ExistingCustomerEnquiry)
+            {
+                ((ExistingCustomerEnquiry)enquiry).Customer = db.Customers.Where(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber).FirstOrDefault();
+            }
 
             return ExcelTemplate.GenerateQuote(enquiry, @"\views\EmailTemplate\QuoteTemplate.xls");
         }
@@ -223,12 +272,27 @@ namespace TranyrLogistics.Controllers
         //GET: /Enquiry/SendQuotation/5
 
         public ActionResult SendQuotation(int id)
-        {            
+        {
             Enquiry enquiry = db.Enquiries.Find(id);
+            if (enquiry is ExistingCustomerEnquiry)
+            {
+                ((ExistingCustomerEnquiry)enquiry).Customer = db.Customers.Where(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber).FirstOrDefault();
+            }
+
             Quotation quotation = new Quotation();
             quotation.EnquiryID = id;
 
-            ViewBag.ToEmail = enquiry.EmailAddress;
+            if (enquiry is PotentialCustomerEnquiry)
+            {
+                ViewBag.ToCustomer = ((PotentialCustomerEnquiry)enquiry).DisplayName;
+                ViewBag.ToEmail = ((PotentialCustomerEnquiry)enquiry).EmailAddress;
+            }
+            else if (enquiry is ExistingCustomerEnquiry)
+            {
+                ViewBag.ToCustomer = ((ExistingCustomerEnquiry)enquiry).Customer.DisplayName;
+                ViewBag.ToEmail = ((ExistingCustomerEnquiry)enquiry).Customer.EmailAddress;
+            }
+
             ViewBag.MessageTemplate = EmailTemplate.PerpareSendQuotationEmail(enquiry, @"~\views\EmailTemplate\SendQuotationEmail.html.cshtml");
 
             return View(quotation);
@@ -274,7 +338,15 @@ namespace TranyrLogistics.Controllers
                     List<string> attachQuote = new List<string>();
                     attachQuote.Add(quotation.FilePathOnDisc);
 
-                    EmailTemplate.Send(enquiry.EmailAddress, "info@tranyr.com", subject, EmailTemplate.FinalizeHtmlEmail(message_body), true, attachQuote);
+                    if (enquiry is PotentialCustomerEnquiry)
+                    {
+                        EmailTemplate.Send(((PotentialCustomerEnquiry)enquiry).EmailAddress, "info@tranyr.com", subject, EmailTemplate.FinalizeHtmlEmail(message_body), true, attachQuote);
+                    }
+                    else if (enquiry is ExistingCustomerEnquiry)
+                    {
+                        EmailTemplate.Send(((ExistingCustomerEnquiry)enquiry).Customer.EmailAddress, "info@tranyr.com", subject, EmailTemplate.FinalizeHtmlEmail(message_body), true, attachQuote);
+                    }
+
                     enquiry.QuotationSent = true;
                 }
                 catch

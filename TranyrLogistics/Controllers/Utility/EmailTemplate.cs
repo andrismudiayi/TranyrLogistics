@@ -3,6 +3,8 @@ using System.IO;
 using System.Net.Mail;
 using System.Net.Mime;
 using TranyrLogistics.Models;
+using TranyrLogistics.Models.Customers;
+using TranyrLogistics.Models.Enquiries;
 using TranyrLogistics.Views.Helpers;
 
 namespace TranyrLogistics.Controllers.Utility
@@ -108,7 +110,22 @@ namespace TranyrLogistics.Controllers.Utility
             {
                 readTemplateFile = streamReader.ReadToEnd();
 
-                readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", enquiry.FirstName);
+                if (enquiry is PotentialCustomerEnquiry)
+                {
+                    readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", ((PotentialCustomerEnquiry)enquiry).FirstName);
+                }
+                else if (enquiry is ExistingCustomerEnquiry)
+                {
+                    if (((ExistingCustomerEnquiry)enquiry).Customer is Individual)
+                    {
+                        readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", (((Individual)((ExistingCustomerEnquiry)enquiry).Customer)).FirstName);
+                    }
+                    else if (((ExistingCustomerEnquiry)enquiry).Customer is Company)
+                    {
+                        readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", "Sir/Madam");
+                    }
+                }
+                
                 readTemplateFile = readTemplateFile.Replace("$$CATEGORY$$", HtmlDropDownExtensions.GetEnumDisplay(enquiry.Category));
                 readTemplateFile = readTemplateFile.Replace("$$GOODS_DESCRIPTION$$", enquiry.GoodsDescription);
                 readTemplateFile = readTemplateFile.Replace("$$PLANNED_SHIPMENT_DATE$$", enquiry.PlannedShipmentTime.ToLongDateString());
@@ -137,7 +154,21 @@ namespace TranyrLogistics.Controllers.Utility
             {
                 readTemplateFile = streamReader.ReadToEnd();
 
-                readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", enquiry.FirstName);
+                if (enquiry is PotentialCustomerEnquiry)
+                {
+                    readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", ((PotentialCustomerEnquiry)enquiry).FirstName);
+                }
+                else if (enquiry is ExistingCustomerEnquiry)
+                {
+                    if (((ExistingCustomerEnquiry)enquiry).Customer is Individual)
+                    {
+                        readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", (((Individual)((ExistingCustomerEnquiry)enquiry).Customer)).FirstName);
+                    }
+                    else if (((ExistingCustomerEnquiry)enquiry).Customer is Company)
+                    {
+                        readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", "Sir/Madam");
+                    }
+                }
             }
 
             return readTemplateFile;

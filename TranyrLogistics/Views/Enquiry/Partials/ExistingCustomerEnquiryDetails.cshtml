@@ -1,0 +1,161 @@
+﻿@using TranyrLogistics.Views.Helpers
+
+@model TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry
+
+<fieldset>
+    <legend>Enquiry</legend>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.EnquiryType)
+        </div>
+        <div class="display-field table-cell">
+            @HtmlDropDownExtensions.GetEnumDisplay(Model.EnquiryType)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.Raw("Customer Number")
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.Customer.CustomerNumber) (@Html.DisplayFor(model => model.Customer.DisplayName))
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.PlannedShipmentTime)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.PlannedShipmentTime)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.OriginCity)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.OriginCity)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.OriginCountry)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.OriginCountry.Name)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.DestinationCity)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.DestinationCity)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.DestinationCountry)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.DestinationCountry.Name)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Category)
+        </div>
+        <div class="display-field table-cell">
+            @HtmlDropDownExtensions.GetEnumDisplay(Model.Category)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.GoodsDescription)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.GoodsDescription)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.NumberOfPackages)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.NumberOfPackages)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.GrossWeight)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.GrossWeight)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.VolumetricWeight)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.VolumetricWeight)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.InsuranceRequired)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.InsuranceRequired)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Notes)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.Notes)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.VerificationSent)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.VerificationSent)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.QuotationRequested)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.QuotationRequested)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.QuotationSent)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.QuotationSent)
+        </div>
+    </div>
+
+</fieldset>

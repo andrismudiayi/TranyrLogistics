@@ -81,16 +81,21 @@ namespace TranyrLogistics.Controllers
         // POST: /ServiceProvider/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(ServiceProvider serviceprovider)
+        public ActionResult Edit(ServiceProvider serviceProvider)
         {
-            serviceprovider.ModifiedDate = DateTime.Now;
+            using (TranyrLogisticsDb db = new TranyrLogisticsDb())
+            {
+                ServiceProvider currentServiceprovider = db.ServiceProviders.Find(serviceProvider.ID);
+                serviceProvider.CreateDate = currentServiceprovider.CreateDate;
+            }
+            serviceProvider.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
-                db.Entry(serviceprovider).State = EntityState.Modified;
+                db.Entry(serviceProvider).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(serviceprovider);
+            return View(serviceProvider);
         }
 
         //
@@ -98,13 +103,13 @@ namespace TranyrLogistics.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            ServiceProvider serviceprovider = db.ServiceProviders.Find(id);
-            serviceprovider.Country = db.Countries.Find(serviceprovider.CountryID);
-            if (serviceprovider == null)
+            ServiceProvider serviceProvider = db.ServiceProviders.Find(id);
+            serviceProvider.Country = db.Countries.Find(serviceProvider.CountryID);
+            if (serviceProvider == null)
             {
                 return HttpNotFound();
             }
-            return View(serviceprovider);
+            return View(serviceProvider);
         }
 
         //
