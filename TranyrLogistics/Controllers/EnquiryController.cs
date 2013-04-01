@@ -71,18 +71,22 @@ namespace TranyrLogistics.Controllers
         [HttpPost]
         public ActionResult Create(Enquiry enquiry)
         {
+            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
+            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
             enquiry.CreateDate = enquiry.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
-                enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
-                enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
-
-                //try
+                try
                 {
-                    string message_body = EmailTemplate.PerpareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml");
                     if (enquiry is PotentialCustomerEnquiry)
                     {
-                        EmailTemplate.Send(((PotentialCustomerEnquiry)enquiry).EmailAddress, "info@tranyr.com", "Enquiry Verification", message_body, true);
+                        EmailTemplate.Send(
+                            ((PotentialCustomerEnquiry)enquiry).EmailAddress,
+                            "info@tranyr.com",
+                            "Enquiry Verification",
+                            EmailTemplate.PerpareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml"),
+                            true
+                        );
                     }
                     else if (enquiry is ExistingCustomerEnquiry)
                     {
@@ -91,11 +95,17 @@ namespace TranyrLogistics.Controllers
                         ((ExistingCustomerEnquiry)enquiry).CustomerID = customer.ID;
                         ((ExistingCustomerEnquiry)enquiry).Customer = customer;
 
-                        EmailTemplate.Send(((ExistingCustomerEnquiry)enquiry).Customer.EmailAddress, "info@tranyr.com", "Enquiry Verification", message_body, true);
+                        EmailTemplate.Send(
+                            ((ExistingCustomerEnquiry)enquiry).Customer.EmailAddress,
+                            "info@tranyr.com",
+                            "Enquiry Verification",
+                            EmailTemplate.PerpareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml"),
+                            true
+                        );
                     }
                     enquiry.VerificationSent = true;
                 }
-                //catch { }
+                catch { }
 
                 db.Enquiries.Add(enquiry);
                 db.SaveChanges();
@@ -305,6 +315,10 @@ namespace TranyrLogistics.Controllers
         public ActionResult SendQuotation(Quotation quotation, string subject, string message_body)
         {
             Enquiry enquiry = db.Enquiries.Find(quotation.EnquiryID);
+            if (enquiry is ExistingCustomerEnquiry)
+            {
+                ((ExistingCustomerEnquiry)enquiry).Customer = db.Customers.Where(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber).FirstOrDefault();
+            }
 
             if (Request.Files.Count > 0)
             {

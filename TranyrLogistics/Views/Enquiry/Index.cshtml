@@ -69,7 +69,17 @@
         <td style="text-align:center">
             @Html.DisplayFor(modelItem => item.QuotationSent)
         </td>
-        <td>
+        <td style="text-align:right;">
+            @if (item is TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry && ((TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry)item).Customer != null)
+            {
+                @Html.ActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "Create Shipment", "CreateShipment", "Shipment", new { id=item.ID, customer_id=((TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry)item).CustomerID}, new Dictionary<string, string> { { "title", "Create Shipment" } }, null)
+                @Html.Raw("|")
+            }
+            else if (item is TranyrLogistics.Models.Enquiries.PotentialCustomerEnquiry)
+            {
+                @Html.ActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "New Customer", "Create", "Customer", new { id = item.ID }, new Dictionary<string, string> { { "title", "Create Customer" } }, null)
+                @Html.Raw("|")
+            }
             @Html.ActionImageLink(@Url.Content("~/Images/send_quotation.png"), "Generate Quote", "GenerateQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Generate Quote" } }, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/request_quotation.png"), "Request Quote", "RequestQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Request Quote" } }, null) |
             @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
