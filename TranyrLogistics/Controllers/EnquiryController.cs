@@ -91,6 +91,10 @@ namespace TranyrLogistics.Controllers
                     else if (enquiry is ExistingCustomerEnquiry)
                     {
                         var customer = db.Customers.FirstOrDefault(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber);
+                        if (customer == null)
+                        {
+                            return RedirectToAction("NotFound");
+                        }
 
                         ((ExistingCustomerEnquiry)enquiry).CustomerID = customer.ID;
                         ((ExistingCustomerEnquiry)enquiry).Customer = customer;
