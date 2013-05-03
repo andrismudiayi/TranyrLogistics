@@ -1,0 +1,68 @@
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model IEnumerable<TranyrLogistics.Models.UserProfile>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<p>
+    @Html.SecureActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.Raw("Name")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.Raw(item.CreateDate.ToShortDateString())
+        </td>
+        <td>
+            @Html.SecureActionImageLink(@Url.Content("~/Images/password.png"), "Change Password", "ChangePassword", "SystemUser", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Change Password" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/roles.png"), "Assign Role", "AssignRole", "SystemUser", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Assign Roles" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "SystemUser", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "SystemUser", new { id=item.UserId }, new Dictionary<string, string> { { "title", "Details" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "SystemUser", new { id=item.UserId }, new Dictionary<string, string> { { "title", "Delete" } }, null)
+        </td>
+    </tr>
+}
+
+</table>

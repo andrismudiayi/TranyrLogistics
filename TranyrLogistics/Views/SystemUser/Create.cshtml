@@ -1,0 +1,58 @@
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.RegisterModel
+@{
+    ViewBag.Title = "Create a new account";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(model => model.FirstName)
+                @Html.TextBoxFor(model => model.FirstName)
+            </li>
+            <li>
+                @Html.LabelFor(model => model.LastName)
+                @Html.TextBoxFor(model => model.LastName)
+            </li>
+            <li>
+                @Html.LabelFor(model => model.EmailAddress)
+                @Html.TextBoxFor(model => model.EmailAddress)
+            </li>
+            <li>
+                @Html.LabelFor(model => model.UserName)
+                @Html.TextBoxFor(model => model.UserName)
+            </li>
+            <li>
+                @Html.LabelFor(model => model.Password)
+                @Html.PasswordFor(model => model.Password)
+            </li>
+            <li>
+                @Html.LabelFor(model => model.ConfirmPassword)
+                @Html.PasswordFor(model => model.ConfirmPassword)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.IsActive)
+                @Html.CheckBoxFor(m => m.IsActive)
+            </li>
+        </ol>
+        <input type="submit" value="Register" />
+    </fieldset>
+}
+
+<br />
+<div>
+    @Html.SecureActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

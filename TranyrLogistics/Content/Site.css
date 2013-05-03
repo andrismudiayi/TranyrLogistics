@@ -184,7 +184,7 @@ footer {
 /* menu
 ----------------------------------------------------------*/
 ul#menu {
-    font-size: 1.3em;
+    font-size: 1.0em;
     font-weight: 600;
     margin: 0 0 5px;
     padding: 0;
@@ -194,7 +194,7 @@ ul#menu {
     ul#menu li {
         display: inline;
         list-style: none;
-        padding-left: 15px;
+        padding-left: 12px;
     }
 
         ul#menu li a {

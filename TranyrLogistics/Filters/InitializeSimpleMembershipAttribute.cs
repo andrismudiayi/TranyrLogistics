@@ -3,8 +3,8 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
-using WebMatrix.WebData;
 using TranyrLogistics.Models;
+using WebMatrix.WebData;
 
 namespace TranyrLogistics.Filters
 {
@@ -25,11 +25,11 @@ namespace TranyrLogistics.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<TranyrMembershipDb>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new TranyrMembershipDb())
                     {
                         if (!context.Database.Exists())
                         {
@@ -37,8 +37,10 @@ namespace TranyrLogistics.Filters
                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
                         }
                     }
-
-                    WebSecurity.InitializeDatabaseConnection("TranyrMembershipDb", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    if (!WebSecurity.Initialized)
+                    {
+                        WebSecurity.InitializeDatabaseConnection("TranyrMembershipDb", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -6,7 +6,6 @@ using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
 {
-    [Authorize]
     public class GroupController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();
@@ -14,6 +13,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Group/
 
+        [Authorize(Roles = "Administrator, Finance, Manager")]
         public ActionResult Index()
         {
             return View(db.Groups.ToList());
@@ -22,6 +22,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Group/Details/5
 
+        [Authorize(Roles = "Administrator, Finance, Manager")]
         public ActionResult Details(int id = 0)
         {
             Group group = db.Groups.Find(id);
@@ -35,6 +36,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Group/Create
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +46,7 @@ namespace TranyrLogistics.Controllers
         // POST: /Group/Create
 
         [HttpPost]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Create(Group group)
         {
             group.CreateDate = group.ModifiedDate = DateTime.Now;
@@ -60,6 +63,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Group/Edit/5
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Edit(int id = 0)
         {
             Group group = db.Groups.Find(id);
@@ -74,6 +78,7 @@ namespace TranyrLogistics.Controllers
         // POST: /Group/Edit/5
 
         [HttpPost]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Edit(Group group)
         {
             using (TranyrLogisticsDb db = new TranyrLogisticsDb())
@@ -94,6 +99,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Group/Delete/5
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Delete(int id = 0)
         {
             Group group = db.Groups.Find(id);
@@ -108,6 +114,7 @@ namespace TranyrLogistics.Controllers
         // POST: /Group/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult DeleteConfirmed(int id)
         {
             Group group = db.Groups.Find(id);

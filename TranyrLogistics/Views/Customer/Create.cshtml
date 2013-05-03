@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.Customer
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.Customer
 
 @{
     ViewBag.Title = "New Customer";
@@ -17,7 +19,7 @@
         @Html.Partial("Partials/NewCustomer")
 
         <div>
-            @Html.ActionLink("Back to List", "Index")
+            @Html.SecureActionLink("Back to List", "Index")
         </div>
     </fieldset>
 }

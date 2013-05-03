@@ -7,7 +7,6 @@ using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
 {
-    [Authorize]
     public class ServiceProviderController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();
@@ -15,6 +14,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ServiceProvider/
 
+        [Authorize(Roles = "Administrator, Finance, Manager")]
         public ActionResult Index()
         {
             IQueryable<ServiceProvider> serviceProviders = db.ServiceProviders.Include(s => s.Country);
@@ -24,6 +24,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ServiceProvider/Details/5
 
+        [Authorize(Roles = "Administrator, Finance, Manager")]
         public ActionResult Details(int id = 0)
         {
             ServiceProvider serviceprovider = db.ServiceProviders.Find(id);
@@ -38,6 +39,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ServiceProvider/Create
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Create()
         {
             ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name");
@@ -49,6 +51,7 @@ namespace TranyrLogistics.Controllers
         // POST: /ServiceProvider/Create
 
         [HttpPost]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Create(ServiceProvider serviceprovider)
         {
             serviceprovider.CreateDate = serviceprovider.ModifiedDate = DateTime.Now;
@@ -65,6 +68,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ServiceProvider/Edit/5
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Edit(int id = 0)
         {
             ServiceProvider serviceprovider = db.ServiceProviders.Find(id);
@@ -81,6 +85,7 @@ namespace TranyrLogistics.Controllers
         // POST: /ServiceProvider/Edit/5
 
         [HttpPost]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Edit(ServiceProvider serviceProvider)
         {
             using (TranyrLogisticsDb db = new TranyrLogisticsDb())
@@ -101,6 +106,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ServiceProvider/Delete/5
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Delete(int id = 0)
         {
             ServiceProvider serviceProvider = db.ServiceProviders.Find(id);
@@ -116,6 +122,7 @@ namespace TranyrLogistics.Controllers
         // POST: /ServiceProvider/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult DeleteConfirmed(int id)
         {
             ServiceProvider serviceprovider = db.ServiceProviders.Find(id);

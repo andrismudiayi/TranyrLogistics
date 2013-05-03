@@ -275,6 +275,6 @@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ShipmentID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.SecureActionLink("Edit", "Edit", "Shipment", new { id=Model.ID }) |
+    @Html.SecureActionLink("Back to List", "Index")
 </p>

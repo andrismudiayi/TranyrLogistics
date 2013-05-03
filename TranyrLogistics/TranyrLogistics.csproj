@@ -64,6 +64,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -175,7 +178,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\SystemUserController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
@@ -191,10 +194,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Migrations\201305022100018_AddDefaultUserData.cs" />
+    <Compile Include="Migrations\201305022100018_AddDefaultUserData.Designer.cs">
+      <DependentUpon>201305022100018_AddDefaultUserData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\SystemUserModels.cs" />
+    <Compile Include="Models\CustomerConfirmation.cs" />
     <Compile Include="Models\Enquiries\ExistingCustomerEnquiry.cs" />
     <Compile Include="Models\Enquiries\PotentialCustomerEnquiry.cs" />
     <Compile Include="Models\Enums\Package.cs" />
+    <Compile Include="Models\Enums\TrackingStatus.cs" />
     <Compile Include="Models\Quotation.cs" />
     <Compile Include="Models\Enums\EnquiryType.cs" />
     <Compile Include="Models\Group.cs" />
@@ -214,13 +225,15 @@
     <Compile Include="Models\Groups\CustomerGroup.cs" />
     <Compile Include="Models\Customers\Individual.cs" />
     <Compile Include="Models\ShipmentDocument.cs" />
+    <Compile Include="Models\ShipmentTracker.cs" />
     <Compile Include="Models\ShippingTerm.cs" />
     <Compile Include="Models\Shipment.cs" />
     <Compile Include="Models\TranyrLogisticsDb.cs" />
     <Compile Include="Models\Utility\ShipmentModel.cs" />
     <Compile Include="Models\Utility\CustomerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Helpers\ActionImageLinkHelper.cs" />
+    <Compile Include="Views\Helpers\AuthorizedActionLinkHelper.cs" />
+    <Compile Include="Views\Helpers\ControllerAuth.cs" />
     <Compile Include="Views\Helpers\HtmlDropDownExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -254,10 +267,13 @@
     <Content Include="Images\application_delete.png" />
     <Content Include="Images\application_edit.png" />
     <Content Include="Images\application_view_detail.png" />
+    <Content Include="Images\password.png" />
     <Content Include="Images\customer_avatar.png" />
     <Content Include="Images\customer_shipments.png" />
     <Content Include="Images\file-upload.png" />
     <Content Include="Images\generate_quote.png" />
+    <Content Include="Images\reassign_enquiry.png" />
+    <Content Include="Images\transport_order.png" />
     <Content Include="Images\request_quotation.png" />
     <Content Include="Images\send_quotation.png" />
     <Content Include="Images\shipment_documents.png" />
@@ -704,15 +720,9 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\SystemUser\Login.cshtml" />
+    <Content Include="Views\SystemUser\ChangePassword.cshtml" />
+    <Content Include="Views\SystemUser\Create.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -779,6 +789,21 @@
     <Content Include="Views\Enquiry\Partials\EditPotentialCustomerEnquiry.cshtml" />
     <Content Include="Views\Enquiry\Partials\PotentialCustomerEnquiryDetails.cshtml" />
     <Content Include="Views\Enquiry\Partials\ExistingCustomerEnquiryDetails.cshtml" />
+    <Content Include="Views\EmailTemplate\CustomerConfirmationEmail.html.cshtml" />
+    <Content Include="Views\EmailTemplate\ProviderTransportOrderEmail.html.cshtml" />
+    <Content Include="Views\EmailTemplate\TransportOrderEmail.html.cshtml" />
+    <Content Include="Views\Enquiry\CustomerConfirmation.cshtml" />
+    <Content Include="Views\Enquiry\SendCustomerConfirmation.cshtml" />
+    <Content Include="Views\Enquiry\Partials\CustomerConfirmationList.cshtml" />
+    <Content Include="Views\Customer\Partials\CustomerDetails.cshtml" />
+    <Content Include="Views\EmailTemplate\InternalCustomerConfirmationEmail.html.cshtml" />
+    <Content Include="Views\Enquiry\SendTransportOrder.cshtml" />
+    <Content Include="Views\Enquiry\ReassignEnquiry.cshtml" />
+    <Content Include="Views\SystemUser\Index.cshtml" />
+    <Content Include="Views\SystemUser\Edit.cshtml" />
+    <Content Include="Views\SystemUser\Details.cshtml" />
+    <Content Include="Views\SystemUser\Delete.cshtml" />
+    <Content Include="Views\SystemUser\AssignRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Uploads\ShipmentDocs\" />
@@ -790,6 +815,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201305022100018_AddDefaultUserData.resx">
+      <DependentUpon>201305022100018_AddDefaultUserData.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

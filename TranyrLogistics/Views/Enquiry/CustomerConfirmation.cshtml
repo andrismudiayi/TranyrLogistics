@@ -1,0 +1,103 @@
+﻿@using TranyrLogistics.Views.Helpers
+
+@model TranyrLogistics.Models.Enquiry
+
+@{
+    ViewBag.Title = "Confirm Transport Order";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<fieldset>
+    <legend>Enquiry</legend>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.Raw("Customer")
+        </div>
+        <div class="display-field table-cell">
+            @Html.Raw(Model.DisplayName)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.Raw("Email Address")
+        </div>
+        <div class="display-field table-cell">
+            @if (Model is TranyrLogistics.Models.Enquiries.PotentialCustomerEnquiry)
+            {
+                @Html.Raw(((TranyrLogistics.Models.Enquiries.PotentialCustomerEnquiry)Model).EmailAddress)
+            }
+            else if (Model is TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry)
+            {
+                @Html.Raw(((TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry)Model).Customer.EmailAddress)
+            }
+            
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.Raw("Origin")
+        </div>
+        <div class="display-field table-cell">
+            @Html.Raw(Model.OriginCity + ", " + Model.OriginCountry.Name)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.Raw("Destination")
+        </div>
+        <div class="display-field table-cell">
+            @Html.Raw(Model.DestinationCity + ", " + Model.DestinationCountry.Name)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.Category)
+        </div>
+        <div class="display-field table-cell">
+            @HtmlDropDownExtensions.GetEnumDisplay(Model.Category)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.NumberOfPackages)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.NumberOfPackages)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.GrossWeight)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.GrossWeight)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+             @Html.DisplayNameFor(model => model.VolumetricWeight)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.VolumetricWeight)
+        </div>
+    </div>
+
+</fieldset>
+<p>
+    @Html.SecureActionLink("Send Customer Confirmation", "SendCustomerConfirmation", "Enquiry", new { id = Model.ID }) |    
+    @Html.SecureActionLink("Send Transport Order", "SendTransportOrder", "Enquiry", new { id=Model.ID }) |
+    @Html.SecureActionLink("Back to List", "Index")
+</p>
+<br />
+
+@Html.Partial("~/Views/Enquiry/Partials/CustomerConfirmationList.cshtml")

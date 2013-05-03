@@ -1,0 +1,65 @@
+﻿@using TranyrLogistics.Views.Helpers
+
+@model TranyrLogistics.Models.Enquiry
+
+@{
+    ViewBag.Title = "Transport Order";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+@using (Html.BeginForm("SendTransportOrder", "Enquiry", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.Label("Service provider")
+        </div>
+        <div class="display-field table-cell">
+            @Html.DropDownList("service_provider_id", String.Empty)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.Label("Subject")
+        </div>
+        <div class="display-field table-cell">
+            <input id="subject" name="subject" value="Tranyr Logistics Transport Order Confirmation" />
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+                Message:
+        </div>
+        <div class="display-field table-cell">
+            <textarea id="message_body" name="message_body">@ViewBag.MessageTemplate</textarea>
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.Label("Document")
+        </div>
+        <div class="display-field table-cell">
+            <input type="file" id="FilePath" name="FilePath" />
+        </div>
+    </div>
+
+    <p style="padding-left:120px">
+        <input type="submit" value="Send Transport Order" />
+    </p>
+}
+
+<div>
+    @Html.SecureActionLink("Back to List", "CustomerConfirmation", "Enquiry", new { id = Model.ID })
+</div>
+
+<script type="text/javascript">
+    $("#message_body").ckeditor();
+</script>

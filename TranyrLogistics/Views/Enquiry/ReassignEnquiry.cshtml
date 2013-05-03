@@ -1,0 +1,41 @@
+﻿@model TranyrLogistics.Models.Enquiry
+
+@{
+    ViewBag.Title = "Re-assign Enquiry";
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ShipmentTerms</legend>
+
+        <div class="editor-label">
+            @Html.Raw("Customer Number")
+        </div>
+        <div class="editor-field">
+            <input id="customer_number" name="customer_number" />
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+
+ @{
+    if (Model is TranyrLogistics.Models.Enquiries.PotentialCustomerEnquiry)
+    {
+        @Html.Partial("Partials/PotentialCustomerEnquiryDetails");
+    }
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

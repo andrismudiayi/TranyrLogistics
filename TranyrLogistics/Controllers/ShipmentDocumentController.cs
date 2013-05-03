@@ -8,7 +8,6 @@ using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
 {
-    [Authorize]
     public class ShipmentDocumentController : Controller
     {
 
@@ -17,6 +16,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentDocumentation/
 
+        [Authorize(Roles = "Customer-Service, Finance, Manager, Operator")]
         public ActionResult Index(string customer_number = "", int shipment_id = 0)
         {
             if (customer_number == string.Empty || shipment_id == 0)
@@ -35,6 +35,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentDocumentation/Details/5
 
+        [Authorize(Roles = "Customer-Service, Finance, Manager, Operator")]
         public ActionResult Details(int id = 0)
         {
             ShipmentDocument shipmentdocumentation = db.ShipmentDocuments.Find(id);
@@ -48,6 +49,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentDocumentation/Create
 
+        [Authorize(Roles = "Manager, Operator")]
         public ActionResult Create(string customer_number = "", int shipment_id = 0)
         {
             if (customer_number == string.Empty || shipment_id == 0)
@@ -64,6 +66,7 @@ namespace TranyrLogistics.Controllers
         // POST: /ShipmentDocumentation/Create
 
         [HttpPost]
+        [Authorize(Roles = "Manager, Operator")]
         public ActionResult Create(ShipmentDocument shipmentDocument)
         {
             if (Request.Files.Count > 0)
@@ -102,6 +105,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentDocumentation/Delete/5
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Delete(int id = 0)
         {
             ShipmentDocument shipmentDocument = db.ShipmentDocuments.Find(id);
@@ -116,6 +120,7 @@ namespace TranyrLogistics.Controllers
         // POST: /ShipmentDocumentation/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Manager")]
         public ActionResult DeleteConfirmed(int id)
         {
             ShipmentDocument shipmentDocument = db.ShipmentDocuments.Find(id);
@@ -134,6 +139,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentDocumentation/DownloadFile/5
 
+        [Authorize(Roles = "Customer-Service, Finance, Manager, Operator")]
         public ActionResult DownloadFile(int id = 0)
         {
             ShipmentDocument shipmentDocument = db.ShipmentDocuments.Find(id);

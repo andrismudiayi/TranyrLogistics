@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.ShippingTerms
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.ShippingTerms
 
 @{
     ViewBag.Title = "Edit Shipping Terms";
@@ -38,7 +40,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.SecureActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
