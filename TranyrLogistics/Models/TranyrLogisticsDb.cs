@@ -21,11 +21,15 @@ namespace TranyrLogistics.Models
 
         public DbSet<Quotation> Quotations { get; set; }
 
+        public DbSet<CustomerConfirmation> CustomerTransportOrders { get; set; }
+
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
 
         public DbSet<ShipmentDocument> ShipmentDocuments { get; set; }
 
         public DbSet<Country> Countries { get; set; }
+
+        public DbSet<ShipmentTracker> ShipmentTrackers { get; set; }
 
         public List<Group> CustomerGroups
         { 

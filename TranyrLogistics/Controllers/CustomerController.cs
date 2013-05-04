@@ -4,11 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using TranyrLogistics.Models;
+using TranyrLogistics.Models.Enquiries;
 using TranyrLogistics.Models.Utility;
 
 namespace TranyrLogistics.Controllers
 {
-    [Authorize]
     public class CustomerController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();
@@ -16,6 +16,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Customer/
 
+        [Authorize(Roles = "Customer-Service, Finance, Manager, Operator")]
         public ActionResult Index()
         {
             var customers = db.Customers.Include(c => c.CustomerGroup).Include(c => c.Country);
@@ -25,6 +26,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Customer/Details/5
 
+        [Authorize(Roles = "Customer-Service, Finance, Manager, Operator")]
         public ActionResult Details(int id = 0)
         {
             Customer customer = db.Customers.Find(id);
@@ -39,8 +41,10 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Customer/Create
 
-        public ActionResult Create()
+        [Authorize(Roles = "Finance, Manager")]
+        public ActionResult Create(int enquiry_id = 0)
         {
+            ViewBag.EnquiryID = enquiry_id;
             ViewBag.CustomerGroupID = new SelectList(db.CustomerGroups, "ID", "Name");
             ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
             return View();
@@ -50,7 +54,8 @@ namespace TranyrLogistics.Controllers
         // POST: /Customer/Create
 
         [HttpPost]
-        public ActionResult Create(Customer customer)
+        [Authorize(Roles = "Finance, Manager")]
+        public ActionResult Create(Customer customer, int enquiry_id = 0)
         {
             customer.CustomerNumber = CustomerModel.GenerateCustomerNumber(customer);
             customer.CreateDate = customer.ModifiedDate = DateTime.Now;
@@ -68,6 +73,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Customer/Edit/5
 
+        [Authorize(Roles = "Finance, Manager")]
         public ActionResult Edit(int id = 0)
         {
             Customer customer = db.Customers.Find(id);
@@ -84,6 +90,7 @@ namespace TranyrLogistics.Controllers
         // POST: /Customer/Edit/5
 
         [HttpPost]
+        [Authorize(Roles = "Finance, Manager")]
         public ActionResult Edit(Customer customer)
         {
             using (TranyrLogisticsDb db = new TranyrLogisticsDb())
@@ -106,6 +113,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Customer/Delete/5
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Delete(int id = 0)
         {
             Customer customer = db.Customers.Find(id);
@@ -121,6 +129,7 @@ namespace TranyrLogistics.Controllers
         // POST: /Customer/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Manager")]
         public ActionResult DeleteConfirmed(int id)
         {
             Customer customer = db.Customers.Find(id);

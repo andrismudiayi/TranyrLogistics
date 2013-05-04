@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.Group
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.Group
 
 @{
     ViewBag.Title = "New Group";
@@ -16,7 +18,7 @@
         @Html.Partial("Partials/NewGroup")
 
         <div>
-            @Html.ActionLink("Back to List", "Index")
+            @Html.SecureActionLink("Back to List", "Index")
         </div>
     </fieldset>
 }

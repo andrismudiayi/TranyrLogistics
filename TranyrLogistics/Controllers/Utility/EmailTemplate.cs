@@ -23,8 +23,6 @@ namespace TranyrLogistics.Controllers.Utility
         public static void Send(List<string> sendTo, string from, string subject, string messageBody, bool isHtml = false)
         {
             SmtpClient smtpClient = new SmtpClient("127.0.0.1", 25);
-            //smtpClient.Credentials = new System.Net.NetworkCredential("pamire.fungai@gmail.com", "$@fung41#!");
-            //smtpClient.EnableSsl = true;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
             MailMessage mailMessage = new MailMessage();
@@ -51,8 +49,6 @@ namespace TranyrLogistics.Controllers.Utility
         public static void Send(List<string> sendTo, string from, string subject, string messageBody, bool isHtml = false, List<string> attachmentFiles = null)
         {
             SmtpClient smtpClient = new SmtpClient("127.0.0.1", 25);
-            //smtpClient.Credentials = new System.Net.NetworkCredential("pamire.fungai@gmail.com", "$@fung41#!");
-            //smtpClient.EnableSsl = true;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
             MailMessage mailMessage = new MailMessage();
@@ -102,7 +98,69 @@ namespace TranyrLogistics.Controllers.Utility
             return readTemplateFile;
         }
 
-        public static string PerpareVerificationEmail(Enquiry enquiry, string templatePath)
+        public static string PrepareCustomerConfirmationEmail(Enquiry enquiry, string templatePath)
+        {
+            string readTemplateFile = string.Empty;
+
+            using (StreamReader streamReader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(templatePath)))
+            {
+                readTemplateFile = streamReader.ReadToEnd();
+
+                if (enquiry is PotentialCustomerEnquiry)
+                {
+                    readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", ((PotentialCustomerEnquiry)enquiry).FirstName);
+                }
+                else if (enquiry is ExistingCustomerEnquiry)
+                {
+                    if (((ExistingCustomerEnquiry)enquiry).Customer is Individual)
+                    {
+                        readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", (((Individual)((ExistingCustomerEnquiry)enquiry).Customer)).FirstName);
+                    }
+                    else if (((ExistingCustomerEnquiry)enquiry).Customer is Company)
+                    {
+                        readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", "Sir/Madam");
+                    }
+                }
+
+                readTemplateFile = readTemplateFile.Replace("$$CATEGORY$$", HtmlDropDownExtensions.GetEnumDisplay(enquiry.Category));
+                readTemplateFile = readTemplateFile.Replace("$$GOODS_DESCRIPTION$$", enquiry.GoodsDescription);
+                readTemplateFile = readTemplateFile.Replace("$$PLANNED_SHIPMENT_DATE$$", enquiry.PlannedShipmentTime.ToLongDateString());
+                readTemplateFile = readTemplateFile.Replace("$$ORIGIN_CITYY$$", enquiry.OriginCity);
+                readTemplateFile = readTemplateFile.Replace("$$ORIGIN_COUNTRY$$", enquiry.OriginCountry.Name);
+                readTemplateFile = readTemplateFile.Replace("$$DESTINATION_CITY$$", enquiry.DestinationCity);
+                readTemplateFile = readTemplateFile.Replace("$$DESTINATION_COUNTRY$$", enquiry.DestinationCountry.Name);
+                readTemplateFile = readTemplateFile.Replace("$$NUMBER_OF_PACKAGES$$", enquiry.NumberOfPackages.ToString());
+                readTemplateFile = readTemplateFile.Replace("$$GROSS_WEIGHT$$", enquiry.GrossWeight.ToString());
+                readTemplateFile = readTemplateFile.Replace("$$VOLUMETRIC_WEIGHT$$", enquiry.VolumetricWeight.ToString());
+
+                if (enquiry.InsuranceRequired)
+                {
+                    readTemplateFile = readTemplateFile.Replace("$$INSURANCE_REQUIRED$$", "is insured");
+                }
+            }
+
+            return readTemplateFile;
+        }
+
+        public static string PrepareInternalCustomerConfirmationEmail(Enquiry enquiry, string templatePath)
+        {
+            string readTemplateFile = string.Empty;
+
+            using (StreamReader streamReader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(templatePath)))
+            {
+                readTemplateFile = streamReader.ReadToEnd();
+
+                if (enquiry is ExistingCustomerEnquiry)
+                {
+                    readTemplateFile = readTemplateFile.Replace("$$CUSTOMER_NUMBER$$", ((ExistingCustomerEnquiry)enquiry).CustomerID.ToString());
+                }
+                readTemplateFile = readTemplateFile.Replace("$$DISPLAY_NAME$$", enquiry.DisplayName);
+            }
+
+            return readTemplateFile;
+        }
+
+        public static string PrepareVerificationEmail(Enquiry enquiry, string templatePath)
         {
             string readTemplateFile = string.Empty;
 

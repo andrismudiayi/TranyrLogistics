@@ -3,7 +3,7 @@
 @model TranyrLogistics.Models.Enquiry
 
 @{
-    ViewBag.Title = "Generate Quote";
+    ViewBag.Title = "Generate Quotation";
 }
 
 <h3>@ViewBag.Title</h3>
@@ -94,17 +94,17 @@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Quote Template", "GenerateQuotationTemplate", new { id = Model.ID }) |
+    @Html.ActionLink("Quotation Template", "GenerateQuotationTemplate", new { id = Model.ID }) |
     @if (Model.QuotationSent)
     {
-        @Html.ActionLink("Resend Quote", "SendQuotation", new { id = Model.ID }, new { id = "resend_quote_link", confirm = "A quotation has already been sent for this enquiry. Do you want to send another one?" })
+        @Html.ActionLink("Resend Quotation", "SendQuotation", new { id = Model.ID }, new { id = "resend_quote_link", confirm = "A quotation has already been sent for this enquiry. Do you want to send another one?" })
     }
     else
     {
-        @Html.ActionLink("Send Quote", "SendQuotation", new { id = Model.ID })
+        @Html.ActionLink("Send Quotation", "SendQuotation", new { id = Model.ID })
     } |
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.SecureActionLink("Edit", "Edit", "Enquiry", new { id=Model.ID }) |
+    @Html.SecureActionLink("Back to List", "Index")
 </p>
 
 <script type="text/javascript">

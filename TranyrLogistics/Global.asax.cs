@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Threading;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -22,7 +23,7 @@ namespace TranyrLogistics
             ModelBinders.Binders.DefaultBinder = new CustomerModelBinder();
 
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<TranyrLogisticsDb>());
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            WebApiConfig.Register(GlobalConfiguration.Configuration);            
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

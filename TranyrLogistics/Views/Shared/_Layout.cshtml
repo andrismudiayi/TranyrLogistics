@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using TranyrLogistics.Views.Helpers
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -28,13 +30,13 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Customers", "Index", "Customer")</li>
-                            <li>@Html.ActionLink("Shipments", "Index", "Shipment")</li>
-                            <li>@Html.ActionLink("Enquiries", "Index", "Enquiry")</li>
-                            <li>@Html.ActionLink("Groups", "Index", "Group")</li>
-                            <li>@Html.ActionLink("Shipping Terms", "Index", "ShippingTerms")</li>
-                            <li>@Html.ActionLink("Service Providers", "Index", "ServiceProvider")</li>
+                            <li>@Html.SecureActionLink("Enquiries", "Index", "Enquiry")</li>
+                            <li>@Html.SecureActionLink("Customers", "Index", "Customer")</li>
+                            <li>@Html.SecureActionLink("Shipments", "Index", "Shipment")</li>
+                            <li>@Html.SecureActionLink("Groups", "Index", "Group")</li>
+                            <li>@Html.SecureActionLink("Shipping Terms", "Index", "ShippingTerms")</li>
+                            <li>@Html.SecureActionLink("Service Providers", "Index", "ServiceProvider")</li>
+                            <li>@Html.SecureActionLink("System Users", "Index", "SystemUser")</li>
                         </ul>
                     </nav>
                 </div>

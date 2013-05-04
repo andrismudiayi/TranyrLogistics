@@ -8,7 +8,6 @@ using TranyrLogistics.Models.Utility;
 
 namespace TranyrLogistics.Controllers
 {
-    [Authorize]
     public class ShipmentController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();
@@ -16,6 +15,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Shipment/
 
+        [Authorize(Roles = "Customer-Service, Finance, Manager, Operator")]
         public ActionResult Index(int customer_id = 0)
         {
             IQueryable<Shipment> shipments = null;
@@ -42,6 +42,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Shipment/Details/5
 
+        [Authorize(Roles = "Customer-Service, Finance, Manager, Operator")]
         public ActionResult Details(int id = 0)
         {
             Shipment shipment = db.Shipments.Find(id);
@@ -57,7 +58,8 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Shipment/Create
 
-        public ActionResult Create(int customer_id = 0)
+        [Authorize(Roles = "Manager, Operator")]
+        public ActionResult Create(int customer_id = 0, int enquiry_id = 0)
         {
             Shipment shipment = new Shipment();
             if (customer_id > 0)
@@ -67,6 +69,24 @@ namespace TranyrLogistics.Controllers
                 shipment.CustomerID = customer.ID;
                 shipment.Customer = customer;
             }
+
+            Enquiry enquiry = null;
+            if (enquiry_id > 0)
+            {
+                enquiry = db.Enquiries.Find(enquiry_id);
+                shipment.PlannedCollectionTime = enquiry.PlannedShipmentTime;
+                shipment.OriginCity = enquiry.OriginCity;
+                shipment.OriginCountryID = enquiry.OriginCountryID;
+                shipment.DestinationCity = enquiry.DestinationCity;
+                shipment.DestinationCountryID = enquiry.DestinationCountryID;
+                shipment.Category = enquiry.Category;
+                shipment.GoodsDescription = enquiry.GoodsDescription;
+                shipment.NumberOfPackages = enquiry.NumberOfPackages;
+                shipment.GrossWeight = enquiry.GrossWeight;
+                shipment.VolumetricWeight = enquiry.VolumetricWeight;
+                shipment.InsuranceRequired = enquiry.InsuranceRequired;
+            }
+
             ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.OriginCountryID);
             ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.DestinationCountryID);
             ViewBag.ShippingTermsID = new SelectList(db.ShippingTerms, "ID", "Standard", shipment.ShippingTermsID);
@@ -78,6 +98,7 @@ namespace TranyrLogistics.Controllers
         // POST: /Shipment/Create
 
         [HttpPost]
+        [Authorize(Roles = "Manager, Operator")]
         public ActionResult Create(Shipment shipment)
         {
             shipment.ReferenceNumber = ShipmentModel.GenerateReferenceNumber(shipment);
@@ -96,15 +117,21 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Shipment/Edit/5
 
+        [Authorize(Roles = "Manager, Operator")]
         public ActionResult Edit(int id = 0)
         {
             Shipment shipment = db.Shipments.Find(id);
-            shipment.OriginCountry = db.Countries.Find(shipment.OriginCountryID);
-            shipment.DestinationCountry = db.Countries.Find(shipment.DestinationCountryID);
             if (shipment == null)
             {
                 return HttpNotFound();
             }
+            shipment.OriginCountry = db.Countries.Find(shipment.OriginCountryID);
+            shipment.DestinationCountry = db.Countries.Find(shipment.DestinationCountryID);
+
+            Customer customer = db.Customers.Find(shipment.CustomerID);
+            customer.Country = db.Countries.Find(customer.CountryID);
+            shipment.Customer = customer;
+
             ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.OriginCountryID);
             ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.DestinationCountryID);
             ViewBag.ShippingTermsID = new SelectList(db.ShippingTerms, "ID", "Standard", shipment.ShippingTermsID);
@@ -116,6 +143,7 @@ namespace TranyrLogistics.Controllers
         // POST: /Shipment/Edit/5
 
         [HttpPost]
+        [Authorize(Roles = "Manager, Operator")]
         public ActionResult Edit(Shipment shipment)
         {
             using (TranyrLogisticsDb db = new TranyrLogisticsDb())
@@ -138,6 +166,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /Shipment/Delete/5
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Delete(int id = 0)
         {
             Shipment shipment = db.Shipments.Find(id);
@@ -154,6 +183,7 @@ namespace TranyrLogistics.Controllers
         // POST: /Shipment/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Manager")]
         public ActionResult DeleteConfirmed(int id)
         {
             Shipment shipment = db.Shipments.Find(id);

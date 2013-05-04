@@ -5,7 +5,6 @@ using TranyrLogistics.Models;
 
 namespace TranyrLogistics.Controllers
 {
-    [Authorize]
     public class ShippingTermsController : Controller
     {
         private TranyrLogisticsDb db = new TranyrLogisticsDb();
@@ -13,6 +12,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentTerms/
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Index()
         {
             return View(db.ShippingTerms.ToList());
@@ -21,6 +21,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentTerms/Details/5
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Details(int id = 0)
         {
             ShippingTerms shipmentterms = db.ShippingTerms.Find(id);
@@ -34,6 +35,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentTerms/Create
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Create()
         {
             return View();
@@ -43,6 +45,7 @@ namespace TranyrLogistics.Controllers
         // POST: /ShipmentTerms/Create
 
         [HttpPost]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Create(ShippingTerms shipmentTerms)
         {
             if (ModelState.IsValid)
@@ -58,6 +61,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentTerms/Edit/5
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Edit(int id = 0)
         {
             ShippingTerms shipmentTerms = db.ShippingTerms.Find(id);
@@ -72,6 +76,7 @@ namespace TranyrLogistics.Controllers
         // POST: /ShipmentTerms/Edit/5
 
         [HttpPost]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Edit(ShippingTerms shipmentTerms)
         {
             if (ModelState.IsValid)
@@ -86,6 +91,7 @@ namespace TranyrLogistics.Controllers
         //
         // GET: /ShipmentTerms/Delete/5
 
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Delete(int id = 0)
         {
             ShippingTerms shipmentterms = db.ShippingTerms.Find(id);
@@ -100,6 +106,7 @@ namespace TranyrLogistics.Controllers
         // POST: /ShipmentTerms/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult DeleteConfirmed(int id)
         {
             ShippingTerms shipmentterms = db.ShippingTerms.Find(id);

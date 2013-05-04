@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.ShipmentDocument
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.ShipmentDocument
 
 @{
     ViewBag.Title = "Document Details";
@@ -39,6 +41,6 @@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
-    @Html.ActionLink("Back to List", "Index", new { customer_number=Model.CustomerNumber, shipment_id=Model.ShipmentID })
+    @Html.SecureActionLink("Edit", "Edit", "ShipmentDocument", new { id=Model.ID }) |
+    @Html.SecureActionLink("Back to List", "Index", "ShipmentDocument", new { customer_number=Model.CustomerNumber, shipment_id=Model.ShipmentID })
 </p>

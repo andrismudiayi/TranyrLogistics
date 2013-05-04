@@ -16,8 +16,5 @@ namespace TranyrLogistics.Models.Customers
 
         [Display(Name = "Importers code")]
         public string ImportersCode { get; set; }
-
-        [Display(Name = "Postal Address")]
-        public string PostalAddress { get; set; }
     }
 }

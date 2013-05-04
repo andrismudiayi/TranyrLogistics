@@ -1,13 +1,11 @@
-﻿@{
+﻿@using TranyrLogistics.Views.Helpers
+
+@{
     ViewBag.Title = "Delete Enquiry";
 }
 
-<h3>@ViewBag.Title</h3>
-<br />
-
 <h3>Are you sure you want to delete this?</h3>
 <br />
-
 <fieldset>
     <legend>Enquiry</legend>
         
@@ -33,7 +31,7 @@
 @using (Html.BeginForm()) {
     <p>
         <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.SecureActionLink("Back to List", "Index")
     </p>
 }
 

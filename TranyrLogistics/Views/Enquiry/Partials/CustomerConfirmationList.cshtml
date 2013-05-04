@@ -1,0 +1,29 @@
+﻿@{
+    List<TranyrLogistics.Models.CustomerConfirmation> customerConfirmations = ViewBag.CustomerTransportOrders;
+}
+
+@if (customerConfirmations.Count > 0)
+{
+    <table>
+        <tr>
+            <th>
+                Transport Order
+            </th>
+            <th>
+                Date Sent
+            </th>
+        </tr>
+
+       @foreach (var item in customerConfirmations)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.ActualFileName, "DownloadQuotation", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.Raw(item.CreateDate)
+                </td>
+            </tr>
+        }
+    </table>
+}

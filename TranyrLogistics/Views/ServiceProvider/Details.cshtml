@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.ServiceProvider
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.ServiceProvider
 
 @{
     ViewBag.Title = "Service Provider Details";
@@ -112,6 +114,6 @@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.SecureActionLink("Edit", "Edit", "ServiceProvider", new { id=Model.ID }) |
+    @Html.SecureActionLink("Back to List", "Index")
 </p>

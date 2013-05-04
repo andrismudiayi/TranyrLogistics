@@ -1,0 +1,70 @@
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.UserRole
+@{
+    ViewBag.Title = "Assign User Role";
+    
+    string[] usersRoles = ViewBag.UserRoles;
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
+
+<section style="float: left; width: 30%;">
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        
+        @Html.HiddenFor(model => model.UserName)
+
+        <div class="editor-label">
+            @Html.Label("User name")
+        </div>
+        <div class="editor-field">
+            @Html.Raw(Model.UserName)
+        </div>
+        <br />
+
+        <div class="editor-label">
+            @Html.Label("Roles")
+        </div>
+        <div class="editor-field">            
+            @Html.DropDownList("RoleName", String.Empty)
+        </div>
+        <br />
+
+        <input type="submit" value="Add Role" />
+    </fieldset>
+
+    <br />
+    <div>
+        @Html.SecureActionLink("Back to List", "Index")
+    </div>
+}
+</section>
+
+<section style="float:inherit; width: 55%;">
+@{    
+    if (usersRoles.Count() > 0) {
+        @Html.Label("User Roles")
+        int index = 0;
+        foreach (string roleName in usersRoles) {
+        <div class="table-row">
+            <div class="display-label table-cell">
+                 @Html.Raw((++index).ToString())
+            </div>
+            <div class="display-field table-cell">
+                @Html.Raw(roleName)
+            </div>
+        </div>
+        }
+    }
+}
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

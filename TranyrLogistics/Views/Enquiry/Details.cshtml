@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.Enquiry
+﻿@using TranyrLogistics.Views.Helpers
+
+@model TranyrLogistics.Models.Enquiry
 
 @{
     ViewBag.Title = "Enquiry Details";
@@ -28,8 +30,8 @@
         }
 
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.SecureActionLink("Edit", "Edit", "Enquiry", new { id=Model.ID }) |
+            @Html.SecureActionLink("Back to List", "Index")
         </p>
 
     </fieldset>

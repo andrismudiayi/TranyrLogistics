@@ -1,13 +1,13 @@
-﻿@model TranyrLogistics.Models.ShipmentDocument
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.ShipmentDocument
 
 @{
     ViewBag.Title = "Delete Document";
 }
 
-<h3>@ViewBag.Title</h3>
-<br />
-
 <h3>Are you sure you want to delete this?</h3>
+<br />
 <fieldset>
     <legend>ShipmentDocumentation</legend>
 
@@ -42,6 +42,6 @@
 @using (Html.BeginForm()) {
     <p>
         <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index", new { customer_number=Model.CustomerNumber, shipment_id=Model.ShipmentID })
+        @Html.SecureActionLink("Back to List", "Index", "ShipmentDocument",new { customer_number=Model.CustomerNumber, shipment_id=Model.ShipmentID })
     </p>
 }

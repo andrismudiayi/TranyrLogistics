@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.ShipmentDocument
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.ShipmentDocument
 
 @{
     ViewBag.Title = "Add Document";
@@ -47,7 +49,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { customer_number=Model.CustomerNumber, shipment_id=Model.ShipmentID })
+    @Html.SecureActionLink("Back to List", "Index", "ShipmentDocument", new { customer_number=Model.CustomerNumber, shipment_id=Model.ShipmentID })
 </div>
 
 @section Scripts {

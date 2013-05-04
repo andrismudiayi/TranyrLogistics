@@ -1,13 +1,11 @@
-﻿@{
+﻿@using TranyrLogistics.Views.Helpers;
+
+@{
     ViewBag.Title = "Delete Customer";
 }
 
-<h3>@ViewBag.Title</h3>
-<br />
-
 <h3>Are you sure you want to delete this?</h3>
 <br />
-
 <fieldset>
     <legend>Customer</legend>
         
@@ -24,16 +22,12 @@
                 @Html.Partial("Partials/IndividualDetails");
             }
         }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 </fieldset>
 
 @using (Html.BeginForm()) {
     <p>
         <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.SecureActionLink("Back to List", "Index")
     </p>
 }
 

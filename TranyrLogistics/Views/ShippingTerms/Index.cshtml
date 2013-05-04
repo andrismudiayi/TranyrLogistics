@@ -10,7 +10,7 @@
 <br />
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.SecureActionLink("Create New", "Create")
 </p>
 <table>
     <tr>
@@ -32,9 +32,9 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "ShippingTerms", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "ShippingTerms", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
-            @Html.ActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "ShippingTerms", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "ShippingTerms", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "ShippingTerms", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "ShippingTerms", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)
 
         </td>
     </tr>

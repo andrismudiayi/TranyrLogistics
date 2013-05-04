@@ -71,6 +71,12 @@ namespace TranyrLogistics.Models
         [Display(Name = "Quote sent")]
         public bool QuotationSent { get; set; }
 
+        [Display(Name = "Customer confirmation sent")]
+        public bool CustomerConfirmationSent { get; set; }
+
+        [Display(Name = "Service provider transport order sent")]
+        public bool ProviderTransportOrderSent { get; set; }
+
         [NotMapped]
         public string DisplayName
         {

@@ -1,4 +1,6 @@
-﻿@model TranyrLogistics.Models.ShippingTerms
+﻿@using TranyrLogistics.Views.Helpers;
+
+@model TranyrLogistics.Models.ShippingTerms
 
 @{
     ViewBag.Title = "Shipping Terms Details";
@@ -30,6 +32,6 @@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.SecureActionLink("Edit", "Edit", "ShippingTerms", new { id=Model.ID }) |
+    @Html.SecureActionLink("Back to List", "Index")
 </p>
