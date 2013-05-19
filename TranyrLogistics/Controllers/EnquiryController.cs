@@ -210,6 +210,8 @@ namespace TranyrLogistics.Controllers
                 enquiry.QuotationSent = currentEnquiry.QuotationSent;
                 enquiry.CreateDate = currentEnquiry.CreateDate;
                 enquiry.CreatedBy = currentEnquiry.CreatedBy;
+                enquiry.AssignedTo = currentEnquiry.AssignedTo;
+                enquiry.StatusIndex = currentEnquiry.StatusIndex;
             }
             enquiry.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)

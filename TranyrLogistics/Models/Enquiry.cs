@@ -68,6 +68,9 @@ namespace TranyrLogistics.Models
         [Display(Name = "Volumetric weight")]
         public decimal VolumetricWeight { get; set; }
 
+        [Display(Name = "Estimated Value")]
+        public string EstimatedValue { get; set; }
+
         [Display(Name = "Insurance required?")]
         public bool InsuranceRequired { get; set; }
 

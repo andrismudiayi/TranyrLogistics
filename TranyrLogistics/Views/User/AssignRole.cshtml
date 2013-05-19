@@ -2,7 +2,7 @@
 
 @model TranyrLogistics.Models.UserRole
 @{
-    ViewBag.Title = "Assign User Role";
+    ViewBag.Title = "Assign Role";
     
     string[] usersRoles = ViewBag.UserRoles;
 }
@@ -20,11 +20,13 @@
         
         @Html.HiddenFor(model => model.UserName)
 
-        <div class="editor-label">
-            @Html.Label("User name")
-        </div>
-        <div class="editor-field">
-            @Html.Raw(Model.UserName)
+        <div class="table-row">
+            <div class="display-label table-cell">
+                 @Html.Label("User")
+            </div>
+            <div class="display-field table-cell">
+                <strong>@Html.Raw(Model.UserName)</strong>
+            </div>
         </div>
         <br />
 

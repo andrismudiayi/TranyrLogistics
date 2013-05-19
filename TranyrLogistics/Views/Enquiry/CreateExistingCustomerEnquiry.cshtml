@@ -140,6 +140,14 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.EstimatedValue)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EstimatedValue)
+            @Html.ValidationMessageFor(model => model.EstimatedValue)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.InsuranceRequired)
         </div>
         <div class="editor-field">

@@ -809,6 +809,7 @@
     <Content Include="Views\Shipment\Partials\CompanyDetails.cshtml" />
     <Content Include="Views\Shipment\Partials\IndividualDetails.cshtml" />
     <Content Include="Views\User\Partials\UserRoles.cshtml" />
+    <Content Include="Views\EmailTemplate\InsuranceRequestEmail.html.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Uploads\ShipmentDocs\" />

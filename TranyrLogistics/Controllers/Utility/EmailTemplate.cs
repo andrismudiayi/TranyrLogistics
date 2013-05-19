@@ -235,6 +235,22 @@ namespace TranyrLogistics.Controllers.Utility
             return readTemplateFile;
         }
 
+        public static string PerpareInsuranceRequestEmail(Shipment shipment, string templatePath)
+        {
+            string readTemplateFile = string.Empty;
+
+            using (StreamReader streamReader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(templatePath)))
+            {
+                readTemplateFile = streamReader.ReadToEnd();
+
+                readTemplateFile = readTemplateFile.Replace("$$CUSTOMER_NAME$$", shipment.Customer.DisplayName);
+                readTemplateFile = readTemplateFile.Replace("$$SHIPMENT_ID$$", shipment.ID.ToString());
+                readTemplateFile = readTemplateFile.Replace("$$SHIPMENT_REF$$", shipment.ReferenceNumber);
+            }
+
+            return readTemplateFile;
+        }
+
         public static string FinalizeHtmlEmail(string messageBody)
         {
             string htmlStuff = "<!DOCTYPE html>";

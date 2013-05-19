@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
+using TranyrLogistics.Controllers.Utility;
 using TranyrLogistics.Models;
 using TranyrLogistics.Models.Utility;
 
@@ -89,6 +90,7 @@ namespace TranyrLogistics.Controllers
                 shipment.NumberOfPackages = enquiry.NumberOfPackages;
                 shipment.GrossWeight = enquiry.GrossWeight;
                 shipment.VolumetricWeight = enquiry.VolumetricWeight;
+                shipment.EstimatedValue = enquiry.EstimatedValue;
                 shipment.InsuranceRequired = enquiry.InsuranceRequired;
                 shipment.ReferralEnquiryID = enquiry.ID;
             }
@@ -129,6 +131,18 @@ namespace TranyrLogistics.Controllers
 
                 db.Shipments.Add(shipment);
                 db.SaveChanges();
+
+                if (shipment.InsuranceRequired)
+                {
+                    shipment.Customer = db.Customers.Find(shipment.CustomerID);
+                    EmailTemplate.Send(
+                        "finance@tranyr.com",
+                        "system@tranyr.com",
+                        "Shipment Insurance Request",
+                        EmailTemplate.PerpareInsuranceRequestEmail(shipment, @"~\views\EmailTemplate\InsuranceRequestEmail.html.cshtml"),
+                        true
+                    );
+                }
                 return RedirectToAction("Index");
             }
             return this.Create(shipment.CustomerID);
