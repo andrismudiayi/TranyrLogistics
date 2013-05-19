@@ -7,16 +7,16 @@ namespace TranyrLogistics.Models.Enquiries
 {
     public class PotentialCustomerEnquiry : Enquiry
     {
-        [Required]
         [Display(Name = "Title")]
+        [Required(ErrorMessage = "*")]
         public Title Title { get; set; }
 
-        [Required]
         [Display(Name = "First name")]
+        [Required(ErrorMessage = "*")]
         public string FirstName { get; set; }
 
-        [Required]
         [Display(Name = "Last name")]
+        [Required(ErrorMessage = "*")]
         public string LastName { get; set; }
 
         [Display(Name = "Company")]
@@ -26,8 +26,8 @@ namespace TranyrLogistics.Models.Enquiries
         [EmailAddress]
         public string EmailAddress { get; set; }
 
-        [Required]
         [Display(Name = "Contact")]
+        [Required(ErrorMessage = "*")]
         public string ContactNumber { get; set; }
     }
 }

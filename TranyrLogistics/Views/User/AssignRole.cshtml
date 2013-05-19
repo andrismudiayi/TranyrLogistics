@@ -47,22 +47,9 @@
 </section>
 
 <section style="float:inherit; width: 55%;">
-@{    
-    if (usersRoles.Count() > 0) {
-        @Html.Label("User Roles")
-        int index = 0;
-        foreach (string roleName in usersRoles) {
-        <div class="table-row">
-            <div class="display-label table-cell">
-                 @Html.Raw((++index).ToString())
-            </div>
-            <div class="display-field table-cell">
-                @Html.Raw(roleName)
-            </div>
-        </div>
-        }
-    }
-}
+    <div id="user-roles">
+        @Html.Partial("~/Views/User/Partials/UserRoles.cshtml")
+    </div>
 </section>
 
 @section Scripts {

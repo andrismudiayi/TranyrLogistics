@@ -21,7 +21,7 @@ namespace TranyrLogistics.Models
 
         public DbSet<Quotation> Quotations { get; set; }
 
-        public DbSet<CustomerConfirmation> CustomerTransportOrders { get; set; }
+        public DbSet<CustomerConfirmation> CustomerConfirmations { get; set; }
 
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
 
@@ -76,8 +76,8 @@ namespace TranyrLogistics.Models
             modelBuilder.Entity<Customer>().HasMany(e => e.Shipments).WithRequired(a => a.Customer).HasForeignKey(e => e.CustomerID);
             modelBuilder.Entity<Customer>().HasRequired(e => e.Country).WithMany().WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<CustomerGroup>().HasMany(e => e.Customers).WithOptional(a => a.CustomerGroup).HasForeignKey(e => e.CustomerGroupID);
-            modelBuilder.Entity<ServiceProviderGroup>().HasMany(e => e.ServiceProviders).WithOptional(a => a.ServiceProviderGroup).HasForeignKey(e => e.ServiceProviderGroupID);
+            modelBuilder.Entity<CustomerGroup>().HasMany(e => e.Customers).WithRequired(a => a.CustomerGroup).HasForeignKey(e => e.CustomerGroupID);
+            modelBuilder.Entity<ServiceProviderGroup>().HasMany(e => e.ServiceProviders).WithRequired(a => a.ServiceProviderGroup).HasForeignKey(e => e.ServiceProviderGroupID);
 
             modelBuilder.Entity<Shipment>().HasRequired(e => e.ShippingTerms);
             modelBuilder.Entity<Shipment>().HasRequired(e => e.ServiceProvider);

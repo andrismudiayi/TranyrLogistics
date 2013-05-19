@@ -7,8 +7,8 @@ namespace TranyrLogistics.Models.Enquiries
 {
     public class ExistingCustomerEnquiry : Enquiry
     {
-        [Required]
         [Display(Name = "Customer No.")]
+        [Required(ErrorMessage = "*")]
         public string CustomerNumber { get; set; }
 
         public int CustomerID { get; set; }

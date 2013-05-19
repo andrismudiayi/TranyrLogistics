@@ -1,6 +1,16 @@
-﻿@using TranyrLogistics.Views.Helpers
+﻿@using TranyrLogistics.Views.Helpers;
 
 @model TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry
+
+@{
+    ViewBag.Title = "Existing Customer Enquiry";
+    
+    Model.CustomerNumber = ViewBag.CustomerNumber;
+    Model.PlannedShipmentTime = DateTime.Today;
+}
+
+<h3>@ViewBag.Title</h3>
+<br />
 
 @using (Html.BeginForm())
 {
@@ -26,11 +36,27 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.Transport)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.Transport)
+            @Html.ValidationMessageFor(model => model.Transport)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.PlannedShipmentTime)
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.PlannedShipmentTime)
             @Html.ValidationMessageFor(model => model.PlannedShipmentTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CollectionPoint)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.CollectionPoint)
+            @Html.ValidationMessageFor(model => model.CollectionPoint)
         </div>
 
         <div class="editor-label">
@@ -45,8 +71,16 @@
             @Html.LabelFor(model => model.OriginCountry)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("OriginCountryID", String.Empty)
-            @Html.ValidationMessageFor(model => model.OriginCountry)
+            @Html.DropDownListFor(model => model.OriginCountryID, ViewBag.CountryID as List<SelectListItem>, string.Empty)
+            @Html.ValidationMessageFor(model => model.OriginCountryID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DestinationAddress)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.DestinationAddress)
+            @Html.ValidationMessageFor(model => model.DestinationAddress)
         </div>
 
         <div class="editor-label">
@@ -61,8 +95,8 @@
             @Html.LabelFor(model => model.DestinationCountry)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("DestinationCountryID", String.Empty)
-            @Html.ValidationMessageFor(model => model.DestinationCountry)
+            @Html.DropDownListFor(model => model.DestinationCountryID, ViewBag.DestinationCountryID as List<SelectListItem>, string.Empty)
+            @Html.ValidationMessageFor(model => model.DestinationCountryID)
         </div>
 
         <div class="editor-label">
@@ -124,5 +158,17 @@
         <p>
             <input type="submit" value="Create" />
         </p>
+
+        <div>
+            @Html.SecureActionLink("Back to List", "Index")
+        </div>
     </fieldset>
+}
+
+<script type="text/javascript">
+    $('#PlannedShipmentTime').datetimepicker({ dateFormat: "dd MM yy" });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

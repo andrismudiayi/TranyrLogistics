@@ -61,10 +61,13 @@ namespace TranyrLogistics.Controllers.Utility
             mailMessage.Subject = subject;
             mailMessage.Body = messageBody;
 
-            foreach (string attachmentFile in attachmentFiles)
+            if (attachmentFiles != null && attachmentFiles.Count > 0)
             {
-                Attachment attachment = new Attachment(attachmentFile, MediaTypeNames.Application.Octet);
-                mailMessage.Attachments.Add(attachment);
+                foreach (string attachmentFile in attachmentFiles)
+                {
+                    Attachment attachment = new Attachment(attachmentFile, MediaTypeNames.Application.Octet);
+                    mailMessage.Attachments.Add(attachment);
+                }
             }
 
             smtpClient.Send(mailMessage);

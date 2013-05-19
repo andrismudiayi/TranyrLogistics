@@ -1,5 +1,7 @@
-﻿@{
-    List<TranyrLogistics.Models.CustomerConfirmation> customerConfirmations = ViewBag.CustomerTransportOrders;
+﻿@using TranyrLogistics.Views.Helpers;
+
+@{
+    List<TranyrLogistics.Models.CustomerConfirmation> customerConfirmations = ViewBag.CustomerConfirmations;
 }
 
 @if (customerConfirmations.Count > 0)
@@ -14,16 +16,19 @@
             </th>
         </tr>
 
-       @foreach (var item in customerConfirmations)
+        @foreach (var item in customerConfirmations)        
         {
-            <tr>
-                <td>
-                    @Html.ActionLink(item.ActualFileName, "DownloadQuotation", new { id = item.ID })
-                </td>
-                <td>
-                    @Html.Raw(item.CreateDate)
-                </td>
-            </tr>
+            if (item.ActualFileName != string.Empty)
+            {
+                <tr>
+                    <td>
+                        @Html.SecureActionLink(item.ActualFileName, "DownloadQuotation", "Enquiry", new { id = item.ID })
+                    </td>
+                    <td>
+                        @Html.Raw(item.CreateDate)
+                    </td>
+                </tr>          
+            }
         }
     </table>
 }

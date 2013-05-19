@@ -10,7 +10,8 @@
 <br />
 
 <p>
-    @Html.SecureActionLink("Create New", "Create")
+    @Html.SecureActionLink("New Potential Customer", "CreatePotentialCustomerEnquiry")
+    @Html.SecureActionLink("New Existing Customer", "CreateExistingCustomerEnquiry")
 </p>
 <table>
     <tr>
@@ -21,10 +22,7 @@
             @Html.Raw("Email Address")
         </th>
         <th>
-            From
-        </th>
-        <th>
-            To
+            Route
         </th>
         <th>
             @Html.DisplayNameFor(model => model.VerificationSent)
@@ -34,6 +32,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.QuotationSent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
         </th>
         <th></th>
     </tr>
@@ -55,10 +56,7 @@
             
         </td>
         <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.OriginCountry.Code)
-        </td>
-        <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.DestinationCountry.Code)
+            @Html.DisplayFor(modelItem => item.OriginCountry.Code) - @Html.DisplayFor(modelItem => item.DestinationCountry.Code)
         </td>
         <td style="text-align:center">
             @Html.DisplayFor(modelItem => item.VerificationSent)
@@ -69,24 +67,24 @@
         <td style="text-align:center">
             @Html.DisplayFor(modelItem => item.QuotationSent)
         </td>
-        <td style="text-align:right;">
+        <td style="text-align:center">
+            @item.CreateDate.ToShortDateString()
+        </td>
+        <td style="text-align:right;">            
             @if (item is TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry && ((TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry)item).Customer != null)
             {
-                @Html.SecureActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "Create Shipment", "Create", "Shipment", new { enquiry_id=item.ID, customer_id=((TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry)item).CustomerID}, new Dictionary<string, string> { { "title", "Create Shipment" } }, null)
-                @Html.Raw("|")
+                @Html.SecureActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "Create Shipment", "Create", "Shipment", new { enquiry_id=item.ID, customer_id=((TranyrLogistics.Models.Enquiries.ExistingCustomerEnquiry)item).CustomerID} , new Dictionary<string, string> { { "title", "Create Shipment" } }, null)
                 @Html.SecureActionImageLink(@Url.Content("~/Images/transport_order.png"), "Confirm Transport Order", "CustomerConfirmation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Confirm transport order" } }, null)
-                @Html.Raw("|")
             }
             else if (item is TranyrLogistics.Models.Enquiries.PotentialCustomerEnquiry)
             {
                 @Html.SecureActionImageLink(@Url.Content("~/Images/customer_avatar.png"), "New Customer", "Create", "Customer", new { enquiry_id = item.ID }, new Dictionary<string, string> { { "title", "Create Customer" } }, null)
-                @Html.Raw("|")
             }
-            @Html.SecureActionImageLink(@Url.Content("~/Images/send_quotation.png"), "Generate Quote", "GenerateQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Generate and send quotation" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/request_quotation.png"), "Request Quote", "RequestQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Request quotation from providers" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/reassign_enquiry.png"), "Re-assign Enquiry", "ReassignEnquiry", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Re-assign enquiry" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/send_quotation.png"), "Generate Quote", "GenerateQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Generate and send quotation" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/request_quotation.png"), "Request Quote", "RequestQuotation", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Request quotation from providers" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/reassign_enquiry.png"), "Re-assign Enquiry", "ReassignEnquiry", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Re-assign enquiry" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null)
             @Html.SecureActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Enquiry", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)
         </td>
     </tr>

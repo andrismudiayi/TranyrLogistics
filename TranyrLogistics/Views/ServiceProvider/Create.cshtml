@@ -9,7 +9,8 @@
 <h3>@ViewBag.Title</h3>
 <br />
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -99,15 +100,15 @@
             @Html.LabelFor(model => model.Country)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("CountryID", String.Empty)
-            @Html.ValidationMessageFor(model => model.Country)
+            @Html.DropDownListFor(model => model.CountryID, ViewBag.CountryID as List<SelectListItem>, string.Empty)
+            @Html.ValidationMessageFor(model => model.CountryID)
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ServiceProviderGroupID, "Group")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("ServiceProviderGroupID", String.Empty)
+            @Html.DropDownListFor(model => model.ServiceProviderGroupID, ViewBag.CountryID as List<SelectListItem>, string.Empty)
             @Html.ValidationMessageFor(model => model.ServiceProviderGroupID)
         </div>
 

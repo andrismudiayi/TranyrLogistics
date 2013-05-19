@@ -2,7 +2,8 @@
 
 @model TranyrLogistics.Models.Customers.Company
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -94,15 +95,15 @@
             @Html.LabelFor(model => model.Country)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("CountryID")
-            @Html.ValidationMessageFor(model => model.Country)
+            @Html.DropDownListFor(model => model.CountryID, ViewBag.CountryID as List<SelectListItem>)
+            @Html.ValidationMessageFor(model => model.CountryID)
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.CustomerGroupID, "Group")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("CustomerGroupID", String.Empty)
+            @Html.DropDownListFor(model => model.CustomerGroupID, ViewBag.CountryID as List<SelectListItem>)
             @Html.ValidationMessageFor(model => model.CustomerGroupID)
         </div>
 
@@ -112,6 +113,14 @@
         <div class="editor-field">
             @Html.EnumDropDownListFor(model => model.Priority)
             @Html.ValidationMessageFor(model => model.Priority)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes)
+            @Html.ValidationMessageFor(model => model.Notes)
         </div>
 
         <p>

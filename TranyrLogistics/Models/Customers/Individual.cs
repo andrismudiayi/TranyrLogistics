@@ -7,26 +7,24 @@ namespace TranyrLogistics.Models.Customers
     [Table("Individual")]
     public class Individual : Customer
     {
-        [Required]
         [Display(Name = "Title")]
+        [Required(ErrorMessage = "*")]
         public Title? Title { get; set; }
 
-        [Required]
         [Display(Name = "First name")]
+        [Required(ErrorMessage = "*")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Initial")]
-        public string Initial { get; set; }
-
-        [Required]
         [Display(Name = "Last name")]
+        [Required(ErrorMessage = "*")]
         public string LastName { get; set; }
 
-        [Required]
         [Display(Name = "Identity")]
+        [Required(ErrorMessage = "*")]
         public string IdentityNumber { get; set; }
 
         [Display(Name = "Tax number")]
+        [Required(ErrorMessage = "*")]
         public string TaxNumber { get; set; }
     }
 }

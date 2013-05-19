@@ -14,35 +14,14 @@ namespace TranyrLogistics.Models
         [Display(Name = "Reference no.")]
         public string ReferenceNumber { get; set; }
 
-        [Required]
         [Display(Name = "Transport")]
+        [Required(ErrorMessage = "*")]
         public Transportation Transport { get; set; }
-
-        [Required]
-        [Display(Name = "Origin city")]
-        public string OriginCity { get; set; }
-
-        [Display(Name = "Origin country")]
-        public Country OriginCountry { get; set; }
-
-        [Required]
-        [Display(Name = "Destination address")]
-        public string DestinationAddress { get; set; }
-
-        [Required]
-        [Display(Name = "Destination city")]
-        public string DestinationCity { get; set; }
-
-        [Display(Name = "Destination country")]
-        public Country DestinationCountry { get; set; }
-
-        [Required]
-        [Display(Name = "Collection point")]
-        public string CollectionPoint { get; set; }
 
         [Display(Name = "Planned collection time")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "*")] 
         public DateTime PlannedCollectionTime { get; set; }
 
         [Display(Name = "Actual collection time")]
@@ -50,19 +29,41 @@ namespace TranyrLogistics.Models
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? ActualCollectionTime { get; set; }
 
-        [Required]
+        [Display(Name = "Collection point")]
+        [Required(ErrorMessage = "*")]
+        public string CollectionPoint { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [Display(Name = "Origin city")]
+        public string OriginCity { get; set; }
+
+        [Display(Name = "Origin country")]
+        public Country OriginCountry { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [Display(Name = "Destination address")]
+        public string DestinationAddress { get; set; }
+
+        [Display(Name = "Destination city")]
+        [Required(ErrorMessage = "*")]
+        public string DestinationCity { get; set; }
+
+        [Display(Name = "Destination country")]
+        public Country DestinationCountry { get; set; }
+
         [Display(Name = "Recipient")]
+        [Required(ErrorMessage = "*")]
         public string Recipient { get; set; }
 
         [Display(Name = "Shipping terms")]
         public virtual ShippingTerms ShippingTerms { get; set; }
 
-        [Required]
         [Display(Name = "Shipment category")]
+        [Required(ErrorMessage = "*")]
         public ShipmentCategory? Category { get; set; }
 
-        [Required]
         [Display(Name = "Goods description")]
+        [Required(ErrorMessage = "*")]
         public string GoodsDescription { get; set; }
 
         [Display(Name = "Planned ETA")]
@@ -74,13 +75,13 @@ namespace TranyrLogistics.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? ActualTimeOfArrival { get; set; }
-        
-        [Required]
+                
         [Display(Name = "Number of packages")]
+        [Required(ErrorMessage = "*")]
         public int NumberOfPackages { get; set; }
 
-        [Required]
         [Display(Name = "Gross weight (Kg)")]
+        [Required(ErrorMessage = "*")]
         public decimal GrossWeight { get; set; }
 
         [Display(Name = "Volumetric weight")]
@@ -101,9 +102,12 @@ namespace TranyrLogistics.Models
         [Display(Name = "Service provider")]
         public virtual ServiceProvider ServiceProvider { get; set; }
 
-        [Required]
         [Display(Name = "Customs entry type")]
+        [Required(ErrorMessage = "*")]
         public CustomsEntryType CustomsEntry { get; set; }
+
+        [Display(Name = "Estimated Value")]
+        public string EstimatedValue { get; set; }
 
         [Display(Name = "ShipShape")]
         public string ShipShape { get; set; }
@@ -118,18 +122,30 @@ namespace TranyrLogistics.Models
         [Display(Name = "Unresolved issues")]
         public bool HasUnresolvedIssues { get; set; }
 
+        [Display(Name = "Created by")]
+        public string CreatedBy { get; set; }
+
+        [Display(Name = "Assigned to")]
+        public string AssignedTo { get; set; }
+
         public ShipmentStatus Status { get; set; }
 
         public virtual DateTime ModifiedDate { get; set; }
 
+        public int? ReferralEnquiryID { get; set; }
+
         public virtual int CustomerID { get; set; }
 
+        [Required(ErrorMessage = "*")]
         public virtual int? ShippingTermsID { get; set; }
 
+        [Required(ErrorMessage = "*")]
         public virtual int? ServiceProviderID { get; set; }
 
+        [Required(ErrorMessage = "*")]
         public virtual int? OriginCountryID { get; set; }
 
+        [Required(ErrorMessage = "*")]
         public virtual int? DestinationCountryID { get; set; }
 
         public Shipment()

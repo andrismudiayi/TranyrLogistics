@@ -10,7 +10,7 @@ namespace TranyrLogistics.Models
         [Key]
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Group")]
         public string Name { get; set; }
 
