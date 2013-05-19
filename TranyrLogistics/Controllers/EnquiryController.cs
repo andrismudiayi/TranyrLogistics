@@ -589,7 +589,7 @@ namespace TranyrLogistics.Controllers
                                         
                     EmailTemplate.Send(
                         "finance@tranyr.com",
-                        "info@tranyr.com",
+                        "system@tranyr.com",
                         "Customer Shipment Confirmation Sent",
                         EmailTemplate.PrepareInternalCustomerConfirmationEmail(enquiry, @"~\views\EmailTemplate\InternalCustomerConfirmationEmail.html.cshtml"),
                         true
