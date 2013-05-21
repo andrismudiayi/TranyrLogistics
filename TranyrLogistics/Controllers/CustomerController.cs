@@ -81,8 +81,8 @@ namespace TranyrLogistics.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CustomerGroupID = new SelectList(db.CustomerGroups, "ID", "Name", customer.CustomerGroupID);
             ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", customer.CountryID);
+            ViewBag.CustomerGroupID = new SelectList(db.CustomerGroups, "ID", "Name", customer.CustomerGroupID);
             return View(customer);
         }
 
@@ -106,6 +106,7 @@ namespace TranyrLogistics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", customer.CountryID);
             ViewBag.CustomerGroupID = new SelectList(db.CustomerGroups, "ID", "Name", customer.CustomerGroupID);
             return View(customer);
         }

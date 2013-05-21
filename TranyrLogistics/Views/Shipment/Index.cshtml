@@ -80,9 +80,9 @@
             @item.PlannedETA.ToShortDateString()
         </td>
         <td>
-            @Html.SecureActionImageLink(@Url.Content("~/Images/shipment_documents.png"), "Documents", "Index", "ShipmentDocument", new { customer_number=item.Customer.CustomerNumber, shipment_id=item.ID }, new Dictionary<string, string> { { "title", "Attach Documents" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Shipment", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Shipment", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/shipment_documents.png"), "Documents", "Index", "ShipmentDocument", new { customer_number=item.Customer.CustomerNumber, shipment_id=item.ID }, new Dictionary<string, string> { { "title", "Attach Documents" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Shipment", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Shipment", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null)
             @Html.SecureActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Shipment", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)
         </td>
     </tr>

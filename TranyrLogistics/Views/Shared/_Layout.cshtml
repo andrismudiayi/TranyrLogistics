@@ -17,6 +17,7 @@
         <script src="~/Scripts/jquery-ui-timepicker-addon.js"></script>
         <script src="~/Scripts/ckeditor/ckeditor.js"></script>
         <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     </head>
     <body>
         <header>
@@ -30,13 +31,34 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.SecureActionLink("Enquiries", "Index", "Enquiry")</li>
-                            <li>@Html.SecureActionLink("Customers", "Index", "Customer")</li>
-                            <li>@Html.SecureActionLink("Shipments", "Index", "Shipment")</li>
-                            <li>@Html.SecureActionLink("Groups", "Index", "Group")</li>
-                            <li>@Html.SecureActionLink("Shipping Terms", "Index", "ShippingTerms")</li>
-                            <li>@Html.SecureActionLink("Service Providers", "Index", "ServiceProvider")</li>
-                            <li>@Html.SecureActionLink("System Users", "Index", "SystemUser")</li>
+                            @if (ControllerAuth.HasActionPermission(this.Html, "Index", "Enquiry"))
+                            {
+                                <li>@Html.SecureActionLink("Enquiries", "Index", "Enquiry")</li>
+                            }
+                            @if (ControllerAuth.HasActionPermission(this.Html, "Index", "Customer"))
+                            {
+                                <li>@Html.SecureActionLink("Customers", "Index", "Customer")</li>
+                            }
+                            @if (ControllerAuth.HasActionPermission(this.Html, "Index", "Shipment"))
+                            {
+                                <li>@Html.SecureActionLink("Shipments", "Index", "Shipment")</li>
+                            }
+                            @if (ControllerAuth.HasActionPermission(this.Html, "Index", "Group"))
+                            {
+                                <li>@Html.SecureActionLink("Groups", "Index", "Group")</li>
+                            }
+                            @if (ControllerAuth.HasActionPermission(this.Html, "Index", "ShippingTerms"))
+                            {
+                                <li>@Html.SecureActionLink("Shipping Terms", "Index", "ShippingTerms")</li>
+                            }
+                            @if (ControllerAuth.HasActionPermission(this.Html, "Index", "ServiceProvider"))
+                            {
+                                <li>@Html.SecureActionLink("Service Providers", "Index", "ServiceProvider")</li>
+                            }
+                            @if (ControllerAuth.HasActionPermission(this.Html, "Index", "User"))
+                            {
+                                <li>@Html.SecureActionLink("Users", "Index", "User")</li>
+                            }
                         </ul>
                     </nav>
                 </div>

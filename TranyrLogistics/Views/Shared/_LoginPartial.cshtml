@@ -1,7 +1,7 @@
 ﻿@if (Request.IsAuthenticated) {
     <text>
         Hello, <strong>@{ @User.Identity.Name }</strong>.
-        @using (Html.BeginForm("LogOff", "SystemUser", FormMethod.Post, new { id = "logoutForm" }))
+        @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm" }))
         {
             @Html.AntiForgeryToken()
             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
@@ -9,6 +9,6 @@
     </text>
 } else {
     <ul>
-        <li>@Html.ActionLink("Log in", "Login", "SystemUser", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

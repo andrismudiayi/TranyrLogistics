@@ -14,12 +14,12 @@ using WebMatrix.WebData;
 namespace TranyrLogistics.Controllers
 {
     [InitializeSimpleMembership]
-    public class SystemUserController : Controller
+    public class UserController : Controller
     {
         TranyrMembershipDb db = new TranyrMembershipDb();
 
         //
-        // GET: /SystemUser/Index
+        // GET: /User/Index
 
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Index()
@@ -28,7 +28,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /SystemUser/Create
+        // GET: /User/Create
 
         [Authorize(Roles = "Administrator")]
         public ActionResult Create()
@@ -37,7 +37,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // POST: /SystemUser/Create
+        // POST: /User/Create
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
@@ -53,7 +53,7 @@ namespace TranyrLogistics.Controllers
                         model.Password,
                         new { FirstName = model.FirstName, LastName = model.LastName, EmailAddress = model.EmailAddress, IsActive = model.IsActive, CreateDate = DateTime.Now }
                     );
-                    return RedirectToAction("Index", "SystemUser");
+                    return RedirectToAction("Index", "User");
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -66,7 +66,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /SystemUser/Edit
+        // GET: /User/Edit
 
         [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int id)
@@ -76,7 +76,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // POST: /SystemUser/Edit
+        // POST: /User/Edit
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
@@ -103,7 +103,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /SystemUser/Details/
+        // GET: /User/Details/
 
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Details(int id = 0)
@@ -117,7 +117,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /SystemUser/Delete
+        // GET: /User/Delete
 
         [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int id)
@@ -131,16 +131,16 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // POST: /SystemUser/Delete/
+        // POST: /User/Delete/
 
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
-            UserProfile userProfile = db.UserProfiles.Find(id);UserProfile systemUser = db.UserProfiles.Find(id);
+            UserProfile userProfile = db.UserProfiles.Find(id);UserProfile User = db.UserProfiles.Find(id);
 
-            // Only delete the SystemUser if the currently logged in user is the owner
-            if (userProfile.UserName == User.Identity.Name)
+            // Only delete the User if the currently logged in user is the owner
+            if (userProfile.UserName == base.User.Identity.Name)
             {
                 return RedirectToAction("Error");
             }
@@ -151,7 +151,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /SystemUser/AssignRole
+        // GET: /User/AssignRole
 
         [Authorize(Roles = "Administrator")]
         public ActionResult AssignRole(int id)
@@ -170,6 +170,7 @@ namespace TranyrLogistics.Controllers
                 defaultRole = usersRoles[0];
             }
 
+            ViewBag.UserID = id;
             ViewBag.RoleName = new SelectList(roles, defaultRole);
             ViewBag.UserRoles = usersRoles;
 
@@ -180,7 +181,40 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /SystemUser/AssignRole
+        // GET: /User/UserRoles
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult UserRoles(int id)
+        {
+            UserProfile userProfile = db.UserProfiles.Find(id);
+
+            string[] usersRoles = Roles.GetRolesForUser(userProfile.UserName);
+            ViewBag.UserID = id;
+            ViewBag.UserRoles = usersRoles;
+
+            return PartialView("~/Views/User/Partials/UserRoles.cshtml");
+        }
+
+        //
+        // GET: /User/RemoveUserFromRole
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult RemoveUserFromRole(int id, string role)
+        {
+            UserProfile userProfile = db.UserProfiles.Find(id);
+
+            if (userProfile.UserName == User.Identity.Name && role == "Administrator")
+            {
+                return RedirectToAction("Error");
+            }
+
+            Roles.RemoveUserFromRole(userProfile.UserName, role);
+
+            return this.UserRoles(id);
+        }
+
+        //
+        // GET: /User/AssignRole
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
@@ -198,7 +232,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /SystemUser/Login
+        // GET: /User/Login
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -208,16 +242,16 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // POST: /SystemUser/Login
+        // POST: /User/Login
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            UserProfile systemUser = db.UserProfiles.FirstOrDefault(x => x.UserName == model.UserName);
+            UserProfile User = db.UserProfiles.FirstOrDefault(x => x.UserName == model.UserName);
 
-            if (systemUser != null && ModelState.IsValid && systemUser.IsActive && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (User != null && ModelState.IsValid && User.IsActive && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
@@ -228,7 +262,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // POST: /SystemUser/LogOff
+        // POST: /User/LogOff
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -240,7 +274,7 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /SystemUser/ChangePassword
+        // GET: /User/ChangePassword
 
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult ChangePassword(int id, ManageMessageId? message)
@@ -252,18 +286,18 @@ namespace TranyrLogistics.Controllers
                 : "";
             
             TranyrMembershipDb usersContext = new TranyrMembershipDb();
-            UserProfile systemUser = usersContext.UserProfiles.Find(id);
+            UserProfile User = usersContext.UserProfiles.Find(id);
 
             LocalPasswordModel localPasswordModel = new LocalPasswordModel();
-            localPasswordModel.UserName = systemUser.UserName;
+            localPasswordModel.UserName = User.UserName;
 
-            ViewBag.DisplayName = systemUser.DisplayName;
+            ViewBag.DisplayName = User.DisplayName;
 
             return View(localPasswordModel);
         }
 
         //
-        // POST: /SystemUser/ChangePassword
+        // POST: /User/ChangePassword
 
         [HttpPost]
         [ValidateAntiForgeryToken]

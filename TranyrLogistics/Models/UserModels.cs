@@ -23,23 +23,23 @@ namespace TranyrLogistics.Models
         [Display(Name = "User ID")]
         public int UserId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Email address")]
         public string EmailAddress { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
 
@@ -58,7 +58,7 @@ namespace TranyrLogistics.Models
 
     public class RegisterExternalLoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
@@ -71,7 +71,7 @@ namespace TranyrLogistics.Models
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
@@ -85,11 +85,11 @@ namespace TranyrLogistics.Models
 
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -100,23 +100,23 @@ namespace TranyrLogistics.Models
 
     public class RegisterModel
     {
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Email address")]
         public string EmailAddress { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -127,7 +127,7 @@ namespace TranyrLogistics.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
 

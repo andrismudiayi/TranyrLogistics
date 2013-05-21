@@ -1,0 +1,40 @@
+﻿@using TranyrLogistics.Views.Helpers;
+
+@{
+    int userID = ViewBag.UserID;
+    string[] usersRoles = ViewBag.UserRoles;
+}
+
+@{    
+    if (usersRoles.Count() > 0) {
+        @Html.Label("User Roles")
+        int index = 0;
+        foreach (string roleName in usersRoles) {
+        <div class="table-row">
+            <div class="display-label table-cell">
+                 @Html.Raw((++index).ToString())
+            </div>
+            <div class="display-field table-cell">
+                @Html.Raw(roleName)
+            </div>
+            <div id="remove-from-role" class="display-field table-cell" >
+                @Ajax.SecureActionImageLink(
+                    @Url.Content("~/Images/close.png"),
+                    "Remove User From Role",
+                    "RemoveUserFromRole",
+                    "User",
+                    new AjaxOptions() {
+                        UpdateTargetId = "user-roles",
+                        InsertionMode = InsertionMode.Replace
+                    },
+                    new { id = userID , role = roleName }
+                )
+            </div>
+        </div>
+        }
+    }
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -2,7 +2,7 @@
 
 @model TranyrLogistics.Models.UserRole
 @{
-    ViewBag.Title = "Assign User Role";
+    ViewBag.Title = "Assign Role";
     
     string[] usersRoles = ViewBag.UserRoles;
 }
@@ -20,11 +20,13 @@
         
         @Html.HiddenFor(model => model.UserName)
 
-        <div class="editor-label">
-            @Html.Label("User name")
-        </div>
-        <div class="editor-field">
-            @Html.Raw(Model.UserName)
+        <div class="table-row">
+            <div class="display-label table-cell">
+                 @Html.Label("User")
+            </div>
+            <div class="display-field table-cell">
+                <strong>@Html.Raw(Model.UserName)</strong>
+            </div>
         </div>
         <br />
 
@@ -47,22 +49,9 @@
 </section>
 
 <section style="float:inherit; width: 55%;">
-@{    
-    if (usersRoles.Count() > 0) {
-        @Html.Label("User Roles")
-        int index = 0;
-        foreach (string roleName in usersRoles) {
-        <div class="table-row">
-            <div class="display-label table-cell">
-                 @Html.Raw((++index).ToString())
-            </div>
-            <div class="display-field table-cell">
-                @Html.Raw(roleName)
-            </div>
-        </div>
-        }
-    }
-}
+    <div id="user-roles">
+        @Html.Partial("~/Views/User/Partials/UserRoles.cshtml")
+    </div>
 </section>
 
 @section Scripts {

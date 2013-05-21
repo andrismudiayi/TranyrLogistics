@@ -9,19 +9,19 @@ namespace TranyrLogistics.Models
         [Key]
         public int ID { get; set; }
 
-        [Required]
         [Display(Name = "Company")]
+        [Required(ErrorMessage = "*")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "VAT number")]
         public string VatNumber { get; set; }
 
-        [Required]
         [Display(Name = "Email Address")]
+        [Required(ErrorMessage = "*")]
         public string EmailAddress { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Contact number")]
         public string ContactNumber { get; set; }
 
@@ -31,17 +31,19 @@ namespace TranyrLogistics.Models
         [Display(Name = "Emergency number")]
         public string EmergencyNumber { get; set; }
 
-        [Required]
         [Display(Name = "Physical Address")]
+        [Required(ErrorMessage = "*")]
         public string PhysicalAddress { get; set; }
 
         [Display(Name = "Postal Address")]
         public string PostalAddress { get; set; }
 
         [Display(Name = "Postal code")]
+        [Required(ErrorMessage = "*")]
         public string PostalCode { get; set; }
 
         [Display(Name = "State/Province")]
+        [Required(ErrorMessage = "*")]
         public string StateOrProvince { get; set; }
 
         [Display(Name = "Country")]
@@ -50,8 +52,10 @@ namespace TranyrLogistics.Models
         [Display(Name = "Group")]
         public virtual ServiceProviderGroup ServiceProviderGroup { get; set; }
 
+        [Required(ErrorMessage = "*")]
         public virtual int? ServiceProviderGroupID { get; set; }
 
+        [Required(ErrorMessage = "*")]
         public virtual int? CountryID { get; set; }
         
         public virtual DateTime? CreateDate { get; set; }

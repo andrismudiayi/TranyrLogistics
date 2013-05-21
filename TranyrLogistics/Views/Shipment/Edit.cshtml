@@ -15,12 +15,29 @@
     <fieldset>
         <legend>Shipment</legend>
 
-        <div class="featured">
+        <div class="table-row">
+            <div id="customer-information-banner" class="table-cell" style="cursor:pointer; font-weight:lighter bold">
+                + @Model.Customer.DisplayName (@Model.Customer.CustomerNumber)
+            </div>
+            @if (!Model.Customer.Notes.IsEmpty())
+            {
+                <img src="/Images/alert.png" />
+            }
+        </div>
+        <div id="customer-information" class="featured" style="width:400px;">
             <div class="form-wrapper">
-                 @if (Model.CustomerID > 0)
-                 {
-                    @Html.Partial("~/Views/Customer/Partials/CustomerDetails.cshtml", Model.Customer)
-                 }
+                @if (Model.CustomerID > 0)
+                {
+                    if (Model.Customer is TranyrLogistics.Models.Customers.Company)
+                    {
+                        @Html.Partial("~/Views/Shipment/Partials/CompanyDetails.cshtml", Model.Customer);
+                        
+                    }
+                    if (Model.Customer is TranyrLogistics.Models.Customers.Individual)
+                    {
+                        @Html.Partial("~/Views/Shipment/Partials/IndividualDetails.cshtml", Model.Customer);
+                    }
+                }
                 <br />
             </div>
         </div>
@@ -32,7 +49,7 @@
             @Html.LabelFor(model => model.ServiceProviderID, "Service Provider")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("ServiceProviderID", String.Empty)
+            @Html.DropDownListFor(model => model.ServiceProviderID, ViewBag.ServiceProviderID as List<SelectListItem>)
             @Html.ValidationMessageFor(model => model.ServiceProviderID)
         </div>
 
@@ -42,6 +59,22 @@
         <div class="editor-field">
             @Html.EnumDropDownListFor(model => model.Transport)
             @Html.ValidationMessageFor(model => model.Transport)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ActualCollectionTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ActualCollectionTime)
+            @Html.ValidationMessageFor(model => model.ActualCollectionTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CollectionPoint)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.CollectionPoint)
+            @Html.ValidationMessageFor(model => model.CollectionPoint)
         </div>
 
         <div class="editor-label">
@@ -56,8 +89,8 @@
             @Html.LabelFor(model => model.OriginCountry)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("OriginCountryID")
-            @Html.ValidationMessageFor(model => model.OriginCountry)
+            @Html.DropDownListFor(model => model.OriginCountryID, ViewBag.OriginCountryID as List<SelectListItem>)
+            @Html.ValidationMessageFor(model => model.OriginCountryID)
         </div>
 
         <div class="editor-label">
@@ -80,27 +113,11 @@
             @Html.LabelFor(model => model.DestinationCountry)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("DestinationCountryID")
-            @Html.ValidationMessageFor(model => model.DestinationCountry)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CollectionPoint)
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.CollectionPoint)
-            @Html.ValidationMessageFor(model => model.CollectionPoint)
+            @Html.DropDownListFor(model => model.DestinationCountryID, ViewBag.DestinationCountryID as List<SelectListItem>)
+            @Html.ValidationMessageFor(model => model.DestinationCountryID)
         </div>
 
         @Html.HiddenFor(model => model.PlannedCollectionTime)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ActualCollectionTime)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ActualCollectionTime)
-            @Html.ValidationMessageFor(model => model.ActualCollectionTime)
-        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Recipient)
@@ -114,7 +131,7 @@
             @Html.LabelFor(model => model.ShippingTermsID, "Shipping Terms")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("ShippingTermsID", String.Empty)
+            @Html.DropDownListFor(model => model.ShippingTermsID, ViewBag.ShippingTermsID as List<SelectListItem>)
             @Html.ValidationMessageFor(model => model.ShippingTermsID)
         </div>
 
@@ -169,14 +186,6 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.InsuranceRequired)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.InsuranceRequired)
-            @Html.ValidationMessageFor(model => model.InsuranceRequired)
-        </div>
-
-        <div class="editor-label">
             @Html.LabelFor(model => model.MasterBillNumber)
         </div>
         <div class="editor-field">
@@ -201,6 +210,30 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.InsuranceRequired)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InsuranceRequired)
+            @Html.ValidationMessageFor(model => model.InsuranceRequired)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CustomsEntry)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.CustomsEntry)
+            @Html.ValidationMessageFor(model => model.CustomsEntry)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EstimatedValue)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EstimatedValue)
+            @Html.ValidationMessageFor(model => model.EstimatedValue)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.ShipShape)
         </div>
         <div class="editor-field">
@@ -214,14 +247,6 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.ClientRefNumber)
             @Html.ValidationMessageFor(model => model.ClientRefNumber)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CustomsEntry)
-        </div>
-        <div class="editor-field">
-            @Html.EnumDropDownListFor(model => model.CustomsEntry)
-            @Html.ValidationMessageFor(model => model.CustomsEntry)
         </div>
 
         <p>
@@ -239,10 +264,20 @@
 }
 
 <script type="text/javascript">
+    var bShowCustomerInfo = false;
+
     $('#ActualCollectionTime').datetimepicker({ dateFormat: "dd MM yy", });
     $('#ActualTimeOfArrival').datetimepicker({ dateFormat: "dd MM yy", });
+    $("#customer-information").hide();
     $(document).ready(function () {
-        $("#company-create-form").hide();
-        $("#individual-create-form").hide();
+        $("#customer-information-banner").click(function () {
+            $("#customer-information").slideToggle("slow");
+            if (bShowCustomerInfo) {
+                $("#customer-information-banner").text("+ @Model.Customer.DisplayName (@Model.Customer.CustomerNumber)");
+            } else {
+                $("#customer-information-banner").text("- @Model.Customer.DisplayName (@Model.Customer.CustomerNumber)");
+            }
+            bShowCustomerInfo = !bShowCustomerInfo;
+        });
     });
 </script>

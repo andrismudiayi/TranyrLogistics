@@ -2,7 +2,8 @@
 
 @model TranyrLogistics.Models.Customers.Individual
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -22,14 +23,6 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.FirstName)
             @Html.ValidationMessageFor(model => model.FirstName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Initial)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Initial)
-            @Html.ValidationMessageFor(model => model.Initial)
         </div>
 
         <div class="editor-label">
@@ -116,15 +109,15 @@
             @Html.LabelFor(model => model.Country)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("CountryID", String.Empty)
-            @Html.ValidationMessageFor(model => model.Country)
+            @Html.DropDownListFor(model => model.CountryID, ViewBag.CountryID as List<SelectListItem>, string.Empty)
+            @Html.ValidationMessageFor(model => model.CountryID)
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.CustomerGroupID, "Group")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("CustomerGroupID", String.Empty)
+            @Html.DropDownListFor(model => model.CustomerGroupID, ViewBag.CustomerGroupID as List<SelectListItem>, string.Empty)
             @Html.ValidationMessageFor(model => model.CustomerGroupID)
         </div>
 
@@ -134,6 +127,14 @@
         <div class="editor-field">
             @Html.EnumDropDownListFor(model => model.Priority)
             @Html.ValidationMessageFor(model => model.Priority)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes)
+            @Html.ValidationMessageFor(model => model.Notes)
         </div>
     </fieldset>
 

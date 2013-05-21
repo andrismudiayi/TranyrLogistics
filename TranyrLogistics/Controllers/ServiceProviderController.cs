@@ -42,8 +42,8 @@ namespace TranyrLogistics.Controllers
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Create()
         {
-            ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name");
             ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name");
             return View();
         }
 
@@ -61,6 +61,8 @@ namespace TranyrLogistics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name");
 
             return View(serviceprovider);
         }
@@ -71,14 +73,15 @@ namespace TranyrLogistics.Controllers
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Edit(int id = 0)
         {
-            ServiceProvider serviceprovider = db.ServiceProviders.Find(id);
-            if (serviceprovider == null)
+            ServiceProvider serviceProvider = db.ServiceProviders.Find(id);
+            if (serviceProvider == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name", serviceprovider.ServiceProviderGroupID);
-            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", serviceprovider.CountryID);
-            return View(serviceprovider);
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", serviceProvider.CountryID);
+            ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name", serviceProvider.ServiceProviderGroupID);
+
+            return View(serviceProvider);
         }
 
         //
@@ -100,6 +103,9 @@ namespace TranyrLogistics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", serviceProvider.CountryID);
+            ViewBag.ServiceProviderGroupID = new SelectList(db.ServiceProviderGroups, "ID", "Name", serviceProvider.ServiceProviderGroupID);
+
             return View(serviceProvider);
         }
 

@@ -3,6 +3,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
+using TranyrLogistics.Controllers.Utility;
 using TranyrLogistics.Models;
 using TranyrLogistics.Models.Utility;
 
@@ -74,9 +76,13 @@ namespace TranyrLogistics.Controllers
             if (enquiry_id > 0)
             {
                 enquiry = db.Enquiries.Find(enquiry_id);
+                shipment.ServiceProviderID = enquiry.PreferedServiceProviderID;
+                shipment.Transport = enquiry.Transport;
                 shipment.PlannedCollectionTime = enquiry.PlannedShipmentTime;
+                shipment.CollectionPoint = enquiry.CollectionPoint;
                 shipment.OriginCity = enquiry.OriginCity;
                 shipment.OriginCountryID = enquiry.OriginCountryID;
+                shipment.DestinationAddress = enquiry.DestinationAddress;
                 shipment.DestinationCity = enquiry.DestinationCity;
                 shipment.DestinationCountryID = enquiry.DestinationCountryID;
                 shipment.Category = enquiry.Category;
@@ -84,13 +90,16 @@ namespace TranyrLogistics.Controllers
                 shipment.NumberOfPackages = enquiry.NumberOfPackages;
                 shipment.GrossWeight = enquiry.GrossWeight;
                 shipment.VolumetricWeight = enquiry.VolumetricWeight;
+                shipment.EstimatedValue = enquiry.EstimatedValue;
                 shipment.InsuranceRequired = enquiry.InsuranceRequired;
+                shipment.ReferralEnquiryID = enquiry.ID;
             }
 
             ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.OriginCountryID);
             ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.DestinationCountryID);
             ViewBag.ShippingTermsID = new SelectList(db.ShippingTerms, "ID", "Standard", shipment.ShippingTermsID);
             ViewBag.ServiceProviderID = new SelectList(db.ServiceProviders, "ID", "Name", shipment.ServiceProviderID);
+
             return View(shipment);
         }
 
@@ -107,8 +116,33 @@ namespace TranyrLogistics.Controllers
             shipment.CreateDate = shipment.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
+                shipment.CreatedBy = User.Identity.Name;
+
+                if (shipment.ReferralEnquiryID > 0)
+                {
+                    var enquiry = db.Enquiries.Find(shipment.ReferralEnquiryID);
+                    if (enquiry == null)
+                    {
+                        return RedirectToAction("Error");
+                    }
+                    enquiry.Status = Enquiry.State.CLOSED;
+                    db.Entry(enquiry).State = EntityState.Modified;                    
+                }
+
                 db.Shipments.Add(shipment);
                 db.SaveChanges();
+
+                if (shipment.InsuranceRequired)
+                {
+                    shipment.Customer = db.Customers.Find(shipment.CustomerID);
+                    EmailTemplate.Send(
+                        "finance@tranyr.com",
+                        "system@tranyr.com",
+                        "Shipment Insurance Request",
+                        EmailTemplate.PerpareInsuranceRequestEmail(shipment, @"~\views\EmailTemplate\InsuranceRequestEmail.html.cshtml"),
+                        true
+                    );
+                }
                 return RedirectToAction("Index");
             }
             return this.Create(shipment.CustomerID);
@@ -136,6 +170,7 @@ namespace TranyrLogistics.Controllers
             ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", shipment.DestinationCountryID);
             ViewBag.ShippingTermsID = new SelectList(db.ShippingTerms, "ID", "Standard", shipment.ShippingTermsID);
             ViewBag.ServiceProviderID = new SelectList(db.ServiceProviders, "ID", "Name", shipment.ServiceProviderID);
+
             return View(shipment);
         }
 
@@ -152,6 +187,7 @@ namespace TranyrLogistics.Controllers
                 shipment.CustomerID = currentShipment.CustomerID;
                 shipment.ReferenceNumber = currentShipment.ReferenceNumber;
                 shipment.CreateDate = currentShipment.CreateDate;
+                shipment.CreatedBy = currentShipment.CreatedBy;
             }
             shipment.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
@@ -190,6 +226,32 @@ namespace TranyrLogistics.Controllers
             db.Shipments.Remove(shipment);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //
+        // GET: /Shipment/AssignShipmentToUser
+
+        [Authorize(Roles = "Customer-Service, Manager, Operator")]
+        public ActionResult AssignShipmentToUser(int id, string username)
+        {
+            Shipment shipment = db.Shipments.Find(id);
+            if (shipment == null)
+            {
+                return HttpNotFound();
+            }
+
+            using (TranyrMembershipDb userDb = new TranyrMembershipDb())
+            {
+                UserProfile userProfile = userDb.UserProfiles.FirstOrDefault(x => x.UserName == username);
+                if (!Roles.IsUserInRole(userProfile.UserName, "Manager") || !Roles.IsUserInRole(userProfile.UserName, "Operator"))
+                {
+                    return HttpNotFound();
+                }
+            }
+
+            shipment.AssignedTo = username;
+
+            return this.Edit(shipment);
         }
 
         protected override void Dispose(bool disposing)

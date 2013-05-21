@@ -9,11 +9,11 @@ namespace TranyrLogistics.Models
         [Key]
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Label")]
         public string Label { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "Description")]
         public string Description { get; set; }
 

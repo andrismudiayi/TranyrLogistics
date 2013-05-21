@@ -11,6 +11,8 @@ namespace TranyrLogistics.Controllers.Utility
 {
     public class EmailTemplate
     {
+        protected static SmtpClient smtpClient = new SmtpClient();
+
         public static void Send(string sendTo, string from, string subject, string messageBody, bool isHtml = false)
         {
             List<string> to = new List<string>();
@@ -22,9 +24,6 @@ namespace TranyrLogistics.Controllers.Utility
 
         public static void Send(List<string> sendTo, string from, string subject, string messageBody, bool isHtml = false)
         {
-            SmtpClient smtpClient = new SmtpClient("127.0.0.1", 25);
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-
             MailMessage mailMessage = new MailMessage();
             mailMessage.IsBodyHtml = isHtml;
             mailMessage.From = new MailAddress(from);
@@ -48,9 +47,6 @@ namespace TranyrLogistics.Controllers.Utility
 
         public static void Send(List<string> sendTo, string from, string subject, string messageBody, bool isHtml = false, List<string> attachmentFiles = null)
         {
-            SmtpClient smtpClient = new SmtpClient("127.0.0.1", 25);
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-
             MailMessage mailMessage = new MailMessage();
             mailMessage.IsBodyHtml = isHtml;
             mailMessage.From = new MailAddress(from);
@@ -61,10 +57,13 @@ namespace TranyrLogistics.Controllers.Utility
             mailMessage.Subject = subject;
             mailMessage.Body = messageBody;
 
-            foreach (string attachmentFile in attachmentFiles)
+            if (attachmentFiles != null && attachmentFiles.Count > 0)
             {
-                Attachment attachment = new Attachment(attachmentFile, MediaTypeNames.Application.Octet);
-                mailMessage.Attachments.Add(attachment);
+                foreach (string attachmentFile in attachmentFiles)
+                {
+                    Attachment attachment = new Attachment(attachmentFile, MediaTypeNames.Application.Octet);
+                    mailMessage.Attachments.Add(attachment);
+                }
             }
 
             smtpClient.Send(mailMessage);
@@ -227,6 +226,22 @@ namespace TranyrLogistics.Controllers.Utility
                         readTemplateFile = readTemplateFile.Replace("$$FIRST_NAME$$", "Sir/Madam");
                     }
                 }
+            }
+
+            return readTemplateFile;
+        }
+
+        public static string PerpareInsuranceRequestEmail(Shipment shipment, string templatePath)
+        {
+            string readTemplateFile = string.Empty;
+
+            using (StreamReader streamReader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(templatePath)))
+            {
+                readTemplateFile = streamReader.ReadToEnd();
+
+                readTemplateFile = readTemplateFile.Replace("$$CUSTOMER_NAME$$", shipment.Customer.DisplayName);
+                readTemplateFile = readTemplateFile.Replace("$$SHIPMENT_ID$$", shipment.ID.ToString());
+                readTemplateFile = readTemplateFile.Replace("$$SHIPMENT_REF$$", shipment.ReferenceNumber);
             }
 
             return readTemplateFile;

@@ -12,49 +12,64 @@ namespace TranyrLogistics.Models
         [Key]
         public int ID { get; set; }
 
-        [Required]
         [Display(Name = "Enquiry type")]
+        [Required(ErrorMessage = "*")]
         public EnquiryType EnquiryType { get; set; }
 
-        [Required]
+        [Display(Name = "Transport")]
+        [Required(ErrorMessage = "*")]
+        public Transportation Transport { get; set; }
+
         [Display(Name = "Planned shipment date/time")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "*")]
         public DateTime PlannedShipmentTime { get; set; }
 
-        [Required]        
+        [Required(ErrorMessage = "*")]
+        [Display(Name = "Collection point")]
+        public string CollectionPoint { get; set; }
+
         [Display(Name = "Origin city")]
+        [Required(ErrorMessage = "*")]
         public string OriginCity { get; set; }
 
         [Display(Name = "Origin country")]
         public Country OriginCountry { get; set; }
 
-        [Required]
+        [Display(Name = "Destination address")]
+        [Required(ErrorMessage = "*")]
+        public string DestinationAddress { get; set; }
+
         [Display(Name = "Destination city")]
+        [Required(ErrorMessage = "*")]
         public string DestinationCity { get; set; }
 
 
         [Display(Name = "Destination country")]
         public Country DestinationCountry { get; set; }
 
-        [Required]
         [Display(Name = "Category")]
+        [Required(ErrorMessage = "*")]
         public ShipmentCategory? Category { get; set; }
 
-        [Required]
         [Display(Name = "Goods description")]
+        [Required(ErrorMessage = "*")]
         public string GoodsDescription { get; set; }
 
-        [Required]
         [Display(Name = "Number of packages")]
+        [Required(ErrorMessage = "*")]
         public int NumberOfPackages { get; set; }
 
-        [Required]
         [Display(Name = "Gross weight (Kg)")]
+        [Required(ErrorMessage = "*")]
         public decimal GrossWeight { get; set; }
 
         [Display(Name = "Volumetric weight")]
         public decimal VolumetricWeight { get; set; }
+
+        [Display(Name = "Estimated Value")]
+        public string EstimatedValue { get; set; }
 
         [Display(Name = "Insurance required?")]
         public bool InsuranceRequired { get; set; }
@@ -74,8 +89,41 @@ namespace TranyrLogistics.Models
         [Display(Name = "Customer confirmation sent")]
         public bool CustomerConfirmationSent { get; set; }
 
-        [Display(Name = "Service provider transport order sent")]
-        public bool ProviderTransportOrderSent { get; set; }
+        [Display(Name = "Transport order sent")]
+        public bool TransportOrderSent { get; set; }
+
+        [Display(Name = "Created by")]
+        public string CreatedBy { get; set; }
+
+        [Display(Name = "Assigned to")]
+        public string AssignedTo { get; set; }
+
+        public virtual int? PreferedServiceProviderID { get; set; }
+
+        [Display(Name = "Prefered Provider")]
+        public ServiceProvider PreferedServiceProvider { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public virtual int? OriginCountryID { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public virtual int? DestinationCountryID { get; set; }
+
+        [Display(Name = "Status")]
+        [NotMapped]
+        public State Status
+        {
+            get
+            {
+                return (Enquiry.State)StatusIndex;
+            }
+            set
+            {
+                StatusIndex = (int)value;
+            }
+        }
+
+        public int StatusIndex { get; set; }
 
         [NotMapped]
         public string DisplayName
@@ -98,8 +146,14 @@ namespace TranyrLogistics.Models
 
         public virtual DateTime ModifiedDate { get; set; }
 
-        public virtual int? OriginCountryID { get; set; }
-
-        public virtual int? DestinationCountryID { get; set; }
+        public enum State
+        {
+            [Display(Name = "Closed")]
+            CLOSED,
+            [Display(Name = "Cancelled")]
+            CANCELLED,
+            [Display(Name = "Open")]
+            OPEN,
+        }
     }
 }

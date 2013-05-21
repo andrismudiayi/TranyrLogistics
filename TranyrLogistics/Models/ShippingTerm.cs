@@ -7,8 +7,8 @@ namespace TranyrLogistics.Models
         [Key]
         public int ID { get; set; }
 
-        [Required]
         [Display(Name = "Standard")]
+        [Required(ErrorMessage = "*")]
         public string Standard { get; set; }
 
         [Display(Name = "Description")]

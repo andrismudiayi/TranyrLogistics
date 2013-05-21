@@ -16,43 +16,49 @@ namespace TranyrLogistics.Models
         [Display(Name = "Customer No.")]
         public string CustomerNumber { get; set; }
 
-        [Required]
         [Display(Name = "Email address")]
         [EmailAddress]
+        [Required(ErrorMessage = "*")]
         public string EmailAddress { get; set; }
 
-        [Required]
         [Display(Name = "Contact number")]
+        [Required(ErrorMessage = "*")]
         public string ContactNumber { get; set; }
 
         [Display(Name = "Mobile")]
         public string Mobile { get; set; }
 
-        [Required]
         [Display(Name = "Physical Address")]
+        [Required(ErrorMessage = "*")]
         public string PhysicalAddress { get; set; }
 
         [Display(Name = "Postal Address")]
         public string PostalAddress { get; set; }
 
         [Display(Name = "Postal code")]
+        [Required(ErrorMessage = "*")]
         public string PostalCode { get; set; }
 
         [Display(Name = "State/Province")]
+        [Required(ErrorMessage = "*")]
         public string StateOrProvince { get; set; }
 
         [Display(Name = "Country")]
         public Country Country { get; set; }
 
-        [Required]
         [Display(Name = "Priority")]
+        [Required(ErrorMessage = "*")]
         public Priority Priority { get; set; }
 
         [Display(Name = "Group")]
         public virtual CustomerGroup CustomerGroup { get; set; }
 
+        public string Notes { get; set; }
+
+        [Required(ErrorMessage = "*")]
         public virtual int? CustomerGroupID { get; set; }
 
+        [Required(ErrorMessage = "*")]
         public virtual int? CountryID { get; set; }
         
         public virtual DateTime? CreateDate { get; set; }
@@ -68,14 +74,7 @@ namespace TranyrLogistics.Models
             {
                 if (this is Individual)
                 {
-                    if (((Individual)this).Initial != string.Empty)
-                    {
-                        return ((Individual)this).FirstName + " " + ((Individual)this).Initial + " " + ((Individual)this).LastName;
-                    }
-                    else
-                    {
-                        return ((Individual)this).FirstName + " " + ((Individual)this).LastName;
-                    }
+                    return ((Individual)this).FirstName + " " + ((Individual)this).LastName;
                 }
                 else if (this is Company)
                 {

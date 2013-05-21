@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 
 namespace TranyrLogistics.Views.Helpers
@@ -35,6 +36,20 @@ namespace TranyrLogistics.Views.Helpers
             imglink.MergeAttributes((IDictionary<string, string>)htmlAttributes, true);
 
             return new MvcHtmlString(imglink.ToString());
+        }
+
+        public static MvcHtmlString SecureActionImageLink(this AjaxHelper ajaxHelper, string imgSrc, string alt, string actionName, string controllerName, AjaxOptions ajaxOptions, object routeValues = null,  object htmlAttributes = null, object imgHtmlAttributes = null)
+        {
+            if (!ControllerAuth.HasActionPermission(ajaxHelper, actionName, controllerName))
+            {
+                return MvcHtmlString.Empty;
+            }
+            var builder = new TagBuilder("img");
+            builder.MergeAttribute("src", imgSrc);
+            builder.MergeAttribute("alt", alt);
+
+            var link = ajaxHelper.ActionLink("[replaceme]", actionName, routeValues, ajaxOptions).ToHtmlString();
+            return MvcHtmlString.Create(link.Replace("[replaceme]", builder.ToString(TagRenderMode.SelfClosing)));
         }
     }
 }

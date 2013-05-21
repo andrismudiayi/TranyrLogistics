@@ -50,6 +50,33 @@
 
     <div class="table-row">
         <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.PlannedCollectionTime)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.PlannedCollectionTime)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.ActualCollectionTime)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.ActualCollectionTime)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.CollectionPoint)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.CollectionPoint)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
             @Html.DisplayNameFor(model => model.OriginCity)
         </div>
         <div class="display-field table-cell">
@@ -90,33 +117,6 @@
         </div>
         <div class="display-field table-cell">
             @Model.DestinationCountry.Name
-        </div>
-    </div>
-
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.CollectionPoint)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.CollectionPoint)
-        </div>
-    </div>
-
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.PlannedCollectionTime)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.PlannedCollectionTime)
-        </div>
-    </div>
-
-    <div class="table-row">
-        <div class="display-label table-cell">
-            @Html.DisplayNameFor(model => model.ActualCollectionTime)
-        </div>
-        <div class="display-field table-cell">
-            @Html.DisplayFor(model => model.ActualCollectionTime)
         </div>
     </div>
 
@@ -239,10 +239,28 @@
 
     <div class="table-row">
         <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.InsuranceRequired)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.InsuranceRequired)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
             @Html.DisplayNameFor(model => model.CustomsEntry)
         </div>
         <div class="display-field table-cell">
             @Html.DisplayFor(model => model.CustomsEntry)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.EstimatedValue)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.EstimatedValue)
         </div>
     </div>
 
@@ -270,6 +288,24 @@
         </div>
         <div class="display-field table-cell">
             @Html.DisplayFor(model => model.CreateDate)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.CreatedBy)
+        </div>
+    </div>
+
+    <div class="table-row">
+        <div class="display-label table-cell">
+            @Html.DisplayNameFor(model => model.AssignedTo)
+        </div>
+        <div class="display-field table-cell">
+            @Html.DisplayFor(model => model.AssignedTo)
         </div>
     </div>
 

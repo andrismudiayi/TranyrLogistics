@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 using TranyrLogistics.Controllers.Utility;
 using TranyrLogistics.Models;
 using TranyrLogistics.Models.Enquiries;
@@ -19,9 +20,9 @@ namespace TranyrLogistics.Controllers
         // GET: /Enquiry/
 
         [Authorize(Roles = "Customer-Service, Finance, Manager, Operator")]
-        public ActionResult Index()
+        public ActionResult Index(Enquiry.State state = Enquiry.State.OPEN)
         {
-            var enquiries = db.Enquiries.Include(c => c.OriginCountry).Include(c => c.DestinationCountry);
+            var enquiries = db.Enquiries.Where(x => x.StatusIndex == (int) Enquiry.State.OPEN).Include(c => c.OriginCountry).Include(c => c.DestinationCountry);
             var enquiryList = enquiries.ToList();
             foreach (Enquiry enquiry in enquiryList)
             {
@@ -33,6 +34,120 @@ namespace TranyrLogistics.Controllers
             }
 
             return View(enquiryList);
+        }
+
+        //
+        // GET: /Enquiry/CreateExistingCustomerEnquiry
+
+        [Authorize(Roles = "Customer-Service, Manager")]
+        public ActionResult CreateExistingCustomerEnquiry(int customer_id = 0)
+        {
+            if (customer_id > 0)
+            {
+                Customer customer = db.Customers.Find(customer_id);
+                ViewBag.CustomerNumber = customer.CustomerNumber;
+            }
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+
+            return View(new ExistingCustomerEnquiry());
+        }
+
+        //
+        // POST: /Enquiry/Create
+
+        [HttpPost]
+        [Authorize(Roles = "Customer-Service, Manager")]
+        public ActionResult CreateExistingCustomerEnquiry(Enquiry enquiry)
+        {
+            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
+            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
+            enquiry.CreateDate = enquiry.ModifiedDate = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var customer = db.Customers.FirstOrDefault(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber);
+                    if (customer == null)
+                    {
+                        return RedirectToAction("NotFound");
+                    }
+
+                    ((ExistingCustomerEnquiry)enquiry).CustomerID = customer.ID;
+                    ((ExistingCustomerEnquiry)enquiry).Customer = customer;
+
+                    EmailTemplate.Send(
+                        ((ExistingCustomerEnquiry)enquiry).Customer.EmailAddress,
+                        "info@tranyr.com",
+                        "Enquiry Verification",
+                        EmailTemplate.PrepareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml"),
+                        true
+                    );
+                    enquiry.VerificationSent = true;
+                }
+                catch { }
+
+                enquiry.CreatedBy = User.Identity.Name;
+                enquiry.Status = Enquiry.State.OPEN;
+
+                db.Enquiries.Add(enquiry);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+
+            return View(enquiry);
+        }
+
+        //
+        // GET: /Enquiry/CreatePotentialCustomerEnquiry
+
+        [Authorize(Roles = "Customer-Service, Manager")]
+        public ActionResult CreatePotentialCustomerEnquiry()
+        {
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+
+            return View(new PotentialCustomerEnquiry());
+        }
+
+        //
+        // POST: /Enquiry/CreatePotentialCustomerEnquiry
+
+        [HttpPost]
+        [Authorize(Roles = "Customer-Service, Manager")]
+        public ActionResult CreatePotentialCustomerEnquiry(Enquiry enquiry)
+        {
+            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
+            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
+            enquiry.CreateDate = enquiry.ModifiedDate = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    EmailTemplate.Send(
+                        ((PotentialCustomerEnquiry)enquiry).EmailAddress,
+                        "info@tranyr.com",
+                        "Enquiry Verification",
+                        EmailTemplate.PrepareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml"),
+                        true
+                    );
+                    enquiry.VerificationSent = true;
+                }
+                catch { }
+
+                enquiry.CreatedBy = User.Identity.Name;
+                enquiry.Status = Enquiry.State.OPEN;
+
+                db.Enquiries.Add(enquiry);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+
+            return View(enquiry);
         }
 
         //
@@ -57,72 +172,6 @@ namespace TranyrLogistics.Controllers
         }
 
         //
-        // GET: /Enquiry/Create
-
-        [Authorize(Roles = "Customer-Service, Manager")]
-        public ActionResult Create()
-        {
-            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
-            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
-            return View();
-        }
-
-        //
-        // POST: /Enquiry/Create
-
-        [HttpPost]
-        [Authorize(Roles = "Customer-Service, Manager")]
-        public ActionResult Create(Enquiry enquiry)
-        {
-            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
-            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
-            enquiry.CreateDate = enquiry.ModifiedDate = DateTime.Now;
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    if (enquiry is PotentialCustomerEnquiry)
-                    {
-                        EmailTemplate.Send(
-                            ((PotentialCustomerEnquiry)enquiry).EmailAddress,
-                            "info@tranyr.com",
-                            "Enquiry Verification",
-                            EmailTemplate.PrepareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml"),
-                            true
-                        );
-                    }
-                    else if (enquiry is ExistingCustomerEnquiry)
-                    {
-                        var customer = db.Customers.FirstOrDefault(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber);
-                        if (customer == null)
-                        {
-                            return RedirectToAction("NotFound");
-                        }
-
-                        ((ExistingCustomerEnquiry)enquiry).CustomerID = customer.ID;
-                        ((ExistingCustomerEnquiry)enquiry).Customer = customer;
-
-                        EmailTemplate.Send(
-                            ((ExistingCustomerEnquiry)enquiry).Customer.EmailAddress,
-                            "info@tranyr.com",
-                            "Enquiry Verification",
-                            EmailTemplate.PrepareVerificationEmail(enquiry, @"~\views\EmailTemplate\EnquiryVerificationEmail.html.cshtml"),
-                            true
-                        );
-                    }
-                    enquiry.VerificationSent = true;
-                }
-                catch { }
-
-                db.Enquiries.Add(enquiry);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(enquiry);
-        }
-
-        //
         // GET: /Enquiry/Edit/5
 
         [Authorize(Roles = "Customer-Service, Manager")]
@@ -134,6 +183,7 @@ namespace TranyrLogistics.Controllers
             {
                 return HttpNotFound();
             }
+
             ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", enquiry.OriginCountryID);
             ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name", enquiry.DestinationCountryID);
             
@@ -159,6 +209,9 @@ namespace TranyrLogistics.Controllers
                 enquiry.QuotationRequested = currentEnquiry.QuotationRequested;
                 enquiry.QuotationSent = currentEnquiry.QuotationSent;
                 enquiry.CreateDate = currentEnquiry.CreateDate;
+                enquiry.CreatedBy = currentEnquiry.CreatedBy;
+                enquiry.AssignedTo = currentEnquiry.AssignedTo;
+                enquiry.StatusIndex = currentEnquiry.StatusIndex;
             }
             enquiry.ModifiedDate = DateTime.Now;
             if (ModelState.IsValid)
@@ -167,6 +220,10 @@ namespace TranyrLogistics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.OriginCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.DestinationCountryID = new SelectList(db.Countries.OrderBy(x => x.Name), "ID", "Name");
+
             return View(enquiry);
         }
 
@@ -213,8 +270,13 @@ namespace TranyrLogistics.Controllers
                 ((ExistingCustomerEnquiry)enquiry).Customer = db.Customers.Where(x => x.CustomerNumber == ((ExistingCustomerEnquiry)enquiry).CustomerNumber).FirstOrDefault();
             }
 
-            var customerTransportOrders = db.CustomerTransportOrders.Where(x => x.EnquiryID == enquiry.ID);
-            ViewBag.CustomerTransportOrders = customerTransportOrders.ToList();
+            if (enquiry.PreferedServiceProviderID > 0)
+            {
+                enquiry.PreferedServiceProvider = db.ServiceProviders.Find(enquiry.PreferedServiceProviderID);
+            }
+
+            var customerConfirmations = db.CustomerConfirmations.Where(x => x.EnquiryID == enquiry.ID);
+            ViewBag.CustomerConfirmations = customerConfirmations.ToList();
 
             return View(enquiry);
         }
@@ -478,38 +540,42 @@ namespace TranyrLogistics.Controllers
                 return RedirectToAction("Error");
             }
 
+            List<string> attachTransportOrder = null;
+
             if (Request.Files.Count > 0)
             {
                 var file = Request.Files["FilePath"];
                 var fileName = Path.GetFileName(file.FileName);
-                string uploadDirectoryPath = Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory +
-                    @"Uploads\EnquiryDocs\" + enquiry.ID + @"\"
-                );
-                string savedFileName = Path.Combine(
-                     uploadDirectoryPath,
-                     DateTime.Now.Ticks + Path.GetExtension(fileName)
-                 );
-                if (!Directory.Exists(uploadDirectoryPath))
+                if (fileName != string.Empty)
                 {
-                    Directory.CreateDirectory(uploadDirectoryPath);
-                }
-                file.SaveAs(savedFileName);
-                customerConfirmation.ActualFileName = fileName;
-                customerConfirmation.FilePathOnDisc = savedFileName;
-            }
+                    string uploadDirectoryPath = Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory +
+                        @"Uploads\EnquiryDocs\" + enquiry.ID + @"\"
+                    );
+                    string savedFileName = Path.Combine(
+                         uploadDirectoryPath,
+                         DateTime.Now.Ticks + Path.GetExtension(fileName)
+                     );
+                    if (!Directory.Exists(uploadDirectoryPath))
+                    {
+                        Directory.CreateDirectory(uploadDirectoryPath);
+                    }
+                    file.SaveAs(savedFileName);
+                    customerConfirmation.ActualFileName = fileName;
+                    customerConfirmation.FilePathOnDisc = savedFileName;
 
-            customerConfirmation.CreateDate = DateTime.Now;
+                    customerConfirmation.CreateDate = DateTime.Now;
+                    db.CustomerConfirmations.Add(customerConfirmation);
+
+                    attachTransportOrder = new List<string>();
+                    attachTransportOrder.Add(customerConfirmation.FilePathOnDisc);
+                }
+            }
+           
             if (ModelState.IsValid)
             {
-                db.CustomerTransportOrders.Add(customerConfirmation);
-                db.SaveChanges();
-
                 try
                 {
-                    List<string> attachTransportOrder = new List<string>();
-                    attachTransportOrder.Add(customerConfirmation.FilePathOnDisc);
-
                     if (enquiry is PotentialCustomerEnquiry)
                     {
                         EmailTemplate.Send(((PotentialCustomerEnquiry)enquiry).EmailAddress, "info@tranyr.com", subject, EmailTemplate.FinalizeHtmlEmail(message_body), true, attachTransportOrder);
@@ -523,7 +589,7 @@ namespace TranyrLogistics.Controllers
                                         
                     EmailTemplate.Send(
                         "finance@tranyr.com",
-                        "info@tranyr.com",
+                        "system@tranyr.com",
                         "Customer Shipment Confirmation Sent",
                         EmailTemplate.PrepareInternalCustomerConfirmationEmail(enquiry, @"~\views\EmailTemplate\InternalCustomerConfirmationEmail.html.cshtml"),
                         true
@@ -531,6 +597,7 @@ namespace TranyrLogistics.Controllers
                 }
                 catch { }
 
+                db.Entry(enquiry).State = EntityState.Modified;
                 db.SaveChanges();
 
                 return RedirectToAction("CustomerConfirmation", new { id = enquiry.ID });
@@ -545,7 +612,7 @@ namespace TranyrLogistics.Controllers
         [Authorize(Roles = "Customer-Service, Manager")]
         public ActionResult DownloadTransportOrder(int id = 0)
         {
-            CustomerConfirmation customerTransportOrder = db.CustomerTransportOrders.Find(id);
+            CustomerConfirmation customerTransportOrder = db.CustomerConfirmations.Find(id);
 
             return File(customerTransportOrder.FilePathOnDisc,
                 FileContent.GetType(Path.GetExtension(customerTransportOrder.ActualFileName)),
@@ -586,91 +653,48 @@ namespace TranyrLogistics.Controllers
         public ActionResult SendTransportOrder(Enquiry enquiry, int service_provider_id, string subject, string message_body)
         {
             ServiceProvider serviceProvider = db.ServiceProviders.Find(service_provider_id);
-                        
+
             try
             {
                 EmailTemplate.Send(serviceProvider.EmailAddress, "info@tranyr.com", subject, EmailTemplate.FinalizeHtmlEmail(message_body), true);
-                enquiry.ProviderTransportOrderSent = true;
+                using (TranyrLogisticsDb context = new TranyrLogisticsDb())
+                {
+                    Enquiry currentEnquiry = context.Enquiries.Find(enquiry.ID);
+                    currentEnquiry.PreferedServiceProviderID = service_provider_id;
+                    currentEnquiry.TransportOrderSent = true;                    
+                    db.Entry(currentEnquiry).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
-            catch
-            { }
-
-            db.SaveChanges();
+            catch { }
 
             return RedirectToAction("CustomerConfirmation", new { id = enquiry.ID });
         }
 
         //
-        // GET: /Enquiry/ReassignEnquiry/5
+        // GET: /Enquiry/AssignEnquiryToUser
 
         [Authorize(Roles = "Customer-Service, Manager")]
-        public ActionResult ReassignEnquiry(int id = 0)
+        public ActionResult AssignEnquiryToUser(int id, string username)
         {
             Enquiry enquiry = db.Enquiries.Find(id);
-            if (enquiry is ExistingCustomerEnquiry)
+            if (enquiry == null)
             {
-                return RedirectToAction("Error");
-            }
-            return View(enquiry);
-        }
-
-        //
-        //POST: /Enquiry/ReassignEnquiry
-
-        [HttpPost, ActionName("ReassignEnquiry"), ValidateInput(false)]
-        [Authorize(Roles = "Customer-Service, Manager")]
-        public ActionResult ReassignEnquiry(Enquiry enquiry, string customer_number)
-        {
-            enquiry = db.Enquiries.Find(enquiry.ID);
-
-            if (enquiry is ExistingCustomerEnquiry)
-            {
-                return RedirectToAction("Error");
+                return HttpNotFound();
             }
 
-            Customer customer = db.Customers.FirstOrDefault(x => x.CustomerNumber == customer_number);
-            if (customer == null)
+            using (TranyrMembershipDb userDb = new TranyrMembershipDb())
             {
-                return RedirectToAction("Error");
+                UserProfile userProfile = userDb.UserProfiles.FirstOrDefault(x => x.UserName == username);
+                if (!Roles.IsUserInRole(userProfile.UserName, "Manager") || !Roles.IsUserInRole(userProfile.UserName, "Customer-Service"))
+                {
+                    return HttpNotFound();
+                }
             }
-            
-            enquiry.OriginCountry = db.Countries.Find(enquiry.OriginCountryID);
-            enquiry.DestinationCountry = db.Countries.Find(enquiry.DestinationCountryID);
 
-            ExistingCustomerEnquiry existingCustomerEnquiry = new ExistingCustomerEnquiry();
-            existingCustomerEnquiry.CustomerID = customer.ID;
-            existingCustomerEnquiry.Customer = customer;
-            existingCustomerEnquiry.CustomerNumber = customer.CustomerNumber;
-            existingCustomerEnquiry.EnquiryType = enquiry.EnquiryType;
-            existingCustomerEnquiry.PlannedShipmentTime = enquiry.PlannedShipmentTime;
-            existingCustomerEnquiry.OriginCity = enquiry.OriginCity;
-            existingCustomerEnquiry.OriginCountry = enquiry.OriginCountry;
-            existingCustomerEnquiry.OriginCountryID = enquiry.OriginCountryID;
-            existingCustomerEnquiry.DestinationCity = enquiry.DestinationCity;
-            existingCustomerEnquiry.DestinationCountry = enquiry.DestinationCountry;
-            existingCustomerEnquiry.DestinationCountryID = enquiry.DestinationCountryID;
-            existingCustomerEnquiry.Category = enquiry.Category;
-            existingCustomerEnquiry.GoodsDescription = enquiry.GoodsDescription;
-            existingCustomerEnquiry.NumberOfPackages = enquiry.NumberOfPackages;
-            existingCustomerEnquiry.GrossWeight = enquiry.GrossWeight;
-            existingCustomerEnquiry.VolumetricWeight = enquiry.VolumetricWeight;
-            existingCustomerEnquiry.InsuranceRequired = enquiry.InsuranceRequired;
-            existingCustomerEnquiry.Notes = enquiry.Notes;
-            existingCustomerEnquiry.VerificationSent = enquiry.VerificationSent;
-            existingCustomerEnquiry.QuotationRequested = enquiry.QuotationRequested;
-            existingCustomerEnquiry.QuotationSent = enquiry.QuotationSent;
-            existingCustomerEnquiry.CustomerConfirmationSent = enquiry.CustomerConfirmationSent;
-            existingCustomerEnquiry.ProviderTransportOrderSent = enquiry.ProviderTransportOrderSent;
-            existingCustomerEnquiry.CreateDate = enquiry.CreateDate;
-            existingCustomerEnquiry.ModifiedDate = enquiry.ModifiedDate;
-            existingCustomerEnquiry.VerificationSent = enquiry.VerificationSent;
-            existingCustomerEnquiry.ID = enquiry.ID;
+            enquiry.AssignedTo = username;
 
-            db.Entry(enquiry).State = EntityState.Deleted;
-            db.Entry(existingCustomerEnquiry).State = EntityState.Added;
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
+            return this.Edit(enquiry);
         }
 
         protected override void Dispose(bool disposing)

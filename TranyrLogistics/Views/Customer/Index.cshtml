@@ -58,10 +58,11 @@
             @HtmlDropDownExtensions.GetEnumDisplay(item.Priority)
         </td>
         <td>
-            @Html.SecureActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "New Shipment", "Create", "Shipment", new { customer_id=item.ID }, new Dictionary<string, string> { { "title", "Create Shipment" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/customer_shipments.png"), "Shipment List", "Index", "Shipment", new { customer_id=item.ID }, new Dictionary<string, string> { { "title", "List Shipments" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Customer", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Customer", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null) |
+            @Html.SecureActionImageLink(@Url.Content("~/Images/enquiry.png"), "New Equiry", "CreateExistingCustomerEnquiry", "Enquiry", new { customer_id=item.ID }, new Dictionary<string, string> { { "title", "Generate and send quotation" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/shipment_icon.png"), "New Shipment", "Create", "Shipment", new { customer_id=item.ID }, new Dictionary<string, string> { { "title", "Create Shipment" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/customer_shipments.png"), "Shipment List", "Index", "Shipment", new { customer_id=item.ID }, new Dictionary<string, string> { { "title", "List Shipments" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "Customer", new { id=item.ID }, new Dictionary<string, string> { { "title", "Edit" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "Customer", new { id=item.ID }, new Dictionary<string, string> { { "title", "Details" } }, null)
             @Html.SecureActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "Customer", new { id=item.ID }, new Dictionary<string, string> { { "title", "Delete" } }, null)
         </td>
     </tr>

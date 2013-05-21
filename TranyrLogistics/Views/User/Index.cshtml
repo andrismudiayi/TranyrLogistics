@@ -56,11 +56,11 @@
             @Html.Raw(item.CreateDate.ToShortDateString())
         </td>
         <td>
-            @Html.SecureActionImageLink(@Url.Content("~/Images/password.png"), "Change Password", "ChangePassword", "SystemUser", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Change Password" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/roles.png"), "Assign Role", "AssignRole", "SystemUser", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Assign Roles" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "SystemUser", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Edit" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "SystemUser", new { id=item.UserId }, new Dictionary<string, string> { { "title", "Details" } }, null) |
-            @Html.SecureActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "SystemUser", new { id=item.UserId }, new Dictionary<string, string> { { "title", "Delete" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/password.png"), "Change Password", "ChangePassword", "User", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Change Password" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/roles.png"), "Assign Role", "AssignRole", "User", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Assign Roles" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_edit.png"), "Edit", "Edit", "User", new { id = item.UserId }, new Dictionary<string, string> { { "title", "Edit" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_view_detail.png"), "Details", "Details", "User", new { id=item.UserId }, new Dictionary<string, string> { { "title", "Details" } }, null)
+            @Html.SecureActionImageLink(@Url.Content("~/Images/application_delete.png"), "Delete", "Delete", "User", new { id=item.UserId }, new Dictionary<string, string> { { "title", "Delete" } }, null)
         </td>
     </tr>
 }

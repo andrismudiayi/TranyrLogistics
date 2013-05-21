@@ -36,6 +36,34 @@ namespace TranyrLogistics.Views.Helpers
             return (ControllerBase)controller;
         }
 
+        public static bool HasActionPermission(this AjaxHelper htmlHelper, string actionName, string controllerName)
+        {
+            ControllerBase controllerToLinkTo = string.IsNullOrEmpty(controllerName)
+                ? htmlHelper.ViewContext.Controller
+                : GetControllerByName(htmlHelper, controllerName);
+
+            ControllerContext controllerContext = new ControllerContext(htmlHelper.ViewContext.RequestContext, controllerToLinkTo);
+
+            ReflectedControllerDescriptor controllerDescriptor = new ReflectedControllerDescriptor(controllerToLinkTo.GetType());
+            ActionDescriptor actionDescriptor = controllerDescriptor.FindAction(controllerContext, actionName);
+
+            return ActionIsAuthorized(controllerContext, actionDescriptor);
+        }
+
+        static ControllerBase GetControllerByName(AjaxHelper helper, string controllerName)
+        {
+            IControllerFactory factory = ControllerBuilder.Current.GetControllerFactory();
+
+            IController controller = factory.CreateController(helper.ViewContext.RequestContext, controllerName);
+
+            if (controller == null)
+            {
+                throw new InvalidOperationException("Controller not found during permission check.");
+            }
+
+            return (ControllerBase)controller;
+        }
+
         static bool ActionIsAuthorized(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
             if (actionDescriptor == null)

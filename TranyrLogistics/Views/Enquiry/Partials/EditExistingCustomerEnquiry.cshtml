@@ -28,11 +28,27 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.Transport)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.Transport)
+            @Html.ValidationMessageFor(model => model.Transport)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.PlannedShipmentTime)
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.PlannedShipmentTime)
             @Html.ValidationMessageFor(model => model.PlannedShipmentTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CollectionPoint)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.CollectionPoint)
+            @Html.ValidationMessageFor(model => model.CollectionPoint)
         </div>
 
         <div class="editor-label">
@@ -47,8 +63,16 @@
             @Html.LabelFor(model => model.OriginCountry)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("OriginCountryID", String.Empty)
-            @Html.ValidationMessageFor(model => model.OriginCountry)
+            @Html.DropDownListFor(model => model.OriginCountryID, ViewBag.CountryID as List<SelectListItem>)
+            @Html.ValidationMessageFor(model => model.OriginCountryID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DestinationAddress)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.DestinationAddress)
+            @Html.ValidationMessageFor(model => model.DestinationAddress)
         </div>
 
         <div class="editor-label">
@@ -63,8 +87,8 @@
             @Html.LabelFor(model => model.DestinationCountry)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("DestinationCountryID", String.Empty)
-            @Html.ValidationMessageFor(model => model.DestinationCountry)
+            @Html.DropDownListFor(model => model.DestinationCountryID, ViewBag.DestinationCountryID as List<SelectListItem>)
+            @Html.ValidationMessageFor(model => model.DestinationCountryID)
         </div>
 
         <div class="editor-label">
@@ -108,6 +132,14 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.EstimatedValue)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EstimatedValue)
+            @Html.ValidationMessageFor(model => model.EstimatedValue)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.InsuranceRequired)
         </div>
         <div class="editor-field">
@@ -128,3 +160,7 @@
         </p>
     </fieldset>
 }
+
+<script type="text/javascript">
+    $('#PlannedShipmentTime').datetimepicker({ dateFormat: "dd MM yy" });
+</script>

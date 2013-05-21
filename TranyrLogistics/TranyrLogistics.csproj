@@ -178,7 +178,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\SystemUserController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
@@ -200,7 +200,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\UserRole.cs" />
-    <Compile Include="Models\SystemUserModels.cs" />
+    <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\CustomerConfirmation.cs" />
     <Compile Include="Models\Enquiries\ExistingCustomerEnquiry.cs" />
     <Compile Include="Models\Enquiries\PotentialCustomerEnquiry.cs" />
@@ -264,15 +264,19 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\base\jquery-ui-timepicker-addon.css" />
+    <Content Include="Images\alert.png" />
     <Content Include="Images\application_delete.png" />
     <Content Include="Images\application_edit.png" />
     <Content Include="Images\application_view_detail.png" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\enquiry.png" />
     <Content Include="Images\password.png" />
     <Content Include="Images\customer_avatar.png" />
     <Content Include="Images\customer_shipments.png" />
     <Content Include="Images\file-upload.png" />
     <Content Include="Images\generate_quote.png" />
     <Content Include="Images\reassign_enquiry.png" />
+    <Content Include="Images\roles.png" />
     <Content Include="Images\transport_order.png" />
     <Content Include="Images\request_quotation.png" />
     <Content Include="Images\send_quotation.png" />
@@ -685,9 +689,9 @@
     <None Include="Scripts\jquery-1.9.0-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.10.0.js" />
     <Content Include="Scripts\jquery-ui-1.10.0.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -720,9 +724,9 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\SystemUser\Login.cshtml" />
-    <Content Include="Views\SystemUser\ChangePassword.cshtml" />
-    <Content Include="Views\SystemUser\Create.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -732,7 +736,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Enquiry\Index.cshtml" />
     <Content Include="Views\Enquiry\Details.cshtml" />
-    <Content Include="Views\Enquiry\Create.cshtml" />
     <Content Include="Views\Enquiry\Edit.cshtml" />
     <Content Include="Views\Enquiry\Delete.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
@@ -782,9 +785,6 @@
     <Content Include="Views\Enquiry\SendQuotation.cshtml" />
     <Content Include="Views\EmailTemplate\SendQuotationEmail.html.cshtml" />
     <Content Include="Views\Enquiry\Partials\QuotationList.cshtml" />
-    <Content Include="Views\Enquiry\Partials\CreatePotentialCustomerEnquiry.cshtml" />
-    <Content Include="Views\Enquiry\Partials\NewEnquiry.cshtml" />
-    <Content Include="Views\Enquiry\Partials\CreateExistingCustomerEnquiry.cshtml" />
     <Content Include="Views\Enquiry\Partials\EditExistingCustomerEnquiry.cshtml" />
     <Content Include="Views\Enquiry\Partials\EditPotentialCustomerEnquiry.cshtml" />
     <Content Include="Views\Enquiry\Partials\PotentialCustomerEnquiryDetails.cshtml" />
@@ -799,11 +799,17 @@
     <Content Include="Views\EmailTemplate\InternalCustomerConfirmationEmail.html.cshtml" />
     <Content Include="Views\Enquiry\SendTransportOrder.cshtml" />
     <Content Include="Views\Enquiry\ReassignEnquiry.cshtml" />
-    <Content Include="Views\SystemUser\Index.cshtml" />
-    <Content Include="Views\SystemUser\Edit.cshtml" />
-    <Content Include="Views\SystemUser\Details.cshtml" />
-    <Content Include="Views\SystemUser\Delete.cshtml" />
-    <Content Include="Views\SystemUser\AssignRole.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\User\AssignRole.cshtml" />
+    <Content Include="Views\Enquiry\CreatePotentialCustomerEnquiry.cshtml" />
+    <Content Include="Views\Enquiry\CreateExistingCustomerEnquiry.cshtml" />
+    <Content Include="Views\Shipment\Partials\CompanyDetails.cshtml" />
+    <Content Include="Views\Shipment\Partials\IndividualDetails.cshtml" />
+    <Content Include="Views\User\Partials\UserRoles.cshtml" />
+    <Content Include="Views\EmailTemplate\InsuranceRequestEmail.html.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Uploads\ShipmentDocs\" />

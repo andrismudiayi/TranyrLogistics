@@ -6,12 +6,12 @@ namespace TranyrLogistics.Models.Customers
     [Table("Company")]
     public class Company : Customer
     {
-        [Required]
         [Display(Name = "Company")]
+        [Required(ErrorMessage = "*")]
         public string Name { get; set; }
 
-        [Required]
         [Display(Name = "VAT number")]
+        [Required(ErrorMessage = "*")]
         public string VatNumber { get; set; }
 
         [Display(Name = "Importers code")]
